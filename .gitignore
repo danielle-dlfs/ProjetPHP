@@ -1,0 +1,7 @@
+# Fichier données personnelles
+dbConnect.inc.php
+
+# Fichiers générés par l'IDE
+.idea
+
+
