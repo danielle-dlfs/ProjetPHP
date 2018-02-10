@@ -1,5 +1,5 @@
 -- TP01 
---------------------
+----------------------------------------------------------------
 -- Combien d'étudiants ? 
 select count(*) as nbrEtudiants 
 from etudiants;
@@ -12,22 +12,23 @@ select classe, count(*) as nbr
 from etudiants
 group by classe;
 -- Combien d'étudiants par année-section ?
-select Classe, count(*)
+select substring(Classe,1, 2) as AnnSec, count(*) as nbr
 from etudiants
-group by substring(Classe, 2);
+group by AnnSec;
 -- Combien d'étudiants par section ?
-select substring(Classe, 2, 1), count(*)
+select substring(Classe, 2, 1) as sec, count(*)
 from etudiants
-group by substring(Classe, 2, 1);
+group by sec;
 -- Combien de fois reviennent chaque prénom ?
-select Prenom, count(*)
+select Prenom, count(*) as nbr
 from etudiants
 group by Prenom;
 -- Quel est le plus grand nombre de fois qu'un prénom revient ? 
-select count(Prenom)
+select count(Prenom) as nbr
 from etudiants
+where max(nbr)
 group by Prenom
-order by count(*) desc limit 1;
+order by count(*) desc;
 -- Quel(s) prénom(s) revien(ne)t le plus souvent ?
 select prenom
 from etudiants
