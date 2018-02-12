@@ -22,8 +22,8 @@
 }
 #sous-menu a {
     display: block;
-    height: 1%; /* -> 3 */
-    padding: 6px 6px 6px 10px;
+    height: 2%; /* -> 3 */
+    padding: 0.5em;
     line-height: 1.5;
     font-size: .9em;
     text-decoration: none;
@@ -78,8 +78,8 @@
 }
 #menu a {
     display: block;
-    height: 1%; /* -> 3 */
-    padding: 6px 6px 6px 10px;
+    height: 2.5%; /* -> 3 */
+    padding: 0.5em;
     line-height: 1.5;
     font-size: .9em;
     text-decoration: none;
