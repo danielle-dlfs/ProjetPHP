@@ -10,6 +10,7 @@
     <!-- La feuille de styles "base.css" doit être appelée en premier. -->
     <link rel="stylesheet" type="text/css" href="CSS/base.css" media="all" />
     <link rel="stylesheet" type="text/css" href="CSS/modele04.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="CSS/index.css" media="screen" />
 </head>
 
 <body>
@@ -22,21 +23,23 @@
             <?php echo $siteName; ?>
 
         </h1>
-        <p class="sous-titre">
-            <strong>Caractéristiques:</strong>
-            minimaliste,
-            menu vertical à gauche,
-            largeur fluide
-        </p>
+        <aside id="menu" class="menu">
+            <ul>
+                <li><a href="accueil.html">Accueil</a></li>
+                <li><a href="profil.html">Profil</a></li>
+                <li><a href="mesInfos.html">Mes infos</a></li>
+                <li><a href="Configuration.html">Configuration</a></li>
+                <li><a href="Connexion.html">Connexion</a></li>
+            </ul>
+        </aside>
     </header>
 
-    <aside id="navigation">
+    <aside id="sous-menu" class="menu">
         <ul>
-            <li><a href="index.html">Accueil</a></li>
-            <li><a href="liste.html">Tous les gabarits</a></li>
-            <li><a href="utiliser.html">Utilisation</a></li>
-            <li><a href="licence.html">Licence</a></li>
-            <li><a href="credits.html">Crédits</a></li>
+            <li><a href="TP01.html">TP01</a></li>
+            <li><a href="TP02.html">TP02</a></li>
+            <li><a href="TP03.html">TP03</a></li>
+            <li><a href="TP04.html">TP04</a></li>
         </ul>
     </aside>
 
