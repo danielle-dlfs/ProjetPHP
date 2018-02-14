@@ -78,10 +78,18 @@
                     désactiver la marge de gauche de <code>div#contenu</code>.</p></li>
         </ol>
     </main>
+
     <footer id="copyright">
-        Mise en page &copy; 2008
-        <a href="http://www.elephorm.com" target="_blank">Elephorm</a> et
-        <a href="http://www.alsacreations.com" target="_blank">Alsacréations</a>
+        <span id="auteur">
+            <?php echo $author?>
+        </span>
+        -
+        <span>Crédits</span>
+        <span id="credit">
+            Mise en page &copy; 2008
+            <a href="http://www.elephorm.com" target="_blank">Elephorm</a> et
+            <a href="http://www.alsacreations.com" target="_blank">Alsacréations</a>
+        </span>
     </footer>
 
 </div><!-- #global -->

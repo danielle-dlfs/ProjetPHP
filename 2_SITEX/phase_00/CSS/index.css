@@ -47,9 +47,11 @@
     list-style: none;
 }
 
-
-
 #contenu {
     margin-top: 2.1em;
+}
+
+#credit {
+    display : block;
 }
 
