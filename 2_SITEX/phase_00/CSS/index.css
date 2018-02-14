@@ -1,26 +1,39 @@
-/* FROM MODELE04 */
-/* Navigation */
-#sous-menu {
-    background: #181A12;
-}
-#sous-menu a {
-    color: #FF6533;
-}
-#sous-menu a:hover, #sous-menu a:focus {
-    background: #000000;
-}
-/* Menu de navigation */
+/* Menu vertical */
 #sous-menu {
     width: 15%;
-    float: left; /* -> 2 */
     margin-top: 1em;
 }
 #sous-menu ul {
-    margin: 0;
     padding: 20px 10px;
-    list-style: none;
 }
-#sous-menu a {
+
+/* Menu horizontal */
+#menu {
+    width: 90%;
+    margin-bottom: 10px;
+}
+
+#menu ul {
+    padding: 0 10px;
+}
+
+#menu li {
+    float: left;
+    padding: 0;
+}
+
+/* Menus - commun */
+.menu {
+    background: #181A12;
+    float: left;
+}
+
+.menu a:hover, .menu a:focus {
+    background: #000000;
+}
+
+.menu a {
+    color: #FF6533;
     display: block;
     height: 2%; /* -> 3 */
     padding: 0.5em;
@@ -29,58 +42,14 @@
     text-decoration: none;
 }
 
-/* tmp */
+.menu ul {
+    margin: 0;
+    list-style: none;
+}
+
+
+
 #contenu {
-/*    border : 1px double darkmagenta; */
     margin-top: 2.1em;
 }
-#navigation {
-    float: left;
-}
 
-#entete {
-    /*border : 1px solid chartreuse;*/
-}
-
-#logo {
-
-}
-/* Menus */
-.menu {
-    background: #181A12;
-}
-.menu a {
-    color: #FF6533;
-}
-.menu a:hover, .menu a:focus {
-    background: #000000;
-}
-
-/* Menu horizontal */
-#menu {
-    width: 90%;
-    float: left; /* -> 2 */
-    margin-bottom: 10px;
-    /* border : 1px solid deepskyblue;*/
-
-}
-
-#menu ul {
-    margin: 0;
-    padding: 0 10px;
-    list-style: none;
-    float: left;
-}
-
-#menu li {
-    float: left;
-    padding: 0;
-}
-#menu a {
-    display: block;
-    height: 2.5%; /* -> 3 */
-    padding: 0.5em;
-    line-height: 1.5;
-    font-size: .9em;
-    text-decoration: none;
-}
