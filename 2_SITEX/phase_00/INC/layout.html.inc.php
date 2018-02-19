@@ -18,8 +18,8 @@
 
     <header id="entete">
         <h1>
-            <img id=logo alt="<?= $logoAlt; ?>" src="<?= $logoPath; ?>" />
-            <?php echo $siteName; ?>
+            <img id=logo alt="<?= $logoAlt ?>" src="<?= $logoPath ?>" />
+            <?= $siteName ?>
 
         </h1>
         <aside id="menu" class="menu">
@@ -43,21 +43,21 @@
     </aside>
 
     <main id="contenu">
-        <?php echo $mainZone  ?>
+        <?= $mainZone  ?>
     </main>
 
     <footer id="copyright">
         <span id="auteur">
-            <?php echo $author;?>
+            <?= $author;?> @2018
         </span>
         -
-        <span onmouseover="showCredits();" onmouseleave="hideCredits();">
-            Crédits
-            <span id="credits">
-                Mise en page &copy; 2008
-                <a href="http://www.elephorm.com" target="_blank">Elephorm</a> et
-                <a href="http://www.alsacreations.com" target="_blank">Alsacréations</a>
-            </span>
+        <span>Crédits</span>
+
+        <span id="credits">
+            Mise en page &copy; 2008
+            <a href="http://www.elephorm.com" target="_blank">Elephorm</a> et
+            <a href="http://www.alsacreations.com" target="_blank">Alsacréations</a>
+
         </span>
     </footer>
 
