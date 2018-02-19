@@ -9,5 +9,6 @@ $logoPath = 'IMG/04.png';
 $logoAlt = 'Logo';
 $mainZone = 'Bienvenue';
 include ("INC/dbConnect.inc.php");
-$author = '<a href="mailto:"' . ___MATRICULE___ . '.students.ephec.be' . '">' . $__INFOS__['nom'] . ' ' . $__INFOS__['prenom'];
+$mail = ___MATRICULE___ . '@students.ephec.be';
+$author = '<a href="mailto:' . $mail . '" title="'. $mail . '">' . $__INFOS__['nom'] . ' ' . $__INFOS__['prenom'];
 include ("INC/layout.html.inc.php");
