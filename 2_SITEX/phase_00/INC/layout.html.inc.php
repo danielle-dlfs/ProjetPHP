@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns="" xml:lang="fr" lang="fr">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title><?= $home ?></title>
@@ -12,7 +12,7 @@
     <script src="JS/index.js"></script>
 </head>
 
-<body>
+<body onload="hideCredits();">
 
 <div id="global">
 
@@ -43,21 +43,19 @@
     </aside>
 
     <main id="contenu">
-        <?= $mainZone  ?>
+        <?= $mainZone ?>
     </main>
 
     <footer id="copyright">
         <span id="auteur">
-            <?= $author;?> @2018
+            <?= $author?>
         </span>
         -
         <span>Crédits</span>
-
         <span id="credits">
             Mise en page &copy; 2008
             <a href="http://www.elephorm.com" target="_blank">Elephorm</a> et
             <a href="http://www.alsacreations.com" target="_blank">Alsacréations</a>
-
         </span>
     </footer>
 
