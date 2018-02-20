@@ -12,7 +12,7 @@
     <script src="JS/index.js"></script>
 </head>
 
-<body onload="hideCredits();">
+<body onload="hideCredits()">
 
 <div id="global">
 
@@ -22,7 +22,7 @@
             <?= $siteName ?>
 
         </h1>
-        <aside id="menu" class="menu">
+        <nav id="menu" class="menu">
             <ul>
                 <li><a href="accueil.html">Accueil</a></li>
                 <li><a href="profil.html">Profil</a></li>
@@ -30,28 +30,26 @@
                 <li><a href="Configuration.html">Configuration</a></li>
                 <li><a href="Connexion.html">Connexion</a></li>
             </ul>
-        </aside>
+        </nav>
     </header>
 
-    <aside id="sous-menu" class="menu">
+    <nav id="sous-menu" class="menu">
         <ul>
             <li><a href="TP01.html">TP01</a></li>
             <li><a href="TP02.html">TP02</a></li>
             <li><a href="TP03.html">TP03</a></li>
             <li><a href="TP04.html">TP04</a></li>
         </ul>
-    </aside>
+    </nav>
 
     <main id="contenu">
         <?= $mainZone ?>
     </main>
 
     <footer id="copyright">
-        <span id="auteur">
-            <?= $author?>
-        </span>
+        <span id="auteur"><?= $author?></span>
         -
-        <span>Crédits</span>
+        <span onmouseover="showCredits();" onmouseleave="hideCredits();">Crédits</span>
         <span id="credits">
             Mise en page &copy; 2008
             <a href="http://www.elephorm.com" target="_blank">Elephorm</a> et
