@@ -5,13 +5,15 @@ $(document).ready(function(){
     credits.hide();
 
     /* Evenements sur credits */
-    var onWordCredits = $("span:contains('Crédits')");
-    onWordCredits.mouseover(function(){
+        $("span:contains('Crédits')").mouseover(function(){
         credits.fadeIn();
-    })
-
-    onWordCredits.mouseleave(function(){
+    });
+    $("#copyright").mouseleave(function(){
         credits.fadeOut();
-    })
+    });
+
+    /* Rendre les liens des crédits "target blank" */
+    $("#credits a").attr("target","_blank");
+
 });
 
