@@ -1,8 +1,6 @@
-/* Phase 0.5 */
-function hideCredits() {
-    document.getElementById('credits').style.display = "none";
-}
+$(document).ready(function(){
 
-function showCredits() {
-    document.getElementById('credits').style.display = "block";
-}
+    /* Au chargement de la page */
+    var credits = $('#credits');
+    credits.hide();
+});

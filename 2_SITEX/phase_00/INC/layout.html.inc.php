@@ -9,10 +9,11 @@
     <link rel="stylesheet" type="text/css" href="CSS/base.css" media="all" />
     <link rel="stylesheet" type="text/css" href="CSS/modele04.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="CSS/index.css" media="screen" />
-    <script src="JS/index.js"></script>
+    <script type="text/javascript" src="/all/jQ/jquery-1.12.3.min.js"></script>
+    <script type="text/javascript" src="JS/index.js"></script>
 </head>
 
-<body onload="hideCredits()">
+<body>
 
 <div id="global">
 
@@ -47,13 +48,13 @@
     </main>
 
     <footer id="copyright">
-        <span id="auteur"><?= $author?></span>
+        <span id="auteur"><?= $author?></span>@2018
         -
-        <span onmouseover="showCredits();" onmouseleave="hideCredits();">Crédits</span>
+        <span>Crédits</span>
         <span id="credits">
             Mise en page &copy; 2008
-            <a href="http://www.elephorm.com" target="_blank">Elephorm</a> et
-            <a href="http://www.alsacreations.com" target="_blank">Alsacréations</a>
+            <a href="http://www.elephorm.com">Elephorm</a> et
+            <a href="http://www.alsacreations.com">Alsacréations</a>
         </span>
     </footer>
 
