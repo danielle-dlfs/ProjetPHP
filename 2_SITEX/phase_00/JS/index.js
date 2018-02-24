@@ -20,8 +20,9 @@ $(document).ready(function(){
 
 function appelAjax(event){
    event.preventDefault();
-   console.log(this);
-   $.get('/TP/2T/RES/appelHTML.php?rq=config', function (retour){
+   console.log(this.attributes.href.value);
+   var request = $(this).attr('href').split('.html')[0];
+   $.get('/TP/2T/RES/appelHTML.php?rq=' + request, function (retour){
         $("#contenu").html(retour);
    });
 }
