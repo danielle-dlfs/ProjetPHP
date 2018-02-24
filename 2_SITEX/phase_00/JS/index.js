@@ -20,28 +20,28 @@ $(document).ready(function(){
 
 function appelAjax(event){
    event.preventDefault();
-   console.log(this.attributes.href.value);
+   console.log(this);
    var request = $(this).attr('href').split('.html')[0];
    // phase 0.8 appelAjax a la place d'appelHTML
    $.get('/TP/2T/RES/appelAjax.php?rq=' + request, gereRetour);
 }
 
 function gereRetour(retour){
-    retour = testRetour(retour);
-    $.get("#contenu").html(retour);
+    retour = testJson(retour);
+    $("#contenu").html(retour);
 }
 
-function testRetour(){
+function testJson(json){
     var parsed;
     try {
         parsed = JSON.parse(json);
-        parsed = "C'est bien du JSON dont les clés sont : </br>";
-        parsed += Object.keys(parsed).join(" . ")
-                + "<br>"
+        parsed = "C'est bien du JSON dont les clés sont : <hr>";
+        parsed += Object.keys(parsed).join(" - ")
+                + "<hr>"
                 + json ;
 
     } catch (e) {
-        // parsed = ;
+        parsed = json;
     }
     return parsed;
 }
