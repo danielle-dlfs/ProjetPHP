@@ -36,7 +36,7 @@
 
     <nav id="sous-menu" class="menu">
         <ul>
-            <li><a href="tableau.html">TP01</a></li>
+            <li><a href="tableau.html">JSON 00</a></li>
             <li><a href="sem02.html">TP02</a></li>
             <li><a href="sem03.html">TP03</a></li>
             <li><a href="sem04.html">TP04</a></li>

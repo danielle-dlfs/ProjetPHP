@@ -22,7 +22,26 @@ function appelAjax(event){
    event.preventDefault();
    console.log(this.attributes.href.value);
    var request = $(this).attr('href').split('.html')[0];
-   $.get('/TP/2T/RES/appelHTML.php?rq=' + request, function (retour){
-        $("#contenu").html(retour);
-   });
+   // phase 0.8 appelAjax a la place d'appelHTML
+   $.get('/TP/2T/RES/appelAjax.php?rq=' + request, gereRetour);
+}
+
+function gereRetour(retour){
+    retour = testRetour(retour);
+    $.get("#contenu").html(retour);
+}
+
+function testRetour(){
+    var parsed;
+    try {
+        parsed = JSON.parse(json);
+        parsed = "C'est bien du JSON dont les clés sont : </br>";
+        parsed += Object.keys(parsed).join(" . ")
+                + "<br>"
+                + json ;
+
+    } catch (e) {
+        // parsed = ;
+    }
+    return parsed;
 }
