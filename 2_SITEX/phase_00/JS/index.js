@@ -17,3 +17,8 @@ $(document).ready(function(){
 
 });
 
+function appelAjax(){
+    $.get('/TP/2T/RES/appelHTML.php?rq=config', function (retour){
+       $("#contenu").html(retour);
+    });
+}

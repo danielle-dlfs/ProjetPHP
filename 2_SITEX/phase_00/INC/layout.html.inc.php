@@ -26,20 +26,20 @@
         <nav id="menu" class="menu">
             <ul>
                 <li><a href="accueil.html">Accueil</a></li>
-                <li><a href="profil.html">Profil</a></li>
-                <li><a href="mesInfos.html">Mes infos</a></li>
-                <li><a href="Configuration.html">Configuration</a></li>
-                <li><a href="Connexion.html">Connexion</a></li>
+                <li><a href="userProfil.html">Profil</a></li>
+                <li><a href="userInfos.html">Mes infos</a></li>
+                <li><a href="config.html">Configuration</a></li>
+                <li><a href="gestLog.html">Connexion</a></li>
             </ul>
         </nav>
     </header>
 
     <nav id="sous-menu" class="menu">
         <ul>
-            <li><a href="TP01.html">TP01</a></li>
-            <li><a href="TP02.html">TP02</a></li>
-            <li><a href="TP03.html">TP03</a></li>
-            <li><a href="TP04.html">TP04</a></li>
+            <li><a href="tableau.html">TP01</a></li>
+            <li><a href="sem02.html">TP02</a></li>
+            <li><a href="sem03.html">TP03</a></li>
+            <li><a href="sem04.html">TP04</a></li>
         </ul>
     </nav>
 
