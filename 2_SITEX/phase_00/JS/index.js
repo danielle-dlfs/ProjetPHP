@@ -12,10 +12,14 @@ $(document).ready(function(){
         credits.fadeOut();
     });
 
-    /* Rendre les liens des crédits "target blank" */
+    /* Rendre les liens des crédits ouvrable dans une nouvelle fenetre */
     $("#credits a").attr("target","_blank");
 
+    /* Appel AJAX */
     $(".menu a").click(appelAjax);
+
+    /* focus sur l' accueil */
+    $("#menu a:first").focus();
 });
 
 function appelAjax(event){

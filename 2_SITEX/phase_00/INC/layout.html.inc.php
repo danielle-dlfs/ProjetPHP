@@ -59,7 +59,5 @@
     </footer>
 
 </div><!-- #global -->
-
 </body>
 </html>
-
