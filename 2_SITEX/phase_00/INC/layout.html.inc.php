@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="CSS/base.css" media="all" />
     <link rel="stylesheet" type="text/css" href="CSS/modele04.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="CSS/index.css" media="screen" />
-    <script type="text/javascript" src="/all/jQ/jquery-1.12.3.min.js"></script>
+    <script type="text/javascript" src="/all/jQ/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="JS/index.js"></script>
 </head>
 

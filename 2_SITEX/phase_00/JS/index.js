@@ -39,8 +39,8 @@ function testJson(json){
     var parsed;
     try {
         parsed = JSON.parse(json);
-        parsed = "C'est bien du JSON dont les clés sont : <hr>";
-        parsed += Object.keys(parsed).join(" - ")
+        parsed = "C'est bien du JSON dont les clés sont : <hr>"
+                + Object.keys(parsed).join(" - ")
                 + "<hr>"
                 + json ;
 
