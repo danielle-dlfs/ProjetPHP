@@ -1,0 +1,75 @@
+/* VARIABLES */
+:root{
+    --menu-bg-color: #181A12;
+}
+
+
+/* Menus - commun */
+.menu {
+    background: var(--menu-bg-color);
+}
+.menu a {
+    color: #FF6533;
+    text-decoration: none;
+    line-height: 1.5;
+    font-size: .9em;
+    /* PHASE 0.7 */
+    border: 0.1em solid var(--menu-bg-color);
+    padding: 0.25em 0.5em;
+}
+
+.menu a:hover, .menu a:focus {
+    /* PHASE 0.7 */
+    background-color: #282828;
+}
+
+.menu a:hover{
+    border-color: #888888;
+    border-radius: 0.25em 0.75em 0.25em 0.75em;
+}
+
+.menu a:focus {
+    /* PHASE 0.7 */
+    border-radius: 0.5em;
+    border-right-color: #CCCCCC;
+    border-bottom-color: #CCCCCC;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    outline:none;
+
+}
+
+.menu ul {
+    margin: 0;
+    list-style: none;
+}
+
+/* Menu vertical - #sous-menu */
+#sous-menu {
+    width: 18%;
+    float: left;
+}
+#sous-menu a {
+    display: block;
+    height: 2%;
+}
+#sous-menu ul {
+    padding: 20px 10px;
+}
+
+/* Menu horizontal - #menu */
+#menu a {
+    height:2.5%;
+    display: inline;
+}
+#menu ul {
+    padding: 10px;
+}
+#menu ul li {
+    display: inline;
+}
+
+/* FOOTER */
+#credits {
+    display: block;
+}
