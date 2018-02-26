@@ -56,4 +56,64 @@ Creation de schéma relationnel : CTRL+R
     
     ````
 
-### Dans _Campus_
+### Dans _MiniCampus_
+1. **mono (?) table**
+
+    - Afficher la liste des classes de base (celles qui n'ont pas de parent)  
+    ````sql
+        
+    ````
+    - Afficher les filles d'une section donnée (p.e. TI)  
+    ````sql
+        
+    ````    
+    - Afficher les filles des filles d'une classe donnée (p.e. TI)
+    ````sql
+        
+    ```` 
+2. **multi table**
+    - Afficher la liste des cours (code, faculté et libellé) pour une classe (p.e. 1TL2) donnée
+    ````sql
+        
+    ````    
+    
+## A faire à domicile
+1. **dans _world_ : mono table**  
+
+      - Afficher la superfie de chacune des regions d'europe  
+    ````sql
+        
+    ````       
+      - Pour chacun des continents, afficher le(s) pays qui a(ont) eu leur indépendence le plus récemment  
+    ````sql
+        
+    ```` 
+    
+2. **dans _world_ : multi table**  
+    - Pour le "monde", donnez le pourcentage de personnes qui ne parlent pas une langue officielle  
+     _Comprenez : personnes répertoriées comme ne parlant pas une langue officielle  
+     ou : répertoriées comme parlant une langue non-officielle_
+    ````sql
+        
+    ```` 
+3. **dans _Minicampus_ : mono table** 
+
+    - Afficher la liste des facultés de base (celles qui n'ont pas de parent)
+    ````sql
+        
+    ```` 
+    - Afficher les filles d'une faculté donnée (p.e. TI)
+    ````sql
+        
+    ```` 
+4. **dans _Minicampus_ : multi table**  
+
+    - Pour tous les étudiants, afficher les informations suivantes :
+        groupe, matricule, nom, prénom et email (construit : matricule@students...)
+    ````sql
+        
+    ```` 
+    - pour chacune des facultés, afficher ces informations précédées du nom de son parent.
+    ````sql
+        
+    ```` 
