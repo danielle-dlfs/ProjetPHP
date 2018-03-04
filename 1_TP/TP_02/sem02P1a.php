@@ -6,5 +6,4 @@
  * Time: 17:21
  */
 
-
-echo phpinfo();
+phpinfo(INFO_VARIABLES);
