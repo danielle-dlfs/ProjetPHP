@@ -81,9 +81,7 @@ Creation de schéma relationnel : CTRL+R
     - Afficher les filles d'une section donnée (p.e. TI)  
     ```sql
     SELECT nom AS 'nomFilles(TI)' 
-    FROM class WHERE parent_id = (SELECT id 
-    								FROM class 
-                                    WHERE nom = 'TI');
+    FROM class WHERE parent_id = (SELECT id FROM class WHERE nom = 'TI');
     ```    
     - Afficher les filles des filles d'une classe donnée (p.e. TI)
     ````sql
@@ -94,13 +92,12 @@ Creation de schéma relationnel : CTRL+R
 2. **multi table**
     - Afficher la liste des cours (code, faculté et libellé) pour une classe (p.e. 1TL2) donnée
     ```sql
-    SELECT class.nom, UCASE(user.username) AS 'matricule', user.nom, user.prenom, CONCAT(LCASE(user.username), '@students.ephec.be') AS mail
-    FROM user
-    INNER JOIN class_user as cu
-    	ON user.id = cu.user_id
-    INNER JOIN .class
-    	ON cu.class_id = class.id
-    WHERE user.username LIKE 'HE%'; 
+    SELECT cours.code, cours.intitule 
+    FROM cours INNER JOIN course_class 
+         ON cours.code = course_class.cours_id 
+    INNER JOIN class 
+         ON class.id = course_class.class_id 
+    WHERE class.nom='1TL2';
     ```    
     
 ## A faire à domicile
