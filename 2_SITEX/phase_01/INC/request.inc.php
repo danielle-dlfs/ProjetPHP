@@ -7,7 +7,7 @@
  */
 
 /*  Protection de fichier */
-// if ( count( get_included_files() ) == 1) die( '--access denied--' );
+if ( count( get_included_files() ) == 1) die( '--access denied--' );
 
 function gereRequete($rq){
     switch($rq){
@@ -16,4 +16,4 @@ function gereRequete($rq){
     }
 }
 
-echo gereRequete('yolo');
+// echo gereRequete('yolo');

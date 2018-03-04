@@ -29,7 +29,7 @@ $(document).ready(function(){
 
 function appelAjax(elmt){
     var request = $(elmt).attr('href').split('.html')[0];
-    $.get('/TP/2T/RES/appelAjax.php?rq=' + request, gereRetour);
+    $.get('index.php?rq=' + request, gereRetour);
 }
 
 function gereRetour(retour){
