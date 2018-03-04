@@ -18,20 +18,18 @@ $(document).ready(function(){
     /* Phase 01.01 */
     $("#menu a:first").addClass('selected');
 
-    $(".menu a").click(function(event){
-        event.preventDefault(); // prévenir
-        $(".menu a").removeClass('selected');
-        $(this).addClass('selected');
-        appelAjax(this);
+    /*$(".menu a").click(appelAjax);*/
+    $('.menu a').click(function(event){
+       event.preventDefault();
+       $(".menu a").removeClass('selected');
+       $(this).addClass('selected');
+       appelAjax(this);
     });
 });
 
-function appelAjax(event){
-   event.preventDefault();
-   console.log(this);
-   var request = $(this).attr('href').split('.html')[0];
-   // phase 0.8 appelAjax a la place d'appelHTML
-   $.get('/TP/2T/RES/appelAjax.php?rq=' + request, gereRetour);
+function appelAjax(elmt){
+    var request = $(elmt).attr('href').split('.html')[0];
+    $.get('/TP/2T/RES/appelAjax.php?rq=' + request, gereRetour);
 }
 
 function gereRetour(retour){
