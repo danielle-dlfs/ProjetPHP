@@ -74,7 +74,8 @@
 }
 
 /* Phase 01 */
-.selected {
+.menu a.selected {
+    background-color: #282828;
     border-radius: 0.5em;
     border-right-color: #CCCCCC;
     border-bottom-color: #CCCCCC;
