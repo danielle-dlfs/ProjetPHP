@@ -15,11 +15,15 @@ $(document).ready(function(){
     /* Rendre les liens des crédits ouvrable dans une nouvelle fenetre */
     $("#credits a").attr("target","_blank");
 
-    /* Appel AJAX */
-    $(".menu a").click(appelAjax);
+    /* Phase 01.01 */
+    $("#menu a:first").addClass('selected');
 
-    /* focus sur l' accueil */
-    $("#menu a:first").focus();
+    $(".menu a").click(function(event){
+        event.preventDefault(); // prévenir
+        $(".menu a").removeClass('selected');
+        $(this).addClass('selected');
+        appelAjax(this);
+    });
 });
 
 function appelAjax(event){
@@ -49,3 +53,4 @@ function testJson(json){
     }
     return parsed;
 }
+

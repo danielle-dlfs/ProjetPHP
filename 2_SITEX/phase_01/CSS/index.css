@@ -36,7 +36,6 @@
     border-top-color: transparent;
     border-left-color: transparent;
     outline:none;
-
 }
 
 .menu ul {
@@ -72,4 +71,14 @@
 /* FOOTER */
 #credits {
     display: block;
+}
+
+/* Phase 01 */
+.selected {
+    border-radius: 0.5em;
+    border-right-color: #CCCCCC;
+    border-bottom-color: #CCCCCC;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    outline:none;
 }
