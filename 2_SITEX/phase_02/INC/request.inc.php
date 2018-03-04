@@ -18,8 +18,6 @@ function gereRequete($rq){
         default:
             //return "Je ne connais pas ce genre de metier (" . $rq . "), aller voir à coté";
             require_once ("/RES/appelAjax.php");
-            return  RES_appelAjax($rq);
+            return  RES_appelAjax($rq, $action);
     }
 }
-
-// echo gereRequete('yolo');
