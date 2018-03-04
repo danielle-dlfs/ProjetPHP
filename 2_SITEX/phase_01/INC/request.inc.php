@@ -7,9 +7,13 @@
  */
 
 /*  Protection de fichier */
-if ( count( get_included_files() ) == 1) die( '--access denied--' );
+// if ( count( get_included_files() ) == 1) die( '--access denied--' );
 
 function gereRequete($rq){
-
+    switch($rq){
+        default:
+            return "Je ne connais pas ce genre de metier (" . $rq . "), aller voir à coté";
+    }
 }
 
+echo gereRequete('yolo');
