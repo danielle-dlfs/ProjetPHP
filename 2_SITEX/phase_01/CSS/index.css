@@ -18,7 +18,7 @@
     padding: 0.25em 0.5em;
 }
 
-.menu a:hover, .menu a:focus {
+.menu a:hover {
     /* PHASE 0.7 */
     background-color: #282828;
 }
@@ -26,16 +26,6 @@
 .menu a:hover{
     border-color: #888888;
     border-radius: 0.25em 0.75em 0.25em 0.75em;
-}
-
-.menu a:focus {
-    /* PHASE 0.7 */
-    border-radius: 0.5em;
-    border-right-color: #CCCCCC;
-    border-bottom-color: #CCCCCC;
-    border-top-color: transparent;
-    border-left-color: transparent;
-    outline:none;
 }
 
 .menu ul {
