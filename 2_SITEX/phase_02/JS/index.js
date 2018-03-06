@@ -34,6 +34,18 @@ function appelAjax(elmt){
 
 function gereRetour(retour){
     retour = testJson(retour);
+    for (var action in retour){
+        switch(action){
+            case 'display' :
+                $("main").html(retour[action]);
+                break;
+            default :
+                console.log('action inconnue :' + action);
+                console.log(retour[action]);
+                break;
+        }
+    }
+
     $("#contenu").html(retour);
 }
 
@@ -41,13 +53,8 @@ function testJson(json){
     var parsed;
     try {
         parsed = JSON.parse(json);
-        parsed = "C'est bien du JSON dont les clés sont : <hr>"
-                + Object.keys(parsed).join(" - ")
-                + "<hr>"
-                + json ;
-
     } catch (e) {
-        parsed = json;
+        console.log('jsonError:' + json);
     }
     return parsed;
 }
