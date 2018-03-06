@@ -5,8 +5,9 @@
  */
 
 function scriptInfos($param = 'new'){
+    $paramLowCase = strtolower($param);
 
-    switch($param) {
+    switch($paramLowCase) {
         case 'new':
            /* static $tableau = [
                 "protocol" => $_SERVER['SERVER_PROTOCOL'],
@@ -54,4 +55,11 @@ function scriptInfos($param = 'new'){
 
 function creeTableau($uneListe, $titre, $index){
 
+}
+
+function monPrint_r($liste){
+    $out = '<pre>';
+    $out .= print_r($liste, true);
+    $out .= '</pre>';
+    return $out;
 }
