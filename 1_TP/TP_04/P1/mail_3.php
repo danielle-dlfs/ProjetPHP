@@ -6,9 +6,11 @@
  * Time: 09:24
  */
 
-$pour = 'd.delfosse@students.ephec.be';
+$destinataire = $_POST['destinataire'];
+$expediteur = 'd.delfosse@students.ephec.be';
 $sujet = $_POST['sujet'];
-$entete = "From:". $_POST['de'] ."\r\n";
+$entete = "From:" .$expediteur .  "\r\n";
 $entete .= "Content-Type: text/html; charset=utf-8\r\n";
 $msg = $_POST['message'];
-$ok = mail($pour,$sujet, $msg, $entete);
+
+mail($destinataire,$sujet, $msg, $entete);
