@@ -13,4 +13,9 @@ $entete = "From:" .$expediteur .  "\r\n";
 $entete .= "Content-Type: text/html; charset=utf-8\r\n";
 $msg = $_POST['message'];
 
-mail($destinataire,$sujet, $msg, $entete);
+$result = mail($destinataire,$sujet, $msg, $entete);
+if(!$result) {
+    echo "Error";
+} else {
+    echo "Success";
+}
