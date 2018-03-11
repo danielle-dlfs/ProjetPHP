@@ -18,7 +18,7 @@
     padding: 0.25em 0.5em;
 }
 
-.menu a:hover, .menu:focus {
+.menu a:hover, .menu a.selected  {
     /* PHASE 0.7 */
     background-color: #282828;
 }
@@ -37,6 +37,7 @@
 #sous-menu {
     width: 18%;
     float: left;
+    /*clear: both;*/
 }
 #sous-menu a {
     display: block;
@@ -65,11 +66,63 @@
 
 /* Phase 01 */
 .menu a.selected {
-    background-color: #282828;
     border-radius: 0.5em;
     border-right-color: #CCCCCC;
     border-bottom-color: #CCCCCC;
     border-top-color: transparent;
     border-left-color: transparent;
     outline:none;
+}
+
+/* Phase 2 */
+section#gestion {
+    clear:both;
+}
+
+section#gestion aside {
+    width:80%;
+    margin-left: auto;
+    margin-right: auto;
+    border: 0.1em solid darkgray;
+    border-radius: 0.5em;
+    background-color: rgba(255,255,255,0.33);
+    padding: 0.5em;
+}
+
+section#gestion aside:before {
+    top:-1em;
+    position:relative;
+    color: yellow;
+    padding: 0.2em 1em;
+    border-radius: 0.5em;
+    box-shadow: 0.2em 0.2em 0.2em rgba(128,0,0,0.5);
+}
+#gestion aside#error:before{
+    content:'error';
+    background-color: darkred;
+    border: 0.1em solid red;
+}
+
+#gestion aside#message:before{
+    content:'message';
+    background-color: darkgreen;
+    border: 0.1em solid green;
+}
+
+#gestion aside#debug:before{
+    content:'debug';
+    background-color: firebrick;
+    border: 0.1em solid orange;
+}
+
+#gestion aside#jsonError:before{
+    content:'jsonError';
+    background-color: rebeccapurple;
+    border: 0.1em solid purple;
+}
+
+#gestion aside#kint:before {
+    content:'kint';
+    background-color: darkblue;
+    border: 0.1em solid blue;
 }

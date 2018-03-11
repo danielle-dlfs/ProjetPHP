@@ -25,6 +25,26 @@ $(document).ready(function(){
        $(this).addClass('selected');
        appelAjax(this);
     });
+    /* Phase 2 - 3.2 */
+    // $("<section id='gestion'></section>").insertAfter("#global");
+    // $("#gestion").append("<aside id='error'></aside>");
+    // $("#error").hide();
+    /* Phase 2 - 3.4 */
+   /* $("aside#error").dblclick(function(){
+        $("aside#error").fadeOut(0.5);
+    });*/
+    /* Phase 2 - 4.2 */
+    $("<section id='gestion'></section>").insertAfter("#global");
+    $("#gestion").append("<aside id='error'></aside>")
+        .append("<aside id='message'></aside>")
+        .append("<aside id='debug'></aside>")
+        .append("<aside id='jsonError'></aside>")
+        .append("<aside id='kint'></aside>");
+    // $("#gestion").children().hide();
+
+    $("#gestion").children().dblclick(function(){
+        $("#gestion").children().fadeOut(0.5);
+    });
 });
 
 function appelAjax(elmt){
@@ -38,6 +58,15 @@ function gereRetour(retour){
         switch(action){
             case 'display' :
                 $("main").html(retour[action]);
+                $("main").fadeIn();
+                break;
+            case 'error':
+                $("#error").html(retour[action]);
+                $("#error").fadeIn();
+               /* $("#error").click(function(){
+                    $("#error").html(retour[action]);
+                    $("#error").fadeIn();
+                });*/
                 break;
             default :
                 console.log('action inconnue :' + action);
@@ -45,8 +74,6 @@ function gereRetour(retour){
                 break;
         }
     }
-
-    $("#contenu").html(retour);
 }
 
 function testJson(json){
