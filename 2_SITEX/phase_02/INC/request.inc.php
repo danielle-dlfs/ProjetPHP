@@ -9,17 +9,23 @@
 /*  Protection de fichier */
 if ( count( get_included_files() ) == 1) die( '--access denied--' );
 
+function display($txt){
+    static $toSend;
+    if (!isset($toSend['display'])) $toSend['display'] = '';
+    $toSend['display'] .= $txt;
+}
+
 function gereRequete($rq){
+    global $toSend;
     switch($rq){
         case 'sem03':
-            //return "Cette fois, je te reconnais (" . $rq .")";
-            /* Phase 02 */
-            return json_encode(['display' => 'Cette fois, je te reconnais (' . $rq .')']);
+            display("Cette fois, je te reconnais( $rq )");
+            break;
         case 'sem04':
-            return json_encode(['display' => 'Requête «'. $rq .'» : Le TP03 est disponible sur le serveur !']);
+            display("Requête « $rq » : Le TP03 est disponible sur le serveur !");
+            break;
         default:
-            //return "Je ne connais pas ce genre de metier (" . $rq . "), aller voir à coté";
-            require_once ("/RES/appelAjax.php");
-            return RES_appelAjax($rq, 'action');
+            require_once "/RES/appelAjax.php";
+            $toSend = json_decode(RES_appelAjax($rq, 'action'));
     }
 }
