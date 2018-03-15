@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Up Form 3</title>
+    <script type="text/javascript" src="JS/up_form_3.js"></script>
+</head>
+<body>
+    <h1>Upload de fichier</h1>
+    <form action="upload2.php" method="post" enctype="multipart/form-data">
+        <!--enctype pour dire au navigateur qu'on veut uploader un fichier avec ce formulaire ! obligatoire -->
+        <input type="file" name="file" id="file">
+        <input type="submit" name="send" value="Envoyer">
+    </form>
+</body>
+</html>

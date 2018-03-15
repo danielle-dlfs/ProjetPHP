@@ -10,9 +10,7 @@
 $file = $_FILES['file'];
 print_r($file);
 $nameFile = $file['name'];
-$typeFile = $file['type'];
 $tmpPathName =  $file['tmp_name'];
-$error = $file['error'];
 $sizeFile = $file['size'];
 $finalPathName = 'MES_IMAGES/'.$nameFile;
 $extensionsArray = ['jpg', 'jpeg', 'gif', 'png'];
