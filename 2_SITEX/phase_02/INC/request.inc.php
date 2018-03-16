@@ -10,7 +10,7 @@
 if ( count( get_included_files() ) == 1) die( '--access denied--' );
 
 function display($txt){
-    static $toSend;
+    global $toSend;
     if (!isset($toSend['display'])) $toSend['display'] = '';
     $toSend['display'] .= $txt;
 }

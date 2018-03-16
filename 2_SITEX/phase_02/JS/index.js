@@ -8,7 +8,7 @@ function testJson(json){
     try {
         parsed = JSON.parse(json);
     } catch (e) {
-        console.log('jsonError:' + json);
+        parsed = {'jsonError' : {'error': e , 'json' : json }}
     }
     return parsed;
 }
@@ -20,12 +20,19 @@ function gereRetour(retour) {
             case 'display' :
                 $("#contenu").html(retour[action]).fadeIn(500);
                 break;
-            case 'error':
+            case 'error' :
                 $("#error").html(retour[action]).fadeIn(500);
                 break;
-            case 'makeTable':
+            case 'makeTable' :
                 var table = makeTable(retour[action]);
                 $("#contenu").html(table).fadeIn(500);
+                break;
+            case 'jsonError':
+                var html = "<p><b>Error :</b></p>" +
+                    retour[action].error +
+                    "<hr><p><b>Json :</b></p>" +
+                    retour[action].json;
+                $("#"+ action).html(html).fadeIn(500);
                 break;
             default :
                 console.log('action inconnue :' + action);

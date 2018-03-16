@@ -5,7 +5,7 @@
  */
 
 if(isset($_GET['rq'])){
-    require_once ("INC/request.inc.php");
+    require_once "INC/request.inc.php";
     $toSend = [];
     gereRequete($_GET['rq']);
     die(json_encode($toSend));
