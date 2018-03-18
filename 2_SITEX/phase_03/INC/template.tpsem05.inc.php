@@ -36,6 +36,7 @@
         </form>
     </fieldset>
     <fieldset id="tp05result">
+        <legend>Liste des cours</legend>
         <p>Pas de groupe sélectionné</p>
         <div></div>
     </fieldset>
