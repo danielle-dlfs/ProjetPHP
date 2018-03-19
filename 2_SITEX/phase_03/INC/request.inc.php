@@ -32,3 +32,13 @@ function gereRequete($rq){
             $toSend = json_decode(RES_appelAjax($rq, 'action'));
     }
 }
+
+function chargeTemplate($name= 'yololo'){
+    $nameToLow = strtolower($name);
+    if(!file_exists("template.$name.inc.php")) {
+        return false;
+    } else {
+
+    }
+
+}
