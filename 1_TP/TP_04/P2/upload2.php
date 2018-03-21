@@ -7,31 +7,28 @@
  */
 
 /* 2.1 */
-$file = $_FILES['file'];
-print_r($file);
-$nameFile = $file['name'];
-$tmpPathName =  $file['tmp_name'];
-$sizeFile = $file['size'];
-$finalPathName = 'MES_IMAGES/'.$nameFile;
-$extensionsArray = ['jpg', 'jpeg', 'gif', 'png'];
-//1. strrchr renvoie l'extension avec le point (« . »).
-//2. substr(chaine,1) ignore le premier caractère de chaine.
-//3. strtolower met l'extension en minuscules.
-$extension_upload = strtolower(substr(strrchr($_FILES['file']['name'],'.'),1));
-if(in_array($extension_upload,$extensionsArray)) {
-    echo "<br>Extension correcte";
-    $moveIsOK = move_uploaded_file($tmpPathName, $finalPathName);
-} else {
-    echo "<br>Extension non autorisée";
-    $moveIsOK = false;
-}
-if ($moveIsOK){
-    echo "<br>l'image a été correctement uploadé dans " . $finalPathName;
-} else {
-    echo "<br>Il y a eu une erreur";
+if(checkImage()){
+    $dst_path = 'AVATARS/'.$_FILES['file']['name'];
+    move_uploaded_file($_FILES['file']['tmp_name'], $dst_path);
+    echo "L'image a été correctement uploadé dans $dst_path";
 }
 
 
+function checkImage(){
+    $file = $_FILES['file'];
+    $extArray = ['jpg', 'jpeg', 'gif', 'png'];
+    //1. strrchr renvoie l'extension avec le point (« . »).
+    //2. substr(chaine,1) ignore le premier caractère de chaine.
+    //3. strtolower met l'extension en minuscules.
+    $extFile = strtolower(substr(strrchr($file['name'],'.'),1));
+    if(in_array($extFile,$extArray)) {
+        // echo "Extension correcte";
+        return true;
+    } else {
+        echo "Extension non autorisée";
+        return false;
+    }
+};
 
 
 
