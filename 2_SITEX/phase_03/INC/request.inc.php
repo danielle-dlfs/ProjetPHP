@@ -9,6 +9,23 @@
 /*  Protection de fichier */
 if ( count( get_included_files() ) == 1) die( '--access denied--' );
 
+function chargeTemplate($name = 'yololo'){
+    $name = 'INC/template.' . strtolower($name) . '.inc.php';
+    return file_exists($name) ? implode("\n", file($name)) : false;
+}
+
+function error($txt){
+    global $toSend;
+    if (!isset($toSend['error'])) $toSend['error'] = '';
+    $toSend['error'] .= $txt;
+}
+
+function debug($txt){
+    global $toSend;
+    if (!isset($toSend['debug'])) $toSend['debug'] = '';
+    $toSend['debug'] .= $txt;
+}
+
 function display($txt){
     global $toSend;
     if (!isset($toSend['display'])) $toSend['display'] = '';
@@ -25,7 +42,9 @@ function gereRequete($rq){
             display("Requête « $rq » : Le TP03 est disponible sur le serveur !");
             break;
         case 'TPsem05':
-            display("Requête « $rq » bien reçue");
+            $res = chargeTemplate($rq);
+            if('tpsem05') display($res);
+            else error("Template non trouvé" . $res);
             break;
         default:
             require_once "/RES/appelAjax.php";
@@ -33,12 +52,3 @@ function gereRequete($rq){
     }
 }
 
-function chargeTemplate($name= 'yololo'){
-    $nameToLow = strtolower($name);
-    if(!file_exists("template.$name.inc.php")) {
-        return false;
-    } else {
-
-    }
-
-}
