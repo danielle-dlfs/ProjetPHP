@@ -32,7 +32,14 @@ function display($txt){
     $toSend['display'] .= $txt;
 }
 
+function toSend($txt,$action = 'display'){
+    global $toSend;
+    if (!isset($toSend[$action])) $toSend[$action] = '';
+    $toSend[$action] .= $txt;
+}
+
 function gereRequete($rq){
+    require_once "/RES/appelAjax.php";
     global $toSend;
     switch($rq){
         case 'sem03':
@@ -43,11 +50,10 @@ function gereRequete($rq){
             break;
         case 'TPsem05':
             $res = chargeTemplate($rq);
-            if('tpsem05') display($res);
+            if('tpsem05') toSend($res,'display');
             else error("Template non trouvé" . $res);
             break;
         default:
-            require_once "/RES/appelAjax.php";
             $toSend = json_decode(RES_appelAjax($rq, 'action'));
     }
 }
