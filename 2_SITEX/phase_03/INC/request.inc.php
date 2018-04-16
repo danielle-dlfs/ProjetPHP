@@ -49,9 +49,7 @@ function gereRequete($rq){
             display("Requête « $rq » : Le TP03 est disponible sur le serveur !");
             break;
         case 'TPsem05':
-            $res = chargeTemplate($rq);
-            if('tpsem05') toSend($res,'display');
-            else error("Template non trouvé" . $res);
+            toSend(chargeTemplate('tpsem05'),'formTP05');
             break;
         default:
             $toSend = json_decode(RES_appelAjax($rq, 'action'));

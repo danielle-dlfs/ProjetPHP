@@ -34,6 +34,9 @@ function gereRetour(retour) {
                     retour[action].json;
                 $("#"+ action).html(html).fadeIn(500);
                 break;
+            case 'formTP05':
+                $("#contenu").html(retour[action]).fadeIn(500);
+                break;
             default :
                 console.log('action inconnue :' + action);
                 console.log(retour[action]);
