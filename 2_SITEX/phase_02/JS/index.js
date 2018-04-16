@@ -50,7 +50,7 @@ function makeTheadObject(el, type='Array'){
 }
 
 function makeTheadArray(el, type='Array'){
-    var out = '<thead>\t<tr>\n\t\t<th>' +(type = 'Array' ? 'index' : 'clé') + '</th>'
+    var out = '<thead>\t<tr>\n\t\t<th>' +(type == 'Array' ? 'index' : 'clé') + '</th>'
        + Object.keys(el).map(function(x){return '\t\t<th>col_' + x + '</th>'}).join('\n')
        + '\t</tr>\n</thead>\n';
     return out;
