@@ -1,10 +1,3 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Danielle
- * Date: 18/03/2018
- */
-?>
 <section id="tpsem05">
     <fieldset id="tp05search">
         <legend>Groupe recherché</legend>
@@ -13,15 +6,15 @@
             <div>
                 <span title="Début (Begin)">
                     <label for="B">&#8676;</label>
-                    <input type="radio" id="B" value="B" name="posSearch">B</input>
+                    <input type="radio" id="B" value="B" name="posSearch">B
                 </span>
                 <span title="In">
                     <label for="I">&#8676;</label>
-                    <input type="radio" id="I" value="I" name="posSearch" checked>I</input>
+                    <input type="radio" id="I" value="I" name="posSearch" checked>I
                     <label for="I">&#8677;</label>
                 </span>
                 <span title="Fin (End)">
-                    <input type="radio" id="E" value="E" name="posSearch">E</input>
+                    <input type="radio" id="E" value="E" name="posSearch">E
                     <label for="E">&#8677;</label>
                 </span>
             </div>
@@ -29,8 +22,8 @@
     </fieldset>
     <fieldset id="tp05select">
         <legend>Suggestion</legend>
-        <form name="suges" id="formSelect" name="select" size="10">
-            <select title="Choisissez le groupe à afficher">
+        <form name="suges" id="formTP05" name="select" >
+            <select title="Choisissez le groupe à afficher" id="formSelect" size="10">
                 <option value="">a</option>
                 <option value="" class="deja">b</option>
             </select>

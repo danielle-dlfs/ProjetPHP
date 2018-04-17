@@ -1,6 +1,21 @@
+var myData =[];
+
 function appelAjax(elmt){
+    console.log(arguments.callee.name,elmt);
+    switch(true){
+        case Boolean(elmt.href):
+            request = $(elmt).attr('href').split(".html")[0];
+            break;
+
+        case Boolean(elmt.action):
+            request = $(elmt).attr('action').split('.html')[0];
+            data = new FormData(elmt);
+            break;
+    }
+    var data = {};
     var request = $(elmt).attr('href').split('.html')[0];
-    $.get('index.php?rq=' + request, gereRetour);
+    data.senderId = elmt.id;
+    $.post('?rq=' + request,data, gereRetour);
 }
 
 function testJson(json){
@@ -13,40 +28,8 @@ function testJson(json){
     return parsed;
 }
 
-function gereRetour(retour) {
-    retour = testJson(retour);
-    for (var action in retour) {
-        switch (action) {
-            case 'display' :
-                $("#contenu").html(retour[action]).fadeIn(500);
-                break;
-            case 'error' :
-                $("#error").html(retour[action]).fadeIn(500);
-                break;
-            case 'makeTable' :
-                var table = makeTable(retour[action]);
-                $("#contenu").html(table).fadeIn(500);
-                break;
-            case 'jsonError':
-                var html = "<p><b>Error :</b></p>" +
-                    retour[action].error +
-                    "<hr><p><b>Json :</b></p>" +
-                    retour[action].json;
-                $("#"+ action).html(html).fadeIn(500);
-                break;
-            case 'formTP05':
-                $("#contenu").html(retour[action]).fadeIn(500);
-                break;
-            default :
-                console.log('action inconnue :' + action);
-                console.log(retour[action]);
-                break;
-        }
-    }
-}
-
 function makeTheadObject(el, type='Array'){
-    var out = '<thead>\t<tr>\n\t\t<th>' +(type =='Array' ? 'index' : 'clé') + '</th>'
+    var out = '<thead>\t<tr>\n\t\t<th>' +(type == 'Array' ? 'index' : 'clé') + '</th>'
         + Object.keys(el).map(function(x){return '\t\t<th>' + x + '</th>'}).join('\n')
         + '\t</tr>\n</thead>\n';
     return out;
@@ -96,6 +79,52 @@ function makeTable(tab){
     var fonction = 'makeTableFrom' + tab.constructor.name;
     var out = window[fonction](tab);
     return out;
+}
+
+function makeOptions(list, value, displayTxt) {
+    var option = '';
+    list.forEach(function(x) {
+        option += '<option value=' + x[value] + '>' + x[displayTxt] + '</option>\n'
+    });
+    return option;
+}
+
+function gereRetour(retour) {
+    retour = testJson(retour);
+    for (let action in retour) {
+        switch (action) {
+            case 'display' :
+                $("#contenu").html(retour[action]).fadeIn(500);
+                break;
+            case 'debug' :
+            case 'error' :
+                $("#error").html(retour[action]).fadeIn(500);
+                break;
+            case 'makeTable' :
+                var table = makeTable(retour[action]);
+                $("#contenu").html(table).fadeIn(500);
+                break;
+            case 'jsonError' :
+                var html = "<p><b>Error :</b></p>" +
+                    retour[action].error +
+                    "<hr><p><b>Json :</b></p>" +
+                    retour[action].json;
+                $("#"+ action).html(html).fadeIn(500);
+                break;
+            case 'formTP05' :
+                $("#contenu").html(retour[action]).fadeIn(500);
+                break;
+            case 'data' :
+                //$('#debug').html(makeTable(JSON.parse(retour[action]))).fadeIn(500);
+                myData['allGroups'] = JSON.parse(retour[action]);
+                $('#formSelect').html(makeOptions(myData.allGroups, 'nom', 'nom'));
+                break;
+            default :
+                console.log('action inconnue :' + action);
+                console.log(retour[action]);
+                break;
+        }
+    }
 }
 
 $(document).ready(function(){

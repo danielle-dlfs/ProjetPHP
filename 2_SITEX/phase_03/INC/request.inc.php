@@ -6,6 +6,7 @@
  * Time: 16:52
  */
 
+require_once "mesFonctions.inc.php";
 /*  Protection de fichier */
 if ( count( get_included_files() ) == 1) die( '--access denied--' );
 
@@ -50,9 +51,12 @@ function gereRequete($rq){
             break;
         case 'TPsem05':
             toSend(chargeTemplate('tpsem05'),'formTP05');
+            toSend(RES_appelAjax('allGroups'),'data');
+            break;
+        case 'formSubmit':
+            debug(monPrint_r($_REQUEST));
             break;
         default:
             $toSend = json_decode(RES_appelAjax($rq, 'action'));
     }
 }
-
