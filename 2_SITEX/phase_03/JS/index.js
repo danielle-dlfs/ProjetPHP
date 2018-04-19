@@ -114,7 +114,7 @@ function gereRetour(retour) {
                 break;
             case 'formTP05' :
                 $("#contenu").html(retour[action]).fadeIn(500);
-                $("#formSearch").change(function(){
+                $("#formSelect").change(function() {
                     appelAjax(this.parentElement);
                 });
                 break;
