@@ -5,3 +5,6 @@ dbConnect.inc.php
 .idea
 web.config
 
+# Fichiers temporaire
+phase_help/
+

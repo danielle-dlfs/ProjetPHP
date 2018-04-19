@@ -1,20 +1,20 @@
-var myData =[];
+var myData = [];
 
 function appelAjax(elmt){
-    console.log(arguments.callee.name,elmt);
+    $.ajaxSetup({"processData" : false, "contentType": false});
+    //console.log(arguments.callee.name,elmt);
+    var data = new FormData();
+    var request ='unknownUri';
     switch(true){
         case Boolean(elmt.href):
             request = $(elmt).attr('href').split(".html")[0];
             break;
-
         case Boolean(elmt.action):
             request = $(elmt).attr('action').split('.html')[0];
             data = new FormData(elmt);
             break;
     }
-    var data = {};
-    var request = $(elmt).attr('href').split('.html')[0];
-    data.senderId = elmt.id;
+    data.append('senderId',elmt.id);
     $.post('?rq=' + request,data, gereRetour);
 }
 
@@ -64,6 +64,7 @@ function makeTableFromObject(tab){
         + '</table>';
     return out;
 }
+
 function makeTableFromArray(tab){
     var firstElement = tab[Object.keys(tab)[0]];
     var elementType = firstElement.constructor.name;
@@ -113,6 +114,9 @@ function gereRetour(retour) {
                 break;
             case 'formTP05' :
                 $("#contenu").html(retour[action]).fadeIn(500);
+                $("#formSearch").change(function(){
+                    appelAjax(this.parentElement);
+                });
                 break;
             case 'data' :
                 //$('#debug').html(makeTable(JSON.parse(retour[action]))).fadeIn(500);

@@ -42,7 +42,7 @@ if ( count( get_included_files() ) == 1) die( '--access denied--' );?>
             <li><a href="sem02.html">TP02</a></li>
             <li><a href="sem03.html">TP03</a></li>
             <li><a href="sem04.html">TP04</a></li>
-            <li><a href="TPsem05.html">TP05</a></li>
+            <li><a href="TPsem05.html" id="formTP05">TP05</a></li>
             <li><a href="testForm.html" id="test">test</a></li>
         </ul>
     </nav>
@@ -50,7 +50,6 @@ if ( count( get_included_files() ) == 1) die( '--access denied--' );?>
     <main id="contenu">
         <?= $mainZone ?>
     </main>
-
     <footer id="copyright">
         <span id="auteur"><?= $author?></span>@2018
         -

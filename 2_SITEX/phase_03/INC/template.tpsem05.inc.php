@@ -1,7 +1,7 @@
 <section id="tpsem05">
     <fieldset id="tp05search">
         <legend>Groupe recherché</legend>
-        <form name="recherche" id="formSearch">
+        <form action="" name="recherche" id="formSearch">
             <input type="text" id="txtSearch" name="txtSearch" class="I" placeholder="nom du groupe recherché">
             <div>
                 <span title="Début (Begin)">
@@ -22,7 +22,7 @@
     </fieldset>
     <fieldset id="tp05select">
         <legend>Suggestion</legend>
-        <form name="suges" id="formTP05" name="select" >
+        <form action="formSubmit.html" name="suges" id="formTP05" name="select">
             <select title="Choisissez le groupe à afficher" id="formSelect" size="10">
                 <option value="">a</option>
                 <option value="" class="deja">b</option>

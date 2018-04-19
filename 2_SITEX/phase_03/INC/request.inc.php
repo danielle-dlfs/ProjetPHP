@@ -55,6 +55,7 @@ function gereRequete($rq){
             break;
         case 'formSubmit':
             debug(monPrint_r($_REQUEST));
+            //debug(monPrint_r($_FILES));
             break;
         default:
             $toSend = json_decode(RES_appelAjax($rq, 'action'));
