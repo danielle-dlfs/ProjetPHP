@@ -39,25 +39,28 @@ function toSend($txt,$action = 'display'){
     $toSend[$action] .= $txt;
 }
 
-function gereRequete($rq){
+function gereSubmit(){
+    debug(monPrint_r($_REQUEST));
+    debug(monPrint_r($_FILES));
+}
+
+function tpSem05(){
+    toSend(chargeTemplate('tpsem05'),'formTP05');
+    toSend(RES_appelAjax('allGroups'),'data');
+}
+
+function callResAjax($rq){
     require_once "/RES/appelAjax.php";
     global $toSend;
+    $toSend = json_decode(RES_appelAjax($rq, 'action'));
+}
+
+function gereRequete($rq){
     switch($rq){
-        case 'sem03':
-            display("Cette fois, je te reconnais( $rq )");
-            break;
-        case 'sem04':
-            display("Requête « $rq » : Le TP03 est disponible sur le serveur !");
-            break;
-        case 'TPsem05':
-            toSend(chargeTemplate('tpsem05'),'formTP05');
-            toSend(RES_appelAjax('allGroups'),'data');
-            break;
-        case 'formSubmit':
-            debug(monPrint_r($_REQUEST));
-            debug(monPrint_r($_FILES));
-            break;
-        default:
-            $toSend = json_decode(RES_appelAjax($rq, 'action'));
+        case 'sem03': display("Cette fois, je te reconnais( $rq )"); break;
+        case 'sem04': display("Requête « $rq » : Le TP03 est disponible sur le serveur !"); break;
+        case 'TPsem05': tpSem05(); break;
+        case 'formSubmit': gereSubmit(); break;
+        default: callResAjax($rq);
     }
 }
