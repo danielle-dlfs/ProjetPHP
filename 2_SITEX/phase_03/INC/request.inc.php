@@ -40,11 +40,20 @@ function toSend($txt,$action = 'display'){
 }
 
 function gereSubmit(){
-    debug(monPrint_r($_REQUEST));
-    debug(monPrint_r($_FILES));
+    if(!isset($_POST['senderId'])) $_REQUEST['senderId'] = '';
+    switch($_POST['senderId']){
+        case 'formTP05':
+            require_once "/RES/appelAjax.php";
+            toSend('#tp05result div', 'destination');
+            sendMakeTable(RES_appelAjax('coursGroup'));
+            break;
+        default:
+            error('<dl><dt>Error in <b>' . __FUNCTION__ . '()</b></dt><dt>'. monPrint_r(["_REQUEST" => $_REQUEST, "_FILES" => $_FILES]) .'</dt></dl>');
+    }
 }
 
 function tpSem05(){
+    require_once "/RES/appelAjax.php";
     toSend(chargeTemplate('tpsem05'),'formTP05');
     toSend(RES_appelAjax('allGroups'),'data');
 }
@@ -53,6 +62,11 @@ function callResAjax($rq){
     require_once "/RES/appelAjax.php";
     global $toSend;
     $toSend = json_decode(RES_appelAjax($rq, 'action'));
+}
+
+function sendMakeTable($tab){
+    global $toSend;
+    $toSend['makeTable'] = $tab;
 }
 
 function gereRequete($rq){

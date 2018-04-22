@@ -82,16 +82,26 @@ function makeTable(tab){
     return out;
 }
 
-function makeOptions(list, value, displayTxt) {
-    var option = '';
-    list.forEach(function(x) {
-        option += '<option value=' + x[value] + '>' + x[displayTxt] + '</option>\n'
-    });
-    return option;
+function makeOptions(l, v, a) {
+    l.map(function(o) {
+        return '<option value=' + o[v] + '>' + o[a] + '</option>\n'
+    }).join('\n');
 }
+/*
 
+function makeOptions (l,v,a){ //liste via req sql, proprietÃ© pour la value, nom pour l'affichage.
+    return l.map(function(option){
+        return  '<option value=' + option[v] + '>' + option[a] + '</option> ';
+    }).join('\n');
+}
+ */
 function gereRetour(retour) {
     retour = testJson(retour);
+    var destination = '#contenu';
+    if ($(retour['destination']).length > 0) {
+        destination = retour['destination'];
+        delete (retour['destination']);
+    }
     for (let action in retour) {
         switch (action) {
             case 'display' :
@@ -99,12 +109,13 @@ function gereRetour(retour) {
                 break;
             case 'debug' :
             case 'error' :
-                $("#error").html(retour[action]).fadeIn(500);
+                $("#" + action).html(retour[action]).fadeIn(500);
                 break;
             case 'makeTable' :
                 var table = makeTable(retour[action]);
                 $("#contenu").html(table).fadeIn(500);
                 break;
+                //return $("#debug").html(table).fadeIn(500);
             case 'jsonError' :
                 var html = "<p><b>Error :</b></p>" +
                     retour[action].error +

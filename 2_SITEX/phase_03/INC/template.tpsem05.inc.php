@@ -22,8 +22,8 @@
     </fieldset>
     <fieldset id="tp05select">
         <legend>Suggestion</legend>
-        <form action="formSubmit.html" name="suges" id="formTP05" name="select">
-            <select title="Choisissez le groupe à afficher" id="formSelect" size="10">
+        <form action="formSubmit.html" name="suges" id="formTP05" >
+            <select title="Choisissez le groupe à afficher" id="formSelect" size="10" name="select">
                 <option value="">a</option>
                 <option value="" class="deja">b</option>
             </select>
