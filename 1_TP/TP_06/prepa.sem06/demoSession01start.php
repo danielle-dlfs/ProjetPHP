@@ -6,7 +6,6 @@
  * Time: 12:54
  */
 
-include_once "menu.inc.php";
 // Start the session
 session_start();
 ?>
@@ -18,6 +17,7 @@ session_start();
 </head>
 <body>
 <?php
+include "menu.inc.php";
 // Set session variables
 $_SESSION["favcolor"] = "green";
 $_SESSION["favanimal"] = "cat";
