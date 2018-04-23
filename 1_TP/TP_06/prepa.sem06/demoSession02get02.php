@@ -19,7 +19,7 @@ session_start();
 <body>
 
 <?php
-print_r($_SESSION);
+echo '<pre>' . print_r($_SESSION,1) . '</pre>';
 ?>
 </body>
 </html>
