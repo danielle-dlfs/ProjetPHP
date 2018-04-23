@@ -43,7 +43,9 @@ function gereSubmit(){
     if(!isset($_POST['senderId'])) $_REQUEST['senderId'] = '';
     switch($_POST['senderId']){
         case 'formTP05':
+            //$_REQUEST['sender']='repéré';
             require_once "/RES/appelAjax.php";
+            toSend('#tp05result p','cacher');
             toSend('#tp05result div', 'destination');
             sendMakeTable(RES_appelAjax('coursGroup'));
             break;

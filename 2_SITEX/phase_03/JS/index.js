@@ -83,24 +83,17 @@ function makeTable(tab){
 }
 
 function makeOptions(l, v, a) {
-    l.map(function(o) {
+    return l.map(function(o) {
         return '<option value=' + o[v] + '>' + o[a] + '</option>\n'
     }).join('\n');
 }
-/*
 
-function makeOptions (l,v,a){ //liste via req sql, proprietÃ© pour la value, nom pour l'affichage.
-    return l.map(function(option){
-        return  '<option value=' + option[v] + '>' + option[a] + '</option> ';
-    }).join('\n');
-}
- */
 function gereRetour(retour) {
     retour = testJson(retour);
-    var destination = '#contenu';
-    if ($(retour['destination']).length > 0) {
-        destination = retour['destination'];
-        delete (retour['destination']);
+    let destination = '#contenu';
+    if($(retour['destination']).length > 0) { // si destination existe
+        destination = retour['destination']; // prise en compte
+        delete (retour['destination']); // on supprime la liste
     }
     for (let action in retour) {
         switch (action) {
@@ -113,7 +106,8 @@ function gereRetour(retour) {
                 break;
             case 'makeTable' :
                 var table = makeTable(retour[action]);
-                $("#contenu").html(table).fadeIn(500);
+                //let destination = (retour['destination'] ? retour['destination'] : '#contenu');
+                $(destination).html(table).fadeIn(500);
                 break;
                 //return $("#debug").html(table).fadeIn(500);
             case 'jsonError' :
@@ -128,11 +122,27 @@ function gereRetour(retour) {
                 $("#formSelect").change(function() {
                     appelAjax(this.parentElement);
                 });
+                $("#formSearch").submit(function(evnt){
+                    evnt.preventDefault();
+                });
+                $("#formSearch").change(function(){
+                    var v = document.formSearch.tp05Text.value;
+                    var r = new RegExp(v,'i');
+                    var l = myData['allGroups'].filter(function(x){return x.nom.match(r)});
+                    console.log(l);
+                });
                 break;
             case 'data' :
                 //$('#debug').html(makeTable(JSON.parse(retour[action]))).fadeIn(500);
                 myData['allGroups'] = JSON.parse(retour[action]);
                 $('#formSelect').html(makeOptions(myData.allGroups, 'nom', 'nom'));
+                //console.log(makeOptions(myData.allGroups, 'nom', 'nom'));
+                break;
+            case 'montrer':
+                $(retour[action]).fadeIn(500);
+                break;
+            case 'cacher':
+                $(retour[action]).fadeOut(250);
                 break;
             default :
                 console.log('action inconnue :' + action);
@@ -185,3 +195,34 @@ $(document).ready(function(){
         $(this).fadeOut(500);
     });
 });
+
+
+
+/* Notes pour le filtrage dans textArea du formulaire TP05 */
+// retourne le contenu du champ :
+//          document.formSearch.tp05Text.value (document.[name du form].[name du textArea].[])
+//   en regex :
+//      var r = new RegExp('2t','i');
+//      for (let x of myData.allGroups) console.log(x.nom.match(r))
+// retourne les groupes contenant "v" dans le nom du groupe
+//          myData['allGroups'].filter(function(x){return x.nom.indexOf(v)!== -1;})
+//
+// retourne les groupes dont le nom COMMENCENT par "v"
+//          myData['allGroups'].filter(function(x){return x.nom.indexOf(v)=== 0;})
+//
+// ! plus complexe pour le "se termine par"
+// On va la traduire par :
+/* Si le contenu recherché est dans la chaine,
+ la dernière position où on le trouve est « la longueur de la chaine - la longueur
+ de ce qu'on recherche*/
+/*    myData['allGroups'].filter(function(x){
+          let lastPos=x.nom.lastIndexOf(v);
+          return lastPos !=-1 && lastPos == (x.nom.length-v.length)
+      })
+*/
+
+
+//var v = document.formSearch.tp05Text.value;
+//var r = new RegExp(v,'i');
+//var l = myData['allGroups'].filter(function(x){return x.nom.match(r)});
+//console.log(l);
