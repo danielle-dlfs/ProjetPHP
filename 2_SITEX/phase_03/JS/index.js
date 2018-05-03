@@ -82,10 +82,34 @@ function makeTable(tab){
     return out;
 }
 
-function makeOptions(l, v, a) {
-    return l.map(function(o) {
-        return '<option value=' + o[v] + '>' + o[a] + '</option>\n'
+function makeOptions(list, value, txt) {
+    return list.map(function(o) {
+        return '<option value=' + o[value] + '>' + o[txt] + '</option>\n'
     }).join('\n');
+}
+
+function filtrage() {
+    var v = $(this).val();
+    $(this).removeClass();
+    switch($(this).parent().find("input:checked").val()){
+        case 'I':
+            $(this).addClass('I');
+            break;
+        case 'B':
+            v = '^' + v ;
+            $(this).addClass('B');
+            break;
+        case 'E':
+            v += '$';
+            $(this).addClass('E');
+            break;
+    }
+    var r = new RegExp(v,'i');
+    var l = myData['allGroups'].filter(function(x){
+        return x.nom.match(r)
+    });
+    //console.log(l);
+    $('#formSelect').html(makeOptions(l,'nom','nom'));
 }
 
 function gereRetour(retour) {
@@ -122,14 +146,12 @@ function gereRetour(retour) {
                 $("#formSelect").change(function() {
                     appelAjax(this.parentElement);
                 });
-                $("#formSearch").submit(function(evnt){
-                    evnt.preventDefault();
-                });
-                $("#formSearch").change(function(){
-                    var v = document.formSearch.tp05Text.value;
-                    var r = new RegExp(v,'i');
-                    var l = myData['allGroups'].filter(function(x){return x.nom.match(r)});
-                    console.log(l);
+                $("#formSearch").submit(function(evnmt){evnmt.preventDefault();})
+                    .find('input').keyup(filtrage);
+
+                //$("#formSearch").find("input:checked").keyup(filtrage);
+                $("#formSearch").find("input[type=radio]").change(function(){
+                    $("#formSearch input[name=tp05Text]").trigger('keyup');
                 });
                 break;
             case 'data' :
@@ -178,7 +200,6 @@ $(document).ready(function(){
         appelAjax(this);
     });
 
-    /* Phase 2 - 4.2 */
     $("<section id='gestion'></section>").insertAfter("#global");
 
     var gestion = $("#gestion");
@@ -221,8 +242,9 @@ $(document).ready(function(){
       })
 */
 
+// TP05 7.6.3
+// $('#formSearch').find('[name=tp05Text]').val(); ==> renvoit la valeur dans le champ texte du formulaire par le nom
+//      ou
+// $('#formSearch [name=tp05Text']).val();
 
-//var v = document.formSearch.tp05Text.value;
-//var r = new RegExp(v,'i');
-//var l = myData['allGroups'].filter(function(x){return x.nom.match(r)});
-//console.log(l);
+
