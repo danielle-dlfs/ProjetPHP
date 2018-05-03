@@ -122,7 +122,7 @@ function gereRetour(retour) {
     for (let action in retour) {
         switch (action) {
             case 'display' :
-                $("#contenu").html(retour[action]).fadeIn(500);
+                $(destination).html(retour[action]).fadeIn(500);
                 break;
             case 'debug' :
             case 'error' :
@@ -130,7 +130,7 @@ function gereRetour(retour) {
                 break;
             case 'makeTable' :
                 var table = makeTable(retour[action]);
-                //let destination = (retour['destination'] ? retour['destination'] : '#contenu');
+                //let destination = (retour['destination'] ? retour['destination'] : destination);
                 $(destination).html(table).fadeIn(500);
                 break;
                 //return $("#debug").html(table).fadeIn(500);
@@ -142,7 +142,7 @@ function gereRetour(retour) {
                 $("#"+ action).html(html).fadeIn(500);
                 break;
             case 'formTP05' :
-                $("#contenu").html(retour[action]).fadeIn(500);
+                $(destination).html(retour[action]).fadeIn(500);
                 $("#formSelect").change(function() {
                     appelAjax(this.parentElement);
                 });
