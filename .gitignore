@@ -1,5 +1,6 @@
 # Fichiers personnels
 dbConnect.inc.php
+config.ini
 
 # Fichiers générés par l'IDE
 .idea
