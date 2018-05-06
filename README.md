@@ -6,18 +6,18 @@ Lien du cours > https://devweb.ephec.be/TP/2T/  <> https://193.190.65.92/TP/2T/
 
 ## Liens vers mes phases :  
 
-- [Phase 0](https://devweb.ephec.be/HE201409/2_SITEX/phase_00/)  
-- [Phase 1](https://devweb.ephec.be/HE201409/2_SITEX/phase_01/)  
-- [Phase 2](https://devweb.ephec.be/HE201409/2_SITEX/phase_02/)  
-- [Phase 3](https://devweb.ephec.be/HE201409/2_SITEX/phase_03/) 
-- [Phase 4](https://devweb.ephec.be/HE201409/2_SITEX/phase_04/) 
+- [Phase 0](https://devweb.ephec.be/HE201409/2_SITEX/phase_00/) | 100% finie   
+- [Phase 1](https://devweb.ephec.be/HE201409/2_SITEX/phase_01/) | 100% finie   
+- [Phase 2](https://devweb.ephec.be/HE201409/2_SITEX/phase_02/) | 100% finie  
+- [Phase 3](https://devweb.ephec.be/HE201409/2_SITEX/phase_03/) | 100% finie   
+- [Phase 4](https://devweb.ephec.be/HE201409/2_SITEX/phase_04/) | work in progress   
 
 
 ## Liens des consignes :  
 
-> [Phase 2](https://devweb.ephec.be/TP/2T/1718sitex_02.php)  | 100% finie  
-> [Phase 3](https://devweb.ephec.be/TP/2T/1718sitex_03.php)  | 100% finie  
-> [Phase 4](https://devweb.ephec.be/TP/2T/1718sitex_04.php)  |  work in progress  
+> [Phase 2](https://devweb.ephec.be/TP/2T/1718sitex_02.php)  
+> [Phase 3](https://devweb.ephec.be/TP/2T/1718sitex_03.php)   
+> [Phase 4](https://devweb.ephec.be/TP/2T/1718sitex_04.php)  
 
 
 > [TP 02](https://devweb.ephec.be/TP/2T/tp1718_sem02.php)  
