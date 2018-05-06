@@ -7,6 +7,8 @@ include "../../dbConnect.inc.php";
 include "mesFonctions.inc.php";
 
 $dbname = 'minicampus';
+
+/* syntaxe nowdoc */
 $sql = <<<'SQL'
 SELECT code, faculte, intitule as libelle
 FROM cours INNER JOIN course_class 

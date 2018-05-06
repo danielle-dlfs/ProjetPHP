@@ -5,56 +5,69 @@
  */
 
 function scriptInfos($param = 'new'){
-    $paramLowCase = strtolower($param);
 
-    switch($paramLowCase) {
-        case 'new':
-           /* static $tableau = [
-                "protocol" => $_SERVER['SERVER_PROTOCOL'],
-                "port" => $_SERVER['SERVER_PORT'],
-                ];*/
+    static $answer;
+    $param = strtolower($param);
+    switch ($param) {
+        case "new":
+            $url = pathinfo($_SERVER['URL']);
+            $answer = array(
+                'protocol' => isset($_SERVER['HTTPS']) ? "https" : "http",
+                'port' => $_SERVER['SERVER_PORT'],
+                'dns' => $_SERVER['SERVER_NAME'],
+                'path' => $url['dirname'],
+                'name' => $url['basename'],
+                'short' => $url['filename'],
+                'ext' => $url['extension'],
+                'isportdef' => $_SERVER['SERVER_PORT_SECURE']
+            );
             break;
-        case 'Empty':
-            echo 'Empty';
+        case "empty":
+            $answer = null;
             break;
-        case 'Protocol':
-            echo $_SERVER['SERVER_PROTOCOL'];
+        case "all":
+            if ($answer == null || !is_array($answer)) $answer = scriptInfos();
             break;
-        case 'Port':
-            echo $_SERVER['SERVER_PORT'];
+        case "full":
+            $answer = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
             break;
-        case 'isPortDef':
-            echo 'isPortDef';
+        case "root":
+            $answer = $_SERVER['URL'];
             break;
-        case 'dns':
-            echo 'dns';
+        case in_array($param, array_keys(scriptInfos())):
+            $answer = $answer[$param];
             break;
-        case 'path':
-            echo 'path';
-            break;
-        case 'name':
-            echo 'name';
-            break;
-        case 'short':
-            echo 'short';
-            break;
-        case 'ext':
-            echo 'extension';
-            break;
-        case 'all':
-            echo 'all';
-            break;
-        case 'full':
-            echo 'full';
-            break;
-        case 'root':
-            echo 'root';
+        default:
+            $answer = 'Error in ' . __FUNCTION__ . ' on line ' . __LINE__ . ' : paramètre inconnu (' . $param . ')';
             break;
     }
+    return $answer;
 }
 
-function creeTableau($uneListe, $titre, $index){
-
+function creeTableau($tab, $title = '', $index = false) {
+    $out = '<table><caption>'. $title .'</caption>';
+    $out .= '<tr>';
+    if ($index) $out .= '<th>index</th>';
+    if (!empty($tab)) {
+        $keys = array_keys($tab[array_keys($tab)[0]]);
+        foreach ($keys as $k) {
+            $out .= '<th>' . $k . '</th>';
+        }
+        $out .= '</tr>';
+        foreach ($tab as $x => $x_value) {
+            $out .= '<tr>';
+            if ($index) $out .= '<td>' . $x . '</td>';
+            foreach ($x_value as $y => $y_value) {
+                $out .= '<td>' . $y_value . '</td>';
+            }
+            $out .= '</tr>';
+        }
+    } else {
+        $out .= "<th>valeur</th>";
+        $out .= "</tr>";
+    }
+    $out .= '</table>';
+    return $out;
 }
 
 function monPrint_r($liste){

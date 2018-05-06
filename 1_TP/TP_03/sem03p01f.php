@@ -20,8 +20,7 @@ SQL;
 try {
     $dbh = new PDO("mysql:host=". getServeur() . ";dbname=$dbname", $__INFOS__['user'],$__INFOS__['pswd']);
     $result = $dbh->query($sql,PDO::FETCH_ASSOC)->fetchAll();
-    echo creeTableau($result,'sans index');
-    echo creeTableau($result,'avec index',true);
+    echo json_encode($result);
     $dbh = null;
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br>";
