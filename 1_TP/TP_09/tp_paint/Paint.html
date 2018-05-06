@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Paint</title>
+  <link rel="stylesheet" type="text/css" href="/all/jQuijquery-ui.min.css" media="screen" />
+  <link rel="stylesheet" href="CSS/Paint.css">
+
+  <script type="text/javascript" src="/all/jQ/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="/all/jQui/jquery-ui.1.12.1.min.js"></script>
+  <script src="JS/Paint.js"></script>
+</head>
+
+<body>
+  <div class="Toolbar">
+    <span id="upload"> - UPLOAD -</span>
+    <div id="menuUpload" title="chargement d'une image">
+      <dl class="accordion">
+        <dt>web</dt>
+        <dd>chargement web</dd>
+
+        <dt>ajax</dt>
+        <dd>chargement ajax</dd>
+
+        <dt>fileReader</dt>
+        <dd>chargement fileReader</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="Toolbar">
+    - Pen Color -<br>
+    <img id="redPen" src="IMG/pen_red.gif" alt="Red Pen" onclick="changeColor('rgb(212,21,29)', this)">
+    <img id="greenPen" src="IMG/pen_green.gif" alt="Green Pen" onclick="changeColor('rgb(131,190,61)', this)">
+    <img id="bluePen" src="IMG/pen_blue.gif" alt="Blue Pen" onclick="changeColor('rgb(0,86,166)', this)">
+  </div>
+  <div class="Toolbar">
+    - Pen Thickness -<br>
+    <img src="IMG/pen_thin.gif" alt="Thin Pen" onclick="changeThickness(1, this)">
+    <img src="IMG/pen_medium.gif" alt="Medium Pen" onclick="changeThickness(5, this)">
+    <img src="IMG/pen_thick.gif" alt="Thick Pen" onclick="changeThickness(10, this)">
+  </div>
+  <div class="CanvasContainer">
+    <canvas id="drawingCanvas" width="500" height="300"></canvas>
+  </div>
+  <div class="Toolbar">
+    - Operations -<br>
+    <button onclick="saveCanvas()">Save the Canvas</button>
+    <button onclick="clearCanvas()">Clear the Canvas</button>
+    <div id="savedCopyContainer">
+      <img id="savedImageCopy"><br>
+      Right-click to save ...
+    </div>
+  </div>
+</body>
+</html>
