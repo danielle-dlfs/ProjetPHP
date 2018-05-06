@@ -7,11 +7,15 @@ if ( count( get_included_files() ) == 1) die( '--access denied--' );?>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title><?= $home ?></title>
+    <link rel="stylesheet" type="text/css" href="/all/jQuijquery-ui.min.css" media="screen" />
+
     <!-- La feuille de styles "base.css" doit être appelée en premier. -->
     <link rel="stylesheet" type="text/css" href="CSS/base.css" media="all" />
     <link rel="stylesheet" type="text/css" href="CSS/modele04.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="CSS/index.css" media="screen" />
+
     <script type="text/javascript" src="/all/jQ/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="/all/jQui/jquery-ui.1.12.1.min.js"></script>
     <script type="text/javascript" src="JS/index.js"></script>
 </head>
 
@@ -23,7 +27,6 @@ if ( count( get_included_files() ) == 1) die( '--access denied--' );?>
         <h1>
             <img id=logo alt="<?= $logoAlt ?>" src="<?= $logoPath ?>" />
             <?= $siteName ?>
-
         </h1>
         <nav id="menu" class="menu">
             <ul>
@@ -31,6 +34,13 @@ if ( count( get_included_files() ) == 1) die( '--access denied--' );?>
                 <li><a href="userProfil.html">Profil</a></li>
                 <li><a href="userInfos.html">Mes infos</a></li>
                 <li><a href="config.html">Configuration</a></li>
+                <li> Session
+                    <ul id="sMenu" class="menu">
+                        <li><a href="displaySession.html">affiche</a></li>
+                        <li><a href="clearLog.html">efface log</a></li>
+                        <li><a href="resetSession.html">redémarre</a></li>
+                    </ul>
+                </li>
                 <li><a href="gestLog.html">Connexion</a></li>
             </ul>
         </nav>

@@ -218,6 +218,10 @@ $(document).ready(function(){
     gestion.children().dblclick(function(){
         $(this).fadeOut(500);
     });
+
+    $('#menu').menu({
+        position: {my: "center top+5", at: "center bottom+"}
+    });
 });
 
 
