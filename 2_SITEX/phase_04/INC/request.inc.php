@@ -79,12 +79,25 @@ function sendMakeTable($tab){
 }
 
 function gereRequete($rq){
-    kint(d($rq));
+    //kint(d($rq));
     switch($rq){
         case 'sem03': display("Cette fois, je te reconnais( $rq )"); break;
         case 'sem04': display("Requête « $rq » : Le TP03 est disponible sur le serveur !"); break;
         case 'TPsem05': tpSem05(); break;
         case 'formSubmit': gereSubmit(); break;
+        case 'displaySession':
+            debug((d($_SESSION['start']));
+            debug((d($_SESSION['log']));
+            break;
+        case 'resetSession':
+            debug(d($_SESSION['start']));
+            debug(d($_SESSION['log'])));
+            break;
+        case 'clearSessLog':
+            debug(d($_SESSION['start']));
+            debug(d($_SESSION['log']));
+            break;
+
         default:
             callResAjax($rq);
             kint('requête inconnue ('.$rq.') transférée à callResAjax()');

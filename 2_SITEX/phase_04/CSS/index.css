@@ -13,19 +13,18 @@
     text-decoration: none;
     line-height: 1.5;
     font-size: .9em;
-    /* PHASE 0.7 */
     border: 0.1em solid var(--menu-bg-color);
-    padding: 0.25em 0.5em;
+    padding: 0.25em 0.5em !important;
 }
 
 .menu a:hover, .menu a.selected  {
-    /* PHASE 0.7 */
     background-color: #282828;
 }
 
 .menu a:hover{
     border-color: #888888;
     border-radius: 0.25em 0.75em 0.25em 0.75em;
+    outline:none;
 }
 
 .menu ul {
@@ -34,12 +33,20 @@
 }
 
 .menu ul li {
-    margin:0;
-    padding:0;
+    margin: 0;
+    padding: 0;
 }
 
 .menu li {
     color: orange;
+}
+
+.menu a.selected {
+    border-radius: 0.5em;
+    border-top-color: transparent;
+    border-right-color: #CCCCCC;
+    border-left-color: transparent;
+    border-bottom-color: #CCCCCC;
 }
 
 /* Menu vertical - #sous-menu */
@@ -58,29 +65,29 @@
 
 /* Menu horizontal - #menu */
 #menu a {
-    height:2.5%;
+    line-height:2.5;
     display: inline;
 }
 #menu ul {
     padding: 10px;
 }
-#menu ul li {
+#menu ul, #menu li {
     display: inline;
+}
+
+#sMenu {
+    border: 0.05em solid darkorange;
+    border-radius: 0.5em;
+}
+
+#sMenu a {
+    padding: 1em;
+    box-shadow: rgba(0, 0, 0, 0.5) .25em .25em .5em;
 }
 
 /* FOOTER */
 #credits {
     display: block;
-}
-
-/* Phase 01 */
-.menu a.selected {
-    border-radius: 0.5em;
-    border-top-color: transparent;
-    border-right-color: #CCCCCC;
-    border-left-color: transparent;
-    border-bottom-color: #CCCCCC;
-    outline:none;
 }
 
 /* Phase 2 */
@@ -169,9 +176,11 @@ section#gestion aside:before {
     font-style: italic;
 }
 
-/* Menu JQuery-UI */
+/*  jQuery UI */
 
-/*  jQuery UI override  */
+.ui-widget.ui-widget-content, .ui-widget-content{
+    border:none;
+}
 
 
 

@@ -7,7 +7,7 @@ if ( count( get_included_files() ) == 1) die( '--access denied--' );?>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title><?= $home ?></title>
-    <link rel="stylesheet" type="text/css" href="/all/jQuijquery-ui.min.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/all/jQui/jquery-ui.min.css" media="screen" />
 
     <!-- La feuille de styles "base.css" doit être appelée en premier. -->
     <link rel="stylesheet" type="text/css" href="CSS/base.css" media="all" />
@@ -28,8 +28,8 @@ if ( count( get_included_files() ) == 1) die( '--access denied--' );?>
             <img id=logo alt="<?= $logoAlt ?>" src="<?= $logoPath ?>" />
             <?= $siteName ?>
         </h1>
-        <nav id="menu" class="menu">
-            <ul>
+        <nav>
+            <ul id="menu" class="menu">
                 <li><a href="index.html">Accueil</a></li>
                 <li><a href="userProfil.html">Profil</a></li>
                 <li><a href="userInfos.html">Mes infos</a></li>

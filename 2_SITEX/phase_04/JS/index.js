@@ -220,7 +220,7 @@ $(document).ready(function(){
     });
 
     $('#menu').menu({
-        position: {my: "center top+5", at: "center bottom+"}
+        position: { my: "center top", at: "center bottom+5" }
     });
 });
 
