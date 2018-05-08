@@ -14,11 +14,11 @@ require_once "INC/dbConnect.inc.php";
 require_once "INC/mesFonctions.inc.php";
 require_once "/ALL/kint/kint.php";
 Kint::$return = true;
+// imposer aux méthodes de la class Kint d'envoyer leur résultat par un return à la place d'un echo.
 
 if(isset($_GET['rq'])){
     $_SESSION['log'][time()] = $_GET['rq'];
     $toSend = [];
-    // imposer aux méthodes de la class Kint d'envoyer leur résultat par un return à la place d'un echo.
     require_once "INC/request.inc.php";
     gereRequete($_GET['rq']);
     die(json_encode($toSend));
@@ -30,10 +30,7 @@ $home = 'Accueil';
 $siteName = 'SITEX : phase 04';
 $logoPath = 'IMG/04.png';
 $logoAlt = 'Logo';
-
-$mainZone = 'Bienvenue kint est la';
-$mainZone .= d($_SESSION);
-
+$mainZone = 'Bienvenue';
 $mail = ___MATRICULE___ . '@students.ephec.be';
 $author = '<a href="mailto:' . $mail . '" title="'. $mail . '">' . $__INFOS__['nom'] . ' ' . $__INFOS__['prenom']. '</a>';
 

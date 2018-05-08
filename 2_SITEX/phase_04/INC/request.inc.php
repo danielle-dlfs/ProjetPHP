@@ -86,18 +86,20 @@ function gereRequete($rq){
         case 'TPsem05': tpSem05(); break;
         case 'formSubmit': gereSubmit(); break;
         case 'displaySession':
-            debug((d($_SESSION['start']));
-            debug((d($_SESSION['log']));
+            debug(d($_SESSION));
+            break;
+        case 'clearLog':
+//            unset($_SESSION['log']);
+            $_SESSION['log'] = [];
+            $_SESSION['log'][time()] = $rq;
+            debug(d($_SESSION));
             break;
         case 'resetSession':
-            debug(d($_SESSION['start']));
-            debug(d($_SESSION['log'])));
+            session_unset();
+            $_SESSION['start'] = date('YmdHis');
+            $_SESSION['log'][time()] = $rq;
+            debug(d($_SESSION));
             break;
-        case 'clearSessLog':
-            debug(d($_SESSION['start']));
-            debug(d($_SESSION['log']));
-            break;
-
         default:
             callResAjax($rq);
             kint('requête inconnue ('.$rq.') transférée à callResAjax()');
