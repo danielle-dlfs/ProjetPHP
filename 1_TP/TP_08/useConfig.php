@@ -3,6 +3,8 @@
  * Created by PhpStorm.
  * User: Danielle
  */
+// if ( count( get_included_files() ) == 1) die( '--access denied--' );
+require_once "mesFonctions.inc.php";
 
 function chargeConfig($filename){
     // mettre a true : on obtient un tableau multidimensionnel avec les noms des sections
@@ -10,11 +12,10 @@ function chargeConfig($filename){
 }
 
 function afficheConfig($config){
-    require_once "mesFonctions.inc.php";
 
-    function gereBloc($bloc, $tab){ // fonction interne a une autre
+    function gereBloc($bloc){
         $out = [];
-        $out[] = monPrint_r();
+        $out[] = monPrint_r($bloc);
         return $out;
     }
 
@@ -23,7 +24,7 @@ function afficheConfig($config){
     foreach($config as $key => $value){
         //echo $key;
         $out[] .= "<fieldset><legend>$key</legend>";
-        $out[] .= monPrint_r($value);
+        $out[] .= array_merge($out,gereBloc($value));
         $out[] .= "</fieldset>";
     }
     $out[] .= "<input type='submit' value='Envoi'>";
