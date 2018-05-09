@@ -1,11 +1,8 @@
 # Fichiers personnels
 dbConnect.inc.php
-config.ini
 
 # Fichiers générés par l'IDE
 .idea
 web.config
 
-# Fichiers temporaire
-phase_help/
 

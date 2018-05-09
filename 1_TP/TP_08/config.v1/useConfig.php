@@ -3,6 +3,7 @@
  * Created by PhpStorm.
  * User: Danielle
  */
+// protection quand mon pwsd était en clair...
 // if ( count( get_included_files() ) == 1) die( '--access denied--' );
 
 function chargeConfig($filename){
@@ -30,7 +31,6 @@ function afficheConfig($config){
                         name="' . $blocName . '"['.$item.']
                         value="'. $value .'" required><br>';
             }
-
         }
         return $out;
     }
