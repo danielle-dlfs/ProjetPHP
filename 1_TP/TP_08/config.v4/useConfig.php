@@ -4,7 +4,9 @@
  * User: Danielle
  */
 // protection pour quand mon pwsd était en clair...
-if ( count( get_included_files() ) == 1) die( '--access denied--' );
+// if ( count( get_included_files() ) == 1) die( '--access denied--' );
+
+require_once "../../TP_03/mesFonctions.inc.php";
 
 function chargeConfig($filename){
     // mettre a true : on obtient un tableau multidimensionnel avec les noms des sections
@@ -22,7 +24,6 @@ function afficheConfig($config){
             $$key = isset($tab[$key]) ? $tab[$key] : null; // mémorisation
             unset($tab[$key]); // suppression
         }
-
 
         $out = [];
         foreach($tab as $item => $value) {
@@ -56,6 +57,7 @@ function afficheConfig($config){
             }
         }
         return $out;
+
     }
 
     $out = [];
@@ -67,11 +69,12 @@ function afficheConfig($config){
         $out[] = "</fieldset>";
     }
 
-    $out[] = "<input type='submit' value='Envoi'>";
+    $out[] = "<input type='submit' name='envoie' value='envoi'>";
     $out[] = "</form>";
 
     return implode("\n", $out);
 }
 
 $config = chargeConfig('config.ini');
+echo monPrint_r($config);
 echo afficheConfig($config);
