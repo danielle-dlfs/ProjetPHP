@@ -14,34 +14,45 @@ function chargeConfig($filename){
 function afficheConfig($config){
 
     function gereBloc($blocName, $tab){
-        $oKey = ['min','max','pas'];
+
+        $oKey = ['min','max','pas', 'choix'];
         foreach($oKey as $key){
             // memorisation dans une variable éponyme $... ['min'] est mémorisé dans $min
             // variable dynamique
             $$key = isset($tab[$key]) ? $tab[$key] : null; // mémorisation
             unset($tab[$key]); // suppression
         }
+
+
         $out = [];
-        foreach($tab as $item => $value){
+        foreach($tab as $item => $value) {
             $out[] = '<label for="' . $blocName . '_' . $item . '">' . $item . '</label>';
-            switch($item){
+            switch ($item) {
                 case 'taille':
-                    $options = ($min !== null ?" min=$min":'')
-                        .($max !== null ?" max=$max":'')
-                        .($pas !== null ?" pas=$pas":'');
-                    $options = str_replace(' pas=',' step=',$options).' title="'.$options.'"';
+                    $options = ($min !== null ? " min=$min" : '')
+                        . ($max !== null ? " max=$max" : '')
+                        . ($pas !== null ? " pas=$pas" : '');
+                    $options = str_replace(' pas=', ' step=', $options) . ' title="' . $options . '"';
                     $out[] = "<input type='number' id='$blocName' name='$blocName' value='$value' $options><br>";
                     break;
                 case 'comment':
-                    $out[] = '<textarea disabled>'. $value .'</textarea><br>';
+                    $out[] = '<textarea disabled>' . $value . '</textarea><br>';
                     break;
                 case 'type':
-                    $out;
+                    $out[] = '<span id="' . $blocName . '_' . $item . '" class="checkList">';
+                    foreach(explode('|',$value) as $type){
+                        $out[] = '<input type="checkbox" id="' . $blocName . '_' . $item . '_' . $type . '" ';
+                        $out[] = 'name="' . $blocName . '[choix][] "';
+                        $isChecked = (in_array($type,$choix) ? 'checked' : '');
+                        $out[] = 'value="'. $type .'" '. $isChecked . ' >';
+                        $out[] = '<label for=' . $blocName . '_' . $item . '_' . $type . '">' . $type . '</label>';
+                    }
+
+                    $out[] = '</span><br>';
                     break;
                 default:
-                    $out[] = '<input type="text" id="' . $blocName . '_' . $item . '"
-                        name="' . $blocName . '"['.$item.']
-                        value="'. $value .'" required><br>';
+                    $out[] = '<input type="text" id="' . $blocName . '_' . $item . ' ';
+                    $out[] = ' "name="' . $blocName . '[' . $item . ']" value="' . $value . '" required><br>';
             }
         }
         return $out;
@@ -64,4 +75,3 @@ function afficheConfig($config){
 
 $config = chargeConfig('config.ini');
 echo afficheConfig($config);
-

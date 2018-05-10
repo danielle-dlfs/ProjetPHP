@@ -3,8 +3,8 @@
  * Created by PhpStorm.
  * User: Danielle
  */
-// protection quand mon pwsd était en clair...
-// if ( count( get_included_files() ) == 1) die( '--access denied--' );
+// protection quand mon psd est en clair
+ if ( count( get_included_files() ) == 1) die( '--access denied--' );
 
 function chargeConfig($filename){
     // mettre a true : on obtient un tableau multidimensionnel avec les noms des sections
