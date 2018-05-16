@@ -11,11 +11,11 @@ if (isset($_POST)) {
         unset($_POST['submit']);
         $out = [];
         /*
-        echo '<pre>' . print_r(chargeConfig("config.ini"), 1) . '</pre>';
+        echo '<pre>' . print_r(chargeConfig("config.ini.php"), 1) . '</pre>';
         echo '<hr>';
         echo '<pre>' . print_r($_POST, 1) . '</pre>';
         */
-        $oldConfig = chargeConfig('config.ini');
+        $oldConfig = chargeConfig('config.ini.php');
 
         foreach ($oldConfig as $key => $value) {
             foreach ($value as $k => $v) {
@@ -39,11 +39,13 @@ if (isset($_POST)) {
             }
             $out[] = "\n";
         }
-        file_put_contents('config.ini', implode("\n\r", $out));
+        file_put_contents('config.ini.php', implode("\n\r", $out));
     }
 }
 
-echo afficheConfig(chargeConfig('config.ini'));
+echo afficheConfig(chargeConfig('config.ini.php'));
+
+// Fonctions
 
 function chargeConfig($filename){
     // mettre a true : on obtient un tableau multidimensionnel avec les noms des sections
@@ -94,14 +96,13 @@ function afficheConfig($config){
             }
         }
         return $out;
-
     }
 
     $out = [];
     $out[] = "<form id='modifConfig' name='modifConfig' method='post' action=''>";
 
     // Unset Error type
-//    unset($config['ERREUR']);
+    unset($config['ERREUR']);
 
     foreach($config as $key => $value){
         $out[] = "<fieldset><legend>$key</legend>";
