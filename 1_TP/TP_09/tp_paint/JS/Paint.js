@@ -1,5 +1,6 @@
 var canvas;
 var context;
+var imageObj = new Image();
 
 function initCanvas() {
   // Get the canvas and the drawing context.
@@ -11,7 +12,11 @@ function initCanvas() {
   canvas.onmouseup = stopDrawing;
   canvas.onmouseout = stopDrawing;
   canvas.onmousemove = draw;
-};
+
+  imageObj.onload = function() {
+    context.drawImage(imageObj, 0, 0);
+  };
+}
 
 var isDrawing = false;
 
@@ -72,7 +77,6 @@ function changeThickness(thickness, imgElement) {
   previousThicknessElement = imgElement;
 }
 
-
 function clearCanvas() {
   context.clearRect(0, 0, canvas.width, canvas.height);
 }
@@ -89,8 +93,100 @@ function saveCanvas() {
   imageContainer.style.display = "block";
 }
 
+function callAjax(dataURL){
+    // make ajax call to get image data url
+    var request = new XMLHttpRequest();
+    request.open('GET', dataURL, true);
+    request.onreadystatechange = function() {
+        // Makes sure the document is ready to parse.
+        if(request.readyState == 4) {
+            // Makes sure it's found the file.
+            if(request.status == 200) {
+                imageObj.src = request.responseText;
+            }
+        }
+    };
+    request.send(null);
+}
+
+function handleImage(e){
+    var reader = new FileReader();
+    var ctx = canvas.getContext('2d');
+    reader.onload = function(event){
+        var img = new Image();
+        img.onload = function(){
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img,0,0);
+        }
+        img.src = event.target.result;
+        // img.src = "http://www.leaders.com.tn/uploads/content/thumbnails/143324392872_content.jpg";
+    }
+    reader.readAsDataURL(e.target.files[0]);
+}
+
 $(document).ready(function(){
   initCanvas();
 
-  $(".accordion").accordion();
+  $('.accordeon').accordion({
+      animate: 250,
+      heightStyle: "content"
+  });
+
+  $('#menuUpload').dialog({
+      position: {
+          my: "left top",
+          at : "center bottom",
+          of : $("body div:first")
+      },
+      closeOnEscape : true,
+      autoOpen: false,
+      show: {
+          effect: "slide",
+          duration: 250
+      },
+      hide: {
+          effect: "drop",
+          duration: 500
+      }
+  });
+
+  $("div:first").click(function(evnt){
+      evnt.preventDefault();
+      $("#menuUpload").dialog('open');
+  }).css({cursor: 'pointer'});
+
+  $("#formWeb").submit(function(evnt){
+      evnt.preventDefault();
+      // imageObj.src = $('#formWeb [name=iWeb]').val();
+      imageObj.src = $(this)[0].iWeb.value;
+      $("#menuUpload").dialog("close");
+  });
+
+    $("#formAjax").submit(function(evnt){
+        evnt.preventDefault();
+        callAjax($(this)[0].iAjax.value);
+        $("#menuUpload").dialog("close");
+    });
+
+  $("#imageLoader").change(function(evnt){
+      handleImage(evnt);
+      $('#menuUpload').dialog('close');
+  });
+
+  // COLORPICKER
+  $('#colorSelector').ColorPicker({
+      color: '#0000ff',
+      onShow: function (colpkr) {
+          $(colpkr).fadeIn(500);
+          return false;
+          },
+      onHide: function (colpkr) {
+          $(colpkr).fadeOut(500);
+          return false;
+      },
+      onChange: function (hsb, hex, rgb) {
+          $('#colorSelector div').css('backgroundColor', '#' + hex);
+      }
+  });
 });

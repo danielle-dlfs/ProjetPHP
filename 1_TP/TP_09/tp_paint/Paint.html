@@ -3,35 +3,60 @@
 <head>
   <meta charset="utf-8">
   <title>Paint</title>
-  <link rel="stylesheet" type="text/css" href="/all/jQuijquery-ui.min.css" media="screen" />
+  <link rel="stylesheet" href="/ALL/jQui/jquery-ui.min.css">
   <link rel="stylesheet" href="CSS/Paint.css">
+  <link rel="stylesheet" href="CSS/colorpicker.css">
+  <link rel="stylesheet" href="CSS/layout.css">
 
-  <script type="text/javascript" src="/all/jQ/jquery-3.3.1.min.js"></script>
-  <script type="text/javascript" src="/all/jQui/jquery-ui.1.12.1.min.js"></script>
+  <script src="/ALL/jQ/jquery-3.3.1.min.js"></script>
+  <script src="/ALL/jQui/jquery-ui.1.12.1.min.js"></script>
+  <script src="JS/colorpicker.js"></script>
   <script src="JS/Paint.js"></script>
 </head>
 
 <body>
   <div class="Toolbar">
-    <span id="upload"> - UPLOAD -</span>
-    <div id="menuUpload" title="chargement d'une image">
-      <dl class="accordion">
+    <span id=upload">- UPLOAD -</span>
+    <span id="menuUpload" title="chargement d'une image">
+      <dl class="accordeon">
         <dt>web</dt>
-        <dd>chargement web</dd>
-
+        <dd>
+          <fieldset>
+            <legend>Chargement web</legend>
+            <form action="" method="" id="formWeb">
+              <input type="text" name="iWeb" width="50" value="https://www.html5canvastutorials.com/demos/assets/darth-vader.jpg">
+              <input type="submit" value="charger">
+            </form>
+          </fieldset>
+        </dd>
         <dt>ajax</dt>
-        <dd>chargement ajax</dd>
-
+        <dd>
+          <fieldset>
+          <legend>Chargement ajax</legend>
+          <form action="" method="" id="formAjax">
+            <input type="text" name="iAjax" width="50" value="dataURL.txt">
+            <input type="submit" value="charger">
+          </form>
+          </fieldset>
+        </dd>
         <dt>fileReader</dt>
-        <dd>chargement fileReader</dd>
+        <dd>
+          <fieldset>
+            <legend>Chargement fileReader</legend>
+            <form action="">
+              <label for="">Image file :</label>
+              <input type="file" id="imageLoader" name="imageLoader"/>
+            </form>
+          </fieldset>
+        </dd>
       </dl>
-    </div>
+    </span>
   </div>
   <div class="Toolbar">
     - Pen Color -<br>
-    <img id="redPen" src="IMG/pen_red.gif" alt="Red Pen" onclick="changeColor('rgb(212,21,29)', this)">
-    <img id="greenPen" src="IMG/pen_green.gif" alt="Green Pen" onclick="changeColor('rgb(131,190,61)', this)">
-    <img id="bluePen" src="IMG/pen_blue.gif" alt="Blue Pen" onclick="changeColor('rgb(0,86,166)', this)">
+    <div id="colorSelector">
+      <div style="background-color: #0000ff"></div>
+    </div>
   </div>
   <div class="Toolbar">
     - Pen Thickness -<br>
