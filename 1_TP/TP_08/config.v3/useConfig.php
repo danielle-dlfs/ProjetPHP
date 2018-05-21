@@ -2,9 +2,16 @@
 /**
  * Created by PhpStorm.
  * User: Danielle
+ * Date: 21-05-18
+ * Time: 19:36
  */
-// protection pour quand mon pwsd était en clair...
-//if ( count( get_included_files() ) == 1) die( '--access denied--' );
+
+function monPrint_r($liste){
+    $out = '<pre>';
+    $out .= print_r($liste, true);
+    $out .= '</pre>';
+    return $out;
+}
 
 function chargeConfig($filename){
     // mettre a true : on obtient un tableau multidimensionnel avec les noms des sections
@@ -12,65 +19,68 @@ function chargeConfig($filename){
 }
 
 function afficheConfig($config){
+    //$out = monPrint_r($config);
 
-    function gereBloc($blocName, $tab){
-
-        $oKey = ['min','max','pas', 'choix'];
+    function gereBloc($blocName,$blocContenu){
+        //CONFIG V2
+        $oKey = ['min', 'max', 'pas', 'choix']; // options du bloc
         foreach($oKey as $key){
             // memorisation dans une variable éponyme $... ['min'] est mémorisé dans $min
             // variable dynamique
-            $$key = isset($tab[$key]) ? $tab[$key] : null; // mémorisation
-            unset($tab[$key]); // suppression
+            $$key = isset($blocContenu[$key]) ? $blocContenu[$key] : null; // memorisation
+            unset($blocContenu[$key]); // on supprime
         }
 
+        // CONFIG V1
         $out = [];
-        foreach($tab as $item => $value) {
-            $out[] = '<label for="' . $blocName . '_' . $item . '">' . $item . '</label>';
-            switch ($item) {
-                case 'taille':
-                    $options = ($min !== null ? " min=$min" : '')
-                        . ($max !== null ? " max=$max" : '')
-                        . ($pas !== null ? " pas=$pas" : '');
-                    $options = str_replace(' pas=', ' step=', $options) . ' title="' . $options . '"';
-                    $out[] = "<input type='number' id='$blocName' name='$blocName' value='$value' $options><br>";
+        // $out[] = monPrint_r($blocContenu);
+        foreach($blocContenu as $k => $v){
+            // SITE = $blocName || titre = $k || value = $v
+            $out[] = "\t<label for='" . $blocName . "_" . $k . "'>" . $k . "</label>";
+            switch($k){
+                case 'taille' :
+                    $options = ($min !== null ? " min=$min" : "") .
+                        ($max !== null ? " max=$max" : "") .
+                        ($pas !== null ? " pas=$pas" : "");
+                    $options = str_replace(" pas=", " step=", $options) . " title='$options' ";
+                    $out[] = "\t<input type='number' id='" . $blocName . "_" . $k ."' name='" .
+                        $blocName . "[" . $k . "]' " . "value='" . $v . "' ". $options . " required><br>";
                     break;
                 case 'comment':
-                    $out[] = '<textarea disabled>' . $value . '</textarea><br>';
+                    $out[] = "\t<textarea cols='50' readonly disabled required>". $v ."</textarea><br>";
                     break;
-                case 'type':
-                    $out[] = '<span id="' . $blocName . '_' . $item . '" class="checkList">';
-                    foreach(explode('|',$value) as $type){
-                        $out[] = '<input type="checkbox" id="' . $blocName . '_' . $item . '_' . $type . '" ';
-                        $out[] = 'name="' . $blocName . '[choix][] "';
-                        $isChecked = (in_array($type,$choix) ? 'checked' : '');
-                        $out[] = 'value="'. $type .'" '. $isChecked . ' >';
-                        $out[] = '<label for=' . $blocName . '_' . $item . '_' . $type . '">' . $type . '</label>';
+                case 'type' :
+                    // AVATAR = $blocName || type = $k || value = $v || jpg = $type
+                    $out[] = "<label for='" . $blocName . "_" . $k . "'>" . $k . "</label> : ";
+                    $out[] = "<span id='" . $blocName . "_" . $k . "' class='checkList'>";
+                    foreach(explode('|',$v) as $type){
+                        $out[] = "<input type='checkbox' id='" . $blocName . "_" . $k . "_" . $type . "' ";
+                        $checked = (in_array($type,$choix) ? 'checked ' : '');
+                        $out[] = "name='" . $blocName . "[choix][]' value='" . $type . "' " . $checked . ">";
+                        $out[] = "<label for='" . $blocName . "_" . $k . "_" . $type . "'>" . $type . "</label>";
                     }
-
-                    $out[] = '</span><br>';
+                    $out[] = "</span>";
                     break;
-                default:
-                    $out[] = '<input type="text" id="' . $blocName . '_' . $item . ' ';
-                    $out[] = ' "name="' . $blocName . '[' . $item . ']" value="' . $value . '" required><br>';
+                default :
+                    $out[] = "\t<input type='text' id='" . $blocName . "_" . $k ."' name='" .
+                        $blocName . "[" . $k . "]' " . "value='" . $v . "' required><br>";
+                    break;
             }
         }
         return $out;
     }
 
+    // Création du formulaire
     $out = [];
-    $out[] = "<form id='modifConfig' name='modifConfig' method='post' action=''>";
+    $out[] = "<form id='modifConfig' name='modifConfig' method='post'>";
 
     foreach($config as $key => $value){
         $out[] = "<fieldset><legend>$key</legend>";
         $out = array_merge($out,gereBloc($key,$value));
-        $out[] = "</fieldset>";
+        $out[]= "</fieldset>";
     }
 
-    $out[] = "<input type='submit' value='Envoi'>";
+    $out[] = "<input type='submit' name='envoie' value='Envoyer' action=''>";
     $out[] = "</form>";
-
     return implode("\n", $out);
 }
-
-$config = chargeConfig('config.ini');
-echo afficheConfig($config);
