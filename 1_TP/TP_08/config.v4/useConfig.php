@@ -3,47 +3,15 @@
  * Created by PhpStorm.
  * User: Danielle
  */
+// protection pour quand mon pwsd était en clair...
+//if ( count( get_included_files() ) == 1) die( '--access denied--' );
 
-require_once "../../TP_03/mesFonctions.inc.php";
-
-if (isset($_POST)) {
-    if (!empty($_POST)) {
-        unset($_POST['submit']);
-        $out = [];
-        /*
-        echo '<pre>' . print_r(chargeConfig("config.ini"), 1) . '</pre>';
-        echo '<hr>';
-        echo '<pre>' . print_r($_POST, 1) . '</pre>';
-        */
-        $oldConfig = chargeConfig('config.ini');
-
-        foreach ($oldConfig as $key => $value) {
-            foreach ($value as $k => $v) {
-                if (gettype($v) == 'array') $oldConfig[$key][$k] = [];
-            }
-        }
-
-        foreach (array_replace_recursive($oldConfig, $_POST) as $k => $v) {
-            $out[] = '[' . $k . ']';
-            foreach ($v as $item => $value) {
-                switch (gettype($value)) {
-                    case 'array':
-                        foreach ($value as $elem) {
-                            $out[] = $item . '[] = "' . $elem . '"';
-                        }
-                        break;
-                    default:
-                        $out[] = $item . ' = "' . $value . '"';
-                        break;
-                }
-            }
-            $out[] = "\n";
-        }
-        file_put_contents('config.ini', implode("\n\r", $out));
-    }
+function monPrint_r($liste){
+    $out = '<pre>';
+    $out .= print_r($liste, true);
+    $out .= '</pre>';
+    return $out;
 }
-
-echo afficheConfig(chargeConfig('config.ini'));
 
 function chargeConfig($filename){
     // mettre a true : on obtient un tableau multidimensionnel avec les noms des sections
@@ -53,7 +21,6 @@ function chargeConfig($filename){
 function afficheConfig($config){
 
     function gereBloc($blocName, $tab){
-
         $oKey = ['min','max','pas', 'choix'];
         foreach($oKey as $key){
             // memorisation dans une variable éponyme $... ['min'] est mémorisé dans $min
@@ -94,14 +61,10 @@ function afficheConfig($config){
             }
         }
         return $out;
-
     }
 
     $out = [];
     $out[] = "<form id='modifConfig' name='modifConfig' method='post' action=''>";
-
-    // Unset Error type
-//    unset($config['ERREUR']);
 
     foreach($config as $key => $value){
         $out[] = "<fieldset><legend>$key</legend>";
@@ -116,4 +79,64 @@ function afficheConfig($config){
     return implode("\n", $out);
 }
 
+function sauveConfig($filename){
+    unset($_POST['submit']);
+    // echo "nom du fichier : $filename";
+    // echo monPrint_r($_POST);
+    $error = 0;
+    $oldConfig = chargeConfig('config.ini');
+    $newConfig = array_replace_recursive($oldConfig, $_POST);
 
+    foreach ($oldConfig as $key => $value) {
+        foreach ($value as $k => $v) {
+            if (gettype($v) == 'array') $oldConfig[$key][$k] = [];
+        }
+    }
+
+    foreach (array_replace_recursive($oldConfig, $_POST) as $k => $v) {
+        $out[] = '[' . $k . ']';
+        foreach ($v as $item => $value) {
+            switch (gettype($value)) {
+                case 'array':
+                    foreach ($value as $elem) {
+                        $out[] = $item . '[] = "' . $elem . '"';
+                    }
+                    break;
+                default:
+                    $out[] = $item . ' = "' . $value . '"';
+                    break;
+            }
+        }
+    }
+    file_put_contents($config, implode("\n", $out));
+    echo"sauvegarde effectuée";
+
+ /*   if(($filename)){
+       if(){
+           foreach($newConfig as $a => $b ){
+               fwrite($f,$blocName);
+               foreach($tab as $key => $value){
+                   switch($key){
+                       case 'type':
+                           foreach ($value as $c){
+                               fwrite($f, "choix[] = " $choix "\n ");
+                           } break;
+                       default : fwrite($f, " = ");
+                   }
+               }
+           }
+       } else $error = '1';
+    }    else $error = '2';
+*/
+    /*switch($error){
+        case '0' : 'Sauvegarde effectuée' ; break;
+        case '1' : 'Le fichier de config n\'existe pas'  ; break;
+        case '2' : 'Problème d\'ouverture du fichier de config' ; break;
+        default : echo __FILE__.' : erreur inconnue !'; break;
+    }*/
+}
+
+echo afficheConfig(chargeConfig('config.ini'));
+if(isset($_POST['submit']) && !empty($_POST['submit']['configForm'])){
+    sauveConfig('config.ini');
+}

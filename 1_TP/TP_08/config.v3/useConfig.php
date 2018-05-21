@@ -4,7 +4,7 @@
  * User: Danielle
  */
 // protection pour quand mon pwsd était en clair...
-if ( count( get_included_files() ) == 1) die( '--access denied--' );
+//if ( count( get_included_files() ) == 1) die( '--access denied--' );
 
 function chargeConfig($filename){
     // mettre a true : on obtient un tableau multidimensionnel avec les noms des sections
@@ -22,7 +22,6 @@ function afficheConfig($config){
             $$key = isset($tab[$key]) ? $tab[$key] : null; // mémorisation
             unset($tab[$key]); // suppression
         }
-
 
         $out = [];
         foreach($tab as $item => $value) {
