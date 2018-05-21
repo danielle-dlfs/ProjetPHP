@@ -25,7 +25,7 @@
         </h1>
         <nav id="menu" class="menu">
             <ul>
-                <li><a href="accueil.html">Accueil</a></li>
+                <li><a href="index.html">Accueil</a></li>
                 <li><a href="userProfil.html">Profil</a></li>
                 <li><a href="userInfos.html">Mes infos</a></li>
                 <li><a href="config.html">Configuration</a></li>

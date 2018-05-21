@@ -11,7 +11,6 @@ if(!isset($_SESSION['start'])) {
 }
 
 require_once "INC/dbConnect.inc.php";
-require_once "INC/mesFonctions.inc.php";
 require_once "/ALL/kint/kint.php";
 Kint::$return = true;
 // imposer aux méthodes de la class Kint d'envoyer leur résultat par un return à la place d'un echo.
