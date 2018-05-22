@@ -2,9 +2,9 @@
 /**
  * Created by PhpStorm.
  * User: Danielle
+ * Date: 21-05-18
+ * Time: 19:36
  */
-// protection pour quand mon pwsd était en clair...
-//if ( count( get_included_files() ) == 1) die( '--access denied--' );
 
 function monPrint_r($liste){
     $out = '<pre>';
@@ -19,124 +19,119 @@ function chargeConfig($filename){
 }
 
 function afficheConfig($config){
+    //$out = monPrint_r($config);
 
-    function gereBloc($blocName, $tab){
-        $oKey = ['min','max','pas', 'choix'];
+    function gereBloc($blocName,$blocContenu){
+        //CONFIG V2
+        $oKey = ['min', 'max', 'pas', 'choix']; // options du bloc
         foreach($oKey as $key){
             // memorisation dans une variable éponyme $... ['min'] est mémorisé dans $min
             // variable dynamique
-            $$key = isset($tab[$key]) ? $tab[$key] : null; // mémorisation
-            unset($tab[$key]); // suppression
+            $$key = isset($blocContenu[$key]) ? $blocContenu[$key] : null; // memorisation
+            unset($blocContenu[$key]); // on supprime
         }
 
+        // CONFIG V1
         $out = [];
-        foreach($tab as $item => $value) {
-            $out[] = '<label for="' . $blocName . '_' . $item . '">' . $item . '</label>';
-            switch ($item) {
-                case 'taille':
-                    $options = ($min !== null ? " min=$min" : '')
-                        . ($max !== null ? " max=$max" : '')
-                        . ($pas !== null ? " pas=$pas" : '');
-                    $options = str_replace(' pas=', ' step=', $options) . ' title="' . $options . '"';
-                    $out[] = "<input type='number' id='$blocName' name='$blocName' value='$value' $options><br>";
+        // $out[] = monPrint_r($blocContenu);
+        foreach($blocContenu as $k => $v){
+            // SITE = $blocName || titre = $k || value = $v
+            $out[] = "\t<label for='" . $blocName . "_" . $k . "'>" . $k . "</label>";
+            switch($k){
+                case 'taille' :
+                    $options = ($min !== null ? " min=$min" : "") .
+                        ($max !== null ? " max=$max" : "") .
+                        ($pas !== null ? " pas=$pas" : "");
+                    $options = str_replace(" pas=", " step=", $options) . " title='$options' ";
+                    $out[] = "\t<input type='number' id='" . $blocName . "_" . $k ."' name='" .
+                        $blocName . "[" . $k . "]' " . "value='" . $v . "' ". $options . " required><br>";
                     break;
                 case 'comment':
-                    $out[] = '<textarea disabled>' . $value . '</textarea><br>';
+                    $out[] = "\t<textarea cols='50' readonly disabled required>". $v ."</textarea><br>";
                     break;
-                case 'type':
-                    $out[] = '<span id="' . $blocName . '_' . $item . '" class="checkList">';
-                    foreach(explode('|',$value) as $type){
-                        $out[] = '<input type="checkbox" id="' . $blocName . '_' . $item . '_' . $type . '" ';
-                        $out[] = 'name="' . $blocName . '[choix][] "';
-                        $isChecked = (in_array($type,$choix) ? 'checked' : '');
-                        $out[] = 'value="'. $type .'" '. $isChecked . ' >';
-                        $out[] = '<label for=' . $blocName . '_' . $item . '_' . $type . '">' . $type . '</label>';
+                case 'type' :
+                    // AVATAR = $blocName || type = $k || value = $v || jpg = $type
+                    $out[] = "<span id='" . $blocName . "_" . $k . "' class='checkList'>";
+                    foreach(explode('|',$v) as $type){
+                        $out[] = "<input type='checkbox' id='" . $blocName . "_" . $k . "_" . $type . "' ";
+                        $checked = (in_array($type,$choix) ? 'checked ' : '');
+                        $out[] = "name='" . $blocName . "[choix][]' value='" . $type . "' " . $checked . ">";
+                        $out[] = "<label for='" . $blocName . "_" . $k . "_" . $type . "'>" . $type . "</label>";
                     }
-
-                    $out[] = '</span><br>';
+                    $out[] = "</span>";
                     break;
-                default:
-                    $out[] = '<input type="text" id="' . $blocName . '_' . $item . ' ';
-                    $out[] = ' "name="' . $blocName . '[' . $item . ']" value="' . $value . '" required><br>';
+                default :
+                    $out[] = "\t<input type='text' id='" . $blocName . "_" . $k ."' name='" .
+                        $blocName . "[" . $k . "]' " . "value='" . $v . "' required><br>";
+                    break;
             }
         }
         return $out;
     }
 
+    // Création du formulaire
     $out = [];
-    $out[] = "<form id='modifConfig' name='modifConfig' method='post' action=''>";
+    $out[] = "<form id='modifConfig' name='modifConfig' method='post'>";
 
     foreach($config as $key => $value){
         $out[] = "<fieldset><legend>$key</legend>";
         $out = array_merge($out,gereBloc($key,$value));
-        // $out[] = monPrint_r($key);
-        $out[] = "</fieldset>";
+        $out[]= "</fieldset>";
     }
 
-    $out[] = "<input type='submit' name='submit[configForm]' value='envoi'>";
+    $out[] = "<input type='submit' name='submit[configForm]' value='Envoyer' action=''>";
     $out[] = "</form>";
-
     return implode("\n", $out);
 }
 
-function sauveConfig($filename){
+/*function sauveConfig($filename){
     unset($_POST['submit']);
-    // echo "nom du fichier : $filename";
-    // echo monPrint_r($_POST);
+    echo "nom du fichier : " . $filename;
+    echo monPrint_r($_POST);
+}*/
+
+function sauveConfig($filename)
+{
+    unset($_POST["submit"]);
+    //echo 'nom du fichier : '. $filename . "<br>";
+    //monPrint_r($_POST);
     $error = 0;
-    $oldConfig = chargeConfig('config.ini');
+    $oldConfig = parse_ini_file("config.ini", true);
     $newConfig = array_replace_recursive($oldConfig, $_POST);
-
-    foreach ($oldConfig as $key => $value) {
-        foreach ($value as $k => $v) {
-            if (gettype($v) == 'array') $oldConfig[$key][$k] = [];
-        }
-    }
-
-    foreach (array_replace_recursive($oldConfig, $_POST) as $k => $v) {
-        $out[] = '[' . $k . ']';
-        foreach ($v as $item => $value) {
-            switch (gettype($value)) {
-                case 'array':
-                    foreach ($value as $elem) {
-                        $out[] = $item . '[] = "' . $elem . '"';
+    //print_r($newConfig);
+    if (file_exists($filename)) {
+        if ($f = fopen($filename, 'w')) {
+            foreach ($newConfig as $blocName => $blocContent) {
+                //die(monPrint_r($blocName));
+                fwrite($f, "[" . $blocName . "]\n");
+                foreach ($blocContent as $key => $value) {
+                    switch ($key) {
+                        case "choix":
+                            foreach ($value as $choix) {
+                                //die(monPrint_r($value));
+                                fwrite($f, "choix[] = \"" . $choix . "\"\n");
+                            }
+                            break;
+                        default :
+                            fwrite($f, "$key = \"$value\"\n");
                     }
-                    break;
-                default:
-                    $out[] = $item . ' = "' . $value . '"';
-                    break;
+                }
             }
-        }
+            fclose($f);
+        } else $error = 2;
+    } else $error = 1;
+    switch ($error) {
+        case 0:
+            echo 'Sauvegarde effectuée !';
+            break;
+        case 1:
+            echo 'Le fichier n\'existe pas';
+            break;
+        case 2:
+            echo 'Problème d\'ouveture du fichier de config';
+            break;
+        default:
+            echo _FILE_ . ' : erreur inconnue';
+            break;
     }
-    file_put_contents($config, implode("\n", $out));
-    echo"sauvegarde effectuée";
-
- /*   if(($filename)){
-       if(){
-           foreach($newConfig as $a => $b ){
-               fwrite($f,$blocName);
-               foreach($tab as $key => $value){
-                   switch($key){
-                       case 'type':
-                           foreach ($value as $c){
-                               fwrite($f, "choix[] = " $choix "\n ");
-                           } break;
-                       default : fwrite($f, " = ");
-                   }
-               }
-           }
-       } else $error = '1';
-    }    else $error = '2';
-*/
-    /*switch($error){
-        case '0' : 'Sauvegarde effectuée' ; break;
-        case '1' : 'Le fichier de config n\'existe pas'  ; break;
-        case '2' : 'Problème d\'ouverture du fichier de config' ; break;
-        default : echo __FILE__.' : erreur inconnue !'; break;
-    }*/
-}
-
-echo afficheConfig(chargeConfig('config.ini'));
-if(isset($_POST['submit']) && !empty($_POST['submit']['configForm'])){
-    sauveConfig('config.ini');
 }
