@@ -8,11 +8,11 @@
 
 require_once "useConfig.php";
 
-$config = chargeConfig("config.ini");
+$config = chargeConfig("config.ini.php");
 //echo monPrint_r($_POST);
 if(isset($_POST['submit'])){
     if(!empty($_POST)){
-        sauveConfig('config.ini');
+        sauveConfig('config.ini.php');
     }
 }
 echo afficheConfig($config);
