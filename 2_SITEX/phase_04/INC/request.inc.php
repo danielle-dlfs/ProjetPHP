@@ -81,10 +81,15 @@ function gereSubmit(){
             sendMakeTable(RES_appelAjax('coursGroup'));
             break;
         case 'modifConfig':
-//            kint(d($_POST));
+            //kint(d($_POST));
             $iCfg = new Config('INC/config.ini.php');
             $iCfg->load();
-            debug($iCfg->save('test.ini.php'));
+            debug($iCfg->save('testSaveConfig.ini.php'));
+            if ($iCfg->getSaveError() == 0) {
+                $_SESSION['config'] = $iCfg->getConfig();
+                $_SESSION['loadTime'] = time();
+                toSend(json_encode(['titre' => $_SESSION['config']['SITE']['titre'], 'logoPath' => $_SESSION['config']['SITE']['images'] . '/' . $_SESSION['config']['LOGO']['logo'] . '?' . rand(0, 100)]), 'layout');
+            }
             break;
         default:
             error('<dl><dt>Error in <b>' . __FUNCTION__ . '()</b></dt><dt>'. monPrint_r(["_REQUEST" => $_REQUEST, "_FILES" => $_FILES]) .'</dt></dl>');

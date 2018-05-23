@@ -4,32 +4,53 @@ if ( count( get_included_files() ) == 1) die( '--access denied--' );
 
 class Config
 {
-    private $filename = 'config.ini.php';
+    private $filename = 'config.ini.php'; //faux ami !! il n'est pas utilisable ici
     private $fileExist = false;
     private $config = [];
+    private $saveError = 0;
 
+    // CONSTRUCTEUR
     function __construct($filename = null) {
         if($filename!=null) $this->filename = $filename;
         $this->fileExist = file_exists($this->filename);
     }
 
-    // Getters
+    // GETTERS
+
+    /**
+     * @return null|string
+     */
     public function getFilename() {
         return $this->filename;
     }
 
+    /**
+     * @return bool
+     */
     public function isFileExist() {
-//        return $this->fileExist ? 1 : 0;
+        //return $this->fileExist ? 1 : 0;
         return $this->fileExist;
     }
 
+    /**
+     * @return array|string
+     */
     public function getConfig() {
         if (empty($this->config)) return 'Config non chargée';
         return $this->config;
     }
 
-    // FONCTIONS
+    /**
+     * @return int
+     */
+    public function getSaveError() {
+        return $this->saveError;
+    }
+
+
+    // ---------------------------- FONCTIONS ----------------------------
     public function load($filename = null){
+        // pas propre selon le prof (mais c'est fonctionnel)
         if($filename != null){
             if(!file_exists($filename)) {
                 return "Le fichier demandé ($filename)n'existe pas";
@@ -38,7 +59,6 @@ class Config
             }
         } else {
              return $this->config = parse_ini_file($this->filename, true);
-
         }
     }
 
@@ -146,8 +166,12 @@ class Config
             } else $error = 2;
         }
 
+        $this->saveError = $error;
+        return $this->saveErrorMessage($error);
+    }
 
-
+    public function saveErrorMessage($error){
+        $msgError = "";
         switch ($error) {
             case 0:
                 $msgError = 'Sauvegarde effectuée !';
@@ -155,13 +179,12 @@ class Config
             case 1:
                 $msgError = 'Vous devez charger la config avant de sauver';
                 break;
-            case 2:
-                $msgError = 'Problème d\'ouveture du fichier de config';
-                break;
             default:
                 $msgError = _FILE_ . ' : erreur inconnue';
                 break;
         }
+
         return $msgError;
     }
+
 }

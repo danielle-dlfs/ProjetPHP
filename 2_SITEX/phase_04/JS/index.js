@@ -125,7 +125,6 @@ function gereRetour(retour) {
             case 'display' :
                 $(destination).html(retour[action]).fadeIn(500);
                 break;
-
             case 'kint':
             case 'debug':
             case 'error':
@@ -175,6 +174,9 @@ function gereRetour(retour) {
                     evnt.preventDefault();
                     appelAjax(this);
                 });
+            case 'layout':
+                var infos = JSON.parse(retour[action]);
+                $('#titre').html('<img id="logo" alt="logo" src="' + infos.logoPath + '" />' + infos.titre);
                 break;
             default :
                 console.log('action inconnue :' + action);
