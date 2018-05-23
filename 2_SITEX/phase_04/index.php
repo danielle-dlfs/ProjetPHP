@@ -14,6 +14,8 @@ require_once "INC/dbConnect.inc.php";
 require_once "/ALL/kint/kint.php";
 Kint::$return = true;
 // imposer aux méthodes de la class Kint d'envoyer leur résultat par un return à la place d'un echo.
+require_once "INC/config.inc.php";
+
 
 if(isset($_GET['rq'])){
     $_SESSION['log'][time()] = $_GET['rq'];

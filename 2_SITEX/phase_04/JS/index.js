@@ -123,7 +123,7 @@ function gereRetour(retour) {
     for (let action in retour) {
         switch (action) {
             case 'display' :
-                $("#contenu").html(retour[action]).fadeIn(500);
+                $(destination).html(retour[action]).fadeIn(500);
                 break;
 
             case 'kint':
@@ -145,7 +145,7 @@ function gereRetour(retour) {
                 $("#"+ action).html(html).fadeIn(500);
                 break;
             case 'formTP05' :
-                $("#contenu").html(retour[action]).fadeIn(500);
+                $(destination).html(retour[action]).fadeIn(500);
                 $("#formSelect").change(function() {
                     appelAjax(this.parentElement);
                 });
@@ -168,6 +168,13 @@ function gereRetour(retour) {
                 break;
             case 'cacher':
                 $(retour[action]).fadeOut(250);
+                break;
+            case 'formConfig':
+                $(destination).html(retour[action]);
+                $("#modifConfig").submit(function(evnt){
+                    evnt.preventDefault();
+                    appelAjax(this);
+                });
                 break;
             default :
                 console.log('action inconnue :' + action);

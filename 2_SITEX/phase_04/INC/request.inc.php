@@ -45,21 +45,6 @@ function toSend($txt,$action = 'display'){
     $toSend[$action] .= $txt;
 }
 
-function gereSubmit(){
-    if(!isset($_POST['senderId'])) $_REQUEST['senderId'] = '';
-    switch($_POST['senderId']){
-        case 'formTP05':
-            //$_REQUEST['sender']='repéré';
-            require_once "/RES/appelAjax.php";
-            toSend('#tp05result p','cacher');
-            toSend('#tp05result div', 'destination');
-            sendMakeTable(RES_appelAjax('coursGroup'));
-            break;
-        default:
-            error('<dl><dt>Error in <b>' . __FUNCTION__ . '()</b></dt><dt>'. monPrint_r(["_REQUEST" => $_REQUEST, "_FILES" => $_FILES]) .'</dt></dl>');
-    }
-}
-
 function tpSem05(){
     require_once "/RES/appelAjax.php";
     toSend(chargeTemplate('tpsem05'),'formTP05');
@@ -76,6 +61,34 @@ function callResAjax($rq){
 function sendMakeTable($tab){
     global $toSend;
     $toSend['makeTable'] = $tab;
+}
+
+function kLogin(){
+    $res = chargeTemplate('login');
+    if($res) { toSend($res,'formConfig');}
+    else error("blabla error kLogin");
+}
+
+function gereSubmit(){
+    if(!isset($_POST['senderId'])) $_REQUEST['senderId'] = '';
+    switch($_POST['senderId']){
+        //case nom/id du formulaire
+        case 'formTP05':
+            //$_REQUEST['sender']='repéré';
+            require_once "/RES/appelAjax.php";
+            toSend('#tp05result p','cacher');
+            toSend('#tp05result div', 'destination');
+            sendMakeTable(RES_appelAjax('coursGroup'));
+            break;
+        case 'modifConfig':
+//            kint(d($_POST));
+            $iCfg = new Config('INC/config.ini.php');
+            $iCfg->load();
+            debug($iCfg->save('test.ini.php'));
+            break;
+        default:
+            error('<dl><dt>Error in <b>' . __FUNCTION__ . '()</b></dt><dt>'. monPrint_r(["_REQUEST" => $_REQUEST, "_FILES" => $_FILES]) .'</dt></dl>');
+    }
 }
 
 function gereRequete($rq){
@@ -100,9 +113,19 @@ function gereRequete($rq){
             $_SESSION['log'][time()] = $rq;
             debug(d($_SESSION));
             break;
+        case 'config':
+            $iConfig = new Config('INC/config.ini.php');
+            //debug("Le nom du fichier est : " .$iConfig->getFilename() . d($iConfig->isFileExist()));
+            $iConfig->load();
+            $cfg = $iConfig->getForm();
+            toSend($cfg,"formConfig");
+            break;
+        case 'gestLog':
+            kLogin();
+            break;
         default:
             callResAjax($rq);
-            kint('requête inconnue ('.$rq.') transférée à callResAjax()');
+            //kint('requête inconnue ('.$rq.') transférée à callResAjax()');
     }
 }
 
