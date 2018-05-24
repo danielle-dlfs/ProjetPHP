@@ -1,105 +1,62 @@
--- MySQL Workbench Forward Engineering
+/* ---------------------------------- VERSION FINALE SCRIPT  ---------------------------------- */
+/* ---------------- CREATIONS DE TABLE ---------------- */
 
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
-
--- -----------------------------------------------------
--- Schema 1718he201409
--- -----------------------------------------------------
-
--- -----------------------------------------------------
--- Schema 1718he201409
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `1718he201409` DEFAULT CHARACTER SET utf8 ;
-SHOW WARNINGS;
-USE `1718he201409` ;
+-- Ordre pour les FK : tbUser tbProfil tbUserProfil
 
 -- -----------------------------------------------------
 -- Table `tbUser`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbUser` ;
 
-SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `tbUser` (
-  `uId` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `uPseudo` CHAR(20) NOT NULL,
-  `uEmail` CHAR(50) NOT NULL,
-  `uSemence` CHAR(32) NOT NULL,
-  `uMdp` CHAR(32) NOT NULL,
-  `uQuestion` VARCHAR(100) NULL DEFAULT 'null',
-  `uReponse` VARCHAR(50) NULL DEFAULT 'null',
-  `uAvatar` BLOB NULL,
-  `uDateCreation` DATETIME NULL,
-  PRIMARY KEY (`uId`));
+CREATE TABLE `tbuser` (
+  `uId` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uPseudo` char(20) NOT NULL,
+  `uEmail` char(50) DEFAULT NULL,
+  `uSemence` char(32) NOT NULL,
+  `uMdp` char(32) NOT NULL,
+  `uQuestion` varchar(100) DEFAULT NULL,
+  `uReponse` varchar(50) DEFAULT NULL,
+  `uAvatar` blob NULL,
+  `uDateCreation` datetime DEFAULT NULL,
+  PRIMARY KEY (`uId`,`uPseudo`),
+  UNIQUE KEY `uPseudo_UNIQUE` (`uPseudo`),
+  UNIQUE KEY `uId_UNIQUE` (`uId`),
+  UNIQUE KEY `uEmail_UNIQUE` (`uEmail`)
+) 
 
-SHOW WARNINGS;
-CREATE UNIQUE INDEX `uPseudo_UNIQUE` ON `tbUser` (`uPseudo` ASC);
-
-SHOW WARNINGS;
-CREATE UNIQUE INDEX `uEmail_UNIQUE` ON `tbUser` (`uEmail` ASC);
-
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `tbProfil`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbProfil` ;
 
-SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `tbProfil` (
-  `pId` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `pNom` CHAR(20) NOT NULL,
-  `pAbrev` CHAR(10) NULL,
-  `pIcon` BLOB NULL,
-  `pEstStatus` TINYINT NULL,
-  PRIMARY KEY (`pId`));
-
-SHOW WARNINGS;
-CREATE UNIQUE INDEX `pNom_UNIQUE` ON `tbProfil` (`pNom` ASC);
-
-SHOW WARNINGS;
-CREATE UNIQUE INDEX `pAbrev_UNIQUE` ON `tbProfil` (`pAbrev` ASC);
-
-SHOW WARNINGS;
+CREATE TABLE `tbprofil` (
+  `pId` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `pNom` char(20) NOT NULL,
+  `pAbrev` char(10) DEFAULT NULL,
+  `pIcon` blob,
+  `pEstStatus` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`pId`),
+  UNIQUE KEY `pNom_UNIQUE` (`pNom`),
+  UNIQUE KEY `pAbrev_UNIQUE` (`pAbrev`)
+)
 
 -- -----------------------------------------------------
 -- Table `tbUserProfil`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbUserProfil` ;
 
-SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `tbUserProfil` (
-  `uId` INT UNSIGNED NOT NULL,
-  `pId` INT UNSIGNED NOT NULL,
-  `upDateDebut` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`uId`, `pId`),
-  CONSTRAINT `fk_tbUserProfil_tbUser`
-    FOREIGN KEY (`uId`)
-    REFERENCES `tbUser` (`uId`)
-    ON DELETE RESTRICT
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_tbUserProfil_tbProfil1`
-    FOREIGN KEY (`pId`)
-    REFERENCES `tbProfil` (`pId`)
-    ON DELETE RESTRICT
-    ON UPDATE CASCADE)
-ENGINE = InnoDB;
+CREATE TABLE `tbuserprofil` (
+  `uId` int(10) unsigned NOT NULL,
+  `pId` int(10) unsigned NOT NULL,
+  `upDateDebut` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`uId`,`pId`),
+  KEY `fk_tbUserProfil_tbProfil1_idx` (`pId`),
+  CONSTRAINT `fk_tbUserProfil_tbProfil1` FOREIGN KEY (`pId`) REFERENCES `tbprofil` (`pId`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_tbUserProfil_tbUser` FOREIGN KEY (`uId`) REFERENCES `tbuser` (`uId`) ON UPDATE CASCADE
+) 
 
-SHOW WARNINGS;
-CREATE INDEX `fk_tbUserProfil_tbProfil1_idx` ON `tbUserProfil` (`pId` ASC);
+/* ------------------------- INSERTION DATA  ------------------------- */
 
-SHOW WARNINGS;
+-- tbUser
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
--- -----------------------------------------------------
--- Data for table `tbUser`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `1718he201409`;
 INSERT INTO `tbUser` (`uId`, `uPseudo`, `uEmail`, `uSemence`, `uMdp`, `uQuestion`, `uReponse`, `uAvatar`, `uDateCreation`) VALUES (1, 'ano', 'ano@ici.be', MD5(UNIX_TIMESTAMP()), MD5(CONCAT(MD5(UNIX_TIMESTAMP()),'anonyme')), NULL, NULL, NULL, NULL);
 INSERT INTO `tbUser` (`uId`, `uPseudo`, `uEmail`, `uSemence`, `uMdp`, `uQuestion`, `uReponse`, `uAvatar`, `uDateCreation`) VALUES (2, 'acti', 'acti@ici.be', MD5(UNIX_TIMESTAMP()), MD5(CONCAT(MD5(UNIX_TIMESTAMP()),'activation')), NULL, NULL, NULL, NULL);
 INSERT INTO `tbUser` (`uId`, `uPseudo`, `uEmail`, `uSemence`, `uMdp`, `uQuestion`, `uReponse`, `uAvatar`, `uDateCreation`) VALUES (3, 'memb', 'memb@ici.be', MD5(UNIX_TIMESTAMP()), MD5(CONCAT(MD5(UNIX_TIMESTAMP()),'membre')), NULL, NULL, NULL, NULL);
@@ -111,12 +68,8 @@ INSERT INTO `tbUser` (`uId`, `uPseudo`, `uEmail`, `uSemence`, `uMdp`, `uQuestion
 
 COMMIT;
 
+-- tbProfil
 
--- -----------------------------------------------------
--- Data for table `tbProfil`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `1718he201409`;
 INSERT INTO `tbProfil` (`pId`, `pNom`, `pAbrev`, `pIcon`, `pEstStatus`) VALUES (DEFAULT, 'anonyme', 'ano', NULL, NULL);
 INSERT INTO `tbProfil` (`pId`, `pNom`, `pAbrev`, `pIcon`, `pEstStatus`) VALUES (DEFAULT, 'activation', 'acti', NULL, 1);
 INSERT INTO `tbProfil` (`pId`, `pNom`, `pAbrev`, `pIcon`, `pEstStatus`) VALUES (DEFAULT, 'membre', 'memb', NULL, NULL);
@@ -128,12 +81,9 @@ INSERT INTO `tbProfil` (`pId`, `pNom`, `pAbrev`, `pIcon`, `pEstStatus`) VALUES (
 
 COMMIT;
 
+-- tbUserProfil 
 
--- -----------------------------------------------------
--- Data for table `tbUserProfil`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `1718he201409`;
+
 INSERT INTO `tbUserProfil` (`uId`, `pId`, `upDateDebut`) VALUES (1, 1, NOW());
 INSERT INTO `tbUserProfil` (`uId`, `pId`, `upDateDebut`) VALUES (2, 2, NOW());
 INSERT INTO `tbUserProfil` (`uId`, `pId`, `upDateDebut`) VALUES (2, 3, NOW());
