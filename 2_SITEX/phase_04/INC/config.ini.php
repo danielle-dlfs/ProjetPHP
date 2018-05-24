@@ -14,9 +14,9 @@ pas = 10
 
 [DB]
 host = "localhost"
-user = "student"
-pswd = "2T"
-dbname = "world"
+user = "DELFOSSE"
+pswd = "Daniellew5V3"
+dbname = "1718he201409"
 
 [AVATAR]
 comment = "le dossier devra se trouver dans celui des images repris dans SITE"

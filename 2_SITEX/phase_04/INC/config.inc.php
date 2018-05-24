@@ -1,56 +1,40 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Danielle
+ */
+
 if ( count( get_included_files() ) == 1) die( '--access denied--' );
 
 
 class Config
 {
-    private $filename = 'config.ini.php'; //faux ami !! il n'est pas utilisable ici
+    private $filename = 'config.ini.php';
     private $fileExist = false;
     private $config = [];
-    private $saveError = 0;
 
-    // CONSTRUCTEUR
     function __construct($filename = null) {
         if($filename!=null) $this->filename = $filename;
         $this->fileExist = file_exists($this->filename);
     }
 
-    // GETTERS
-
-    /**
-     * @return null|string
-     */
+    // Getters
     public function getFilename() {
         return $this->filename;
     }
 
-    /**
-     * @return bool
-     */
     public function isFileExist() {
-        //return $this->fileExist ? 1 : 0;
+//        return $this->fileExist ? 1 : 0;
         return $this->fileExist;
     }
 
-    /**
-     * @return array|string
-     */
     public function getConfig() {
         if (empty($this->config)) return 'Config non chargée';
         return $this->config;
     }
 
-    /**
-     * @return int
-     */
-    public function getSaveError() {
-        return $this->saveError;
-    }
-
-
-    // ---------------------------- FONCTIONS ----------------------------
+    // FONCTIONS
     public function load($filename = null){
-        // pas propre selon le prof (mais c'est fonctionnel)
         if($filename != null){
             if(!file_exists($filename)) {
                 return "Le fichier demandé ($filename)n'existe pas";
@@ -59,6 +43,7 @@ class Config
             }
         } else {
              return $this->config = parse_ini_file($this->filename, true);
+
         }
     }
 
@@ -74,6 +59,8 @@ class Config
         $out[] = "<form id='modifConfig' name='modifConfig' method='post' action='formSubmit.html'>";
         // UNSET ERROR TYPE
         unset($config['ERREUR']);
+        unset($config['DB']);
+
         foreach($config as $key => $value){
             $out[] = "<fieldset><legend>$key</legend>";
             $out = array_merge($out,$this->getBloc($key,$value));
@@ -131,47 +118,43 @@ class Config
         return $out;
     }
 
-    public function save($filename = null){
+    function save($filename = null)
+    {
         if(!$filename) $filename = $this->filename;
         unset($_POST["submit"]);
-        unset($_POST["senderId"]);
-
         $error = 0;
 
         if(!$this->config){
             $error = 1;
         } else {
             $oldConfig = $this->config;
-            // la boucle foreach du prof pour vérifier toutes des possibilites cfr 3.5.1
-            $newConfig = array_replace_recursive($oldConfig, $_POST);
-
-            if ($f = fopen($filename, 'w')) {
-                foreach ($newConfig as $blocName => $blocContent) {
-                    //die(monPrint_r($blocName));
-                    fwrite($f, "[" . $blocName . "]\n");
-                    foreach ($blocContent as $key => $value) {
-                        switch ($key) {
-                            case "choix":
-                                foreach ($value as $choix) {
-                                    //die(monPrint_r($value));
-                                    fwrite($f, "choix[] = \"" . $choix . "\"\n");
-                                }
-                                break;
-                            default :
-                                fwrite($f, "$key = \"$value\"\n");
-                        }
-                    }
-                }
-                fclose($f);
-            } else $error = 2;
+//            foreach($oldConfig as $key => $value){
+//
+//            }
         }
 
-        $this->saveError = $error;
-        return $this->saveErrorMessage($error);
-    }
+        $newConfig = array_replace_recursive($oldConfig, $_POST);
 
-    public function saveErrorMessage($error){
-        $msgError = "";
+        if ($f = fopen($filename, 'w')) {
+            foreach ($newConfig as $blocName => $blocContent) {
+                //die(monPrint_r($blocName));
+                fwrite($f, "[" . $blocName . "]\n");
+                foreach ($blocContent as $key => $value) {
+                    switch ($key) {
+                        case "choix":
+                            foreach ($value as $choix) {
+                                //die(monPrint_r($value));
+                                fwrite($f, "choix[] = \"" . $choix . "\"\n");
+                            }
+                            break;
+                        default :
+                            fwrite($f, "$key = \"$value\"\n");
+                    }
+                }
+            }
+            fclose($f);
+        } else $error = 2;
+
         switch ($error) {
             case 0:
                 $msgError = 'Sauvegarde effectuée !';
@@ -179,12 +162,13 @@ class Config
             case 1:
                 $msgError = 'Vous devez charger la config avant de sauver';
                 break;
+            case 2:
+                $msgError = 'Problème d\'ouveture du fichier de config';
+                break;
             default:
                 $msgError = _FILE_ . ' : erreur inconnue';
                 break;
         }
-
         return $msgError;
     }
-
 }

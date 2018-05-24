@@ -174,9 +174,23 @@ function gereRetour(retour) {
                     evnt.preventDefault();
                     appelAjax(this);
                 });
-            case 'layout':
+            /*case 'layout':
                 var infos = JSON.parse(retour[action]);
                 $('#titre').html('<img id="logo" alt="logo" src="' + infos.logoPath + '" />' + infos.titre);
+                break;*/
+            case 'formLogin':
+                // attention le prof voulait section cachée /hidden
+                $(destination).html(retour[action]);
+                $("#formLogin").submit(function(evnt){
+                    evnt.preventDefault();
+                    appelAjax(this);
+                });
+                $("#logMdPP").click(function(evnt){
+                    // l'appel ajax doit etre mis avant l'arret de propagation d'evnts
+                    appelAjax(this);
+                    evnt.preventDefault();
+
+                });
                 break;
             default :
                 console.log('action inconnue :' + action);
