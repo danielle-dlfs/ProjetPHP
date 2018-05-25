@@ -42,7 +42,13 @@ function toSend($txt,$action = 'display'){
     $toSend[$action] .= $txt;
 }
 
-/* Remplacable par fct toSend mais on garde */
+/* Remplacables par fct toSend mais on garde */
+
+function display($txt){
+    global $toSend;
+    if (!isset($toSend['display'])) $toSend['display'] = '';
+    $toSend['display'] .= $txt;
+}
 
 function error($txt){
     global $toSend;
@@ -54,12 +60,6 @@ function debug($txt){
     global $toSend;
     if (!isset($toSend['debug'])) $toSend['debug'] = '';
     $toSend['debug'] .= $txt;
-}
-
-function display($txt){
-    global $toSend;
-    if (!isset($toSend['display'])) $toSend['display'] = '';
-    $toSend['display'] .= $txt;
 }
 
 function kint($txt){
@@ -82,25 +82,31 @@ function gereSubmit(){
             sendMakeTable(RES_appelAjax('coursGroup'));
             break;
         case 'modifConfig':
-            kint(d($_POST));
+            $iCfg = new Config('INC/config.ini.php');
+            $iCfg->load();
+            $iCfg->save();
+            //debug($iCfg->save()); // c'est rassurant d'avoir cette confirmation haha
+            if ($iCfg->getSaveError() == 0) {
+                $_SESSION['config'] = $iCfg->getConfig();
+                $_SESSION['loadTime'] = time();
+                toSend(json_encode(['titre' => $_SESSION['config']['SITE']['titre'], 'logoPath' => $_SESSION['config']['SITE']['images'] . '/' . $_SESSION['config']['LOGO']['logo'] . '?' . rand(0, 100)]), 'layout');
+            }
             break;
         case 'formLogin':
-            $iDb = new Db();
-            // ==> ramener l'utilisateur correspondant au login-mdp transmis
-            $user = $iDb->call("whoIs",$_POST['login']);
-
             // testez si vous avez un retour
             // S'il n'y en a pas, retournez en debug un message adéquat
             // testez si ce n'est pas une __ERReur__
             // Si c'est le cas envoyez là en error
             // Si le résultat n'est dans aucun des cas précédent, envoyez le en kint(d())
-            if($user) if(isset($user['__ERR__'])) error($user['__ERR__']);
-                    else authentification($user); // si ce n'est pas une erreur
-            else debug("Pseudo et/ou mot de passe incorrect(s) !");
-
+            $iDB = new Db();
+            $user = $iDB->call('whoIs', array_values($_POST['login']));
+            if ($user)  if (isset($user['__ERR__'])) error($user['__ERR__']);
+                        else authentication($user[0]);
+            else debug('Pseudo et/ou mot de passe incorret(s) !');
             break;
         default:
             error('<dl><dt>Error in <b>' . __FUNCTION__ . '()</b></dt><dt>'. monPrint_r(["_REQUEST" => $_REQUEST, "_FILES" => $_FILES]) .'</dt></dl>');
+            break;
     }
 }
 
@@ -133,9 +139,8 @@ function gereRequete($rq){
             $cfg = $iConfig->getForm();
             toSend($cfg,"formConfig");
             break;
-        case 'gestLog':
-            kLogin();
-            break;
+        case 'gestLog': $f = 'kLog' . (isset($_SESSION['user']) ? 'out': 'in'); $f(); break;
+//        case 'gestLog': kLogin(); break;
         case 'testDB':
             $iDB = new Db;
             debug($iDB->getException());
@@ -144,7 +149,7 @@ function gereRequete($rq){
             //kint(d($iDB->call('mc_group',['2TL'])));
             //kint(d($iDB->call('mc_coursesGroup',['2TL'])));
             kint(d($iDB->call('whoIs', ['ano', 'anonyme'])));
-            kint(d($iDB->call('userProfil', [8])));
+            kint(d($iDB->call('userProfil', [$_SESSION['user']['id']])));
             break;
         default:
             callResAjax($rq);
@@ -156,8 +161,13 @@ function gereRequete($rq){
 
 function kLogin(){
     $res = chargeTemplate('login');
-    if($res) { toSend($res,'formConfig');}
-    else error("blabla error kLogin");
+    if($res) { toSend($res,'formLogin');}
+    else error("error kLogin");
+}
+
+function kLogout() {
+    toSend('Au revoir <b>' . $_SESSION['user']['pseudo'] . '</b> !', 'logout');
+    unset($_SESSION['user']);
 }
 
 /**
@@ -168,13 +178,12 @@ function kLogin(){
  * retournez un kint(d()) de ce que vous avez mémorisé sur ce user
  * @param $user
  */
-function authentification($user){
+
+function authentication($user) {
     $_SESSION['user'] = $user;
     $iDB = new Db();
-    $profil = $iDB->call('userProfil', [$user['uId']]);
-    // 0 car il correspond à ano
+    $profil = $iDB->call('userProfil', [$user['id']]); // le 'id' selon la routine userprofil
     $_SESSION['user']['profil'] = $profil;
-//    toSend(json_encode($_SESSION['user']), 'userConnu');
-    return kint(d($user));
+//    toSend(d($profil), 'kint');
+    toSend((json_encode(d($_SESSION['user']))), 'userConnu');
 }
-

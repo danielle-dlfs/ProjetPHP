@@ -9,16 +9,22 @@ if ( count( get_included_files() ) == 1) die( '--access denied--' );
 
 class Config
 {
-    private $filename = 'config.ini.php';
+    private $filename = 'config.ini.php'; // faux ami c'est juste pour créer la variable il est pas utilisable
     private $fileExist = false;
     private $config = [];
+
+    /**
+     * Contient les erreurs rencontrées durant le processus de sauvegarde
+     * @var int
+     */
+    private $saveError = 0;
 
     function __construct($filename = null) {
         if($filename!=null) $this->filename = $filename;
         $this->fileExist = file_exists($this->filename);
     }
 
-    // Getters
+    // ----------------------------- GETTERS -------------------------------
     public function getFilename() {
         return $this->filename;
     }
@@ -33,7 +39,15 @@ class Config
         return $this->config;
     }
 
-    // FONCTIONS
+    /**
+     * Renvoie une valeur != 0 si le processus de sauvegarde a rencontré une erreur
+     * @return int
+     */
+    public function getSaveError() {
+        return $this->saveError;
+    }
+
+    // ----------------------------- FONCTIONS -------------------------------
     public function load($filename = null){
         if($filename != null){
             if(!file_exists($filename)) {
@@ -43,7 +57,6 @@ class Config
             }
         } else {
              return $this->config = parse_ini_file($this->filename, true);
-
         }
     }
 
@@ -51,12 +64,12 @@ class Config
         $config = $this->getConfig();
         if (empty($this->config)){
             return $config;
-
         }
         //$out = monPrint_r($config);
         // Création du formulaire
         $out = [];
         $out[] = "<form id='modifConfig' name='modifConfig' method='post' action='formSubmit.html'>";
+
         // UNSET ERROR TYPE
         unset($config['ERREUR']);
         unset($config['DB']);
@@ -118,57 +131,57 @@ class Config
         return $out;
     }
 
-    function save($filename = null)
-    {
-        if(!$filename) $filename = $this->filename;
-        unset($_POST["submit"]);
+    public function save($filename = null) {
+        if (!$filename) $filename = $this->filename;
+
+        unset($_POST['rq']);
+        unset($_POST['senderId']);
+        unset($_POST['submit']);
+
+        $out = [];
         $error = 0;
 
-        if(!$this->config){
-            $error = 1;
-        } else {
+        if (!$this->config) $error = 1;
+        else {
             $oldConfig = $this->config;
-//            foreach($oldConfig as $key => $value){
-//
-//            }
-        }
-
-        $newConfig = array_replace_recursive($oldConfig, $_POST);
-
-        if ($f = fopen($filename, 'w')) {
-            foreach ($newConfig as $blocName => $blocContent) {
-                //die(monPrint_r($blocName));
-                fwrite($f, "[" . $blocName . "]\n");
-                foreach ($blocContent as $key => $value) {
-                    switch ($key) {
-                        case "choix":
-                            foreach ($value as $choix) {
-                                //die(monPrint_r($value));
-                                fwrite($f, "choix[] = \"" . $choix . "\"\n");
-                            }
-                            break;
-                        default :
-                            fwrite($f, "$key = \"$value\"\n");
-                    }
+            foreach ($oldConfig as $key => $value) {
+                foreach ($value as $k => $v) {
+                    if (gettype($v) == 'array') $oldConfig[$key][$k] = [];
                 }
             }
-            fclose($f);
-        } else $error = 2;
+            foreach ($this->config = array_replace_recursive($oldConfig, $_POST) as $k => $v) {
+                $out[] = '[' . $k . ']';
+                foreach ($v as $item => $value) {
+                    switch (gettype($value)) {
+                        case 'array':
+                            foreach ($value as $elem) {
+                                $out[] = $item . '[] = "' . $elem . '"';
+                            }
+                            break;
+                        default:
+                            $out[] = $item . ' = "' . $value . '"';
+                            break;
+                    }
+                }
+                $out[] = "";
+            }
+            file_put_contents($filename, implode("\n", $out));
+        }
 
+        $this->saveError = $error;
+        return $this->saveErrorMessage($error);
+    }
+
+    public function saveErrorMessage($error) {
+        $errorMsg = "";
         switch ($error) {
-            case 0:
-                $msgError = 'Sauvegarde effectuée !';
-                break;
             case 1:
-                $msgError = 'Vous devez charger la config avant de sauver';
+                $errorMsg = "Vous devez charger la config avant de la sauver !";
                 break;
-            case 2:
-                $msgError = 'Problème d\'ouveture du fichier de config';
-                break;
-            default:
-                $msgError = _FILE_ . ' : erreur inconnue';
+            case 0:
+                $errorMsg = "Sauvegarde effectuée";
                 break;
         }
-        return $msgError;
+        return $errorMsg;
     }
 }

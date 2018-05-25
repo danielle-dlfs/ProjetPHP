@@ -32,15 +32,25 @@ if(isset($_GET['rq'])){
     $_SESSION['log'][time()] = 'reset F5';
 }
 
-$site = &$_SESSION['config']['SITE']; // &  cfr 3.6.3
-$logo = &$_SESSION['config']['LOGO']; // &  cfr 3.6.3
+$site = &$_SESSION['config']['SITE'];
+$logo = &$_SESSION['config']['LOGO'];
 
 $home = 'Accueil';
 $siteName = $site['titre'];
-$logoPath = $site['images'] . '/' . $logo['logo'] ;
+$logoPath = $site['images'] . '/' . $logo['logo'];
 $logoAlt = 'logo';
 $mainZone = 'Bienvenue';
+
 $mail = ___MATRICULE___ . '@students.ephec.be';
 $author = '<a href="mailto:' . $mail . '" title="'. $mail . '">' . $__INFOS__['nom'] . ' ' . $__INFOS__['prenom']. '</a>';
+
+$gestLog = 'Connexion';
+$style = '';
+
+if (isset($_SESSION['user'])) {
+    $gestLog = 'Déconnexion';
+    $style = '#4C4F22';
+    $mainZone = 'Page rafraichie: vous êtes toujours connecté ' . $_SESSION['user']['pseudo'] . ' !';
+}
 
 require_once "INC/layout.html.inc.php";

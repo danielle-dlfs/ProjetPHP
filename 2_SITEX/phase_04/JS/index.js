@@ -135,7 +135,6 @@ function gereRetour(retour) {
                 //let destination = (retour['destination'] ? retour['destination'] : '#contenu');
                 $(destination).html(table).fadeIn(500);
                 break;
-                //return $("#debug").html(table).fadeIn(500);
             case 'jsonError' :
                 var html = "<p><b>Error :</b></p>" +
                     retour[action].error +
@@ -174,10 +173,7 @@ function gereRetour(retour) {
                     evnt.preventDefault();
                     appelAjax(this);
                 });
-            /*case 'layout':
-                var infos = JSON.parse(retour[action]);
-                $('#titre').html('<img id="logo" alt="logo" src="' + infos.logoPath + '" />' + infos.titre);
-                break;*/
+                break;
             case 'formLogin':
                 // attention le prof voulait section cachée /hidden
                 $(destination).html(retour[action]);
@@ -192,8 +188,39 @@ function gereRetour(retour) {
 
                 });
                 break;
+            case 'layout':
+                var infos = JSON.parse(retour[action]);
+                $('#titre').html('<img id="logo" alt="logo" src="' + infos.logoPath + '" />' + infos.titre);
+                break;
+            case 'userConnu':
+                myData['user'] = JSON.parse(retour[action]);
+                $('#contenu').html('Bienvenue ' + myData['user'].uPseudo);
+                $('#menu a[href="gestLog.html"]').text('Déconnexion');
+                $('body').css('background', '#4C4F22');
+                break;
+            case 'logout':
+                console.log('logout');
+                delete (myData['user']);
+                $('body').css('background', '');
+                $('#menu a[href="gestLog.html"]').text('Connexion');
+                $(destination).html('<div title="Déconnnexion">' + retour[action] + '</div>').find('div').dialog({
+                    modal: true,
+                    width: 100,
+                    height: 70,
+                    classes: {
+                        'ui-dialog': 'dialOk'
+                    },
+                    resizable: false,
+                    dragable: false,
+                    position: {
+                        my: 'right top',
+                        at: 'center bottom+5',
+                        of: '#menu a[href="gestLog.html"]'
+                    }
+                });
+                break;
             default :
-                console.log('action inconnue :' + action);
+                console.log('action inconnue : ' + action);
                 console.log(retour[action]);
                 break;
         }
