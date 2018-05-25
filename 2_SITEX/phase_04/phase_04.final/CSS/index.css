@@ -17,19 +17,10 @@
     color: inherit;
 }
 
-
-.ui-menu .ui-menu-item-wrapper {
-    padding: 0.25em 0.5em;
-}
-
 .ui-menu-item-wrapper.ui-state-active {
-    border: 0.1em solid var(--menu-bg-color);
+    border-color: transparent;
     background: none;
     color: #FF6533;
-}
-
-.ui-menu .ui-state-focus, .ui-menu .ui-state-active {
-    margin: initial;
 }
 
 /* ------- MENU ------- */
@@ -42,20 +33,18 @@
     margin: 0;
     list-style: none;
 }
-
 .menu ul li {
     margin: 0;
     padding: 0;
 }
 
-.menu  li {
+.menu li {
     color: orange;
-    min-width: 5em;
-    text-align: center;
 }
 
 .menu a {
     height: 1%;
+    padding: 0.25em 0.5em !important;
     font-size: 1.2em;
     text-decoration: none;
     color: #FF6533;
@@ -97,25 +86,31 @@
 }
 
 #menu ul, #menu li {
-    display: inline-block;
+    display: inline;
 }
 
-.menu.sMenu {
+#sous-menu {
+    width: 18%;
+    float: left;
+}
+
+#sous-menu ul {
+    padding: 20px 10px;
+}
+
+#sous-menu a {
+    display: block;
+    line-height: 2;
+}
+
+#sMenu {
     border: 0.05em solid darkorange;
     border-radius: .5em;
 }
 
-.menu.sMenu a {
+#sMenu a {
+    padding: 1em;
     box-shadow: rgba(0, 0, 0, 0.5) .25em .25em .5em;
-}
-
-#menu li ul:before {
-    content: '⏏';
-    color: orange;
-    display: inline-block;
-    position: absolute;
-    top: -0.75em;
-    left: 47%;
 }
 
 

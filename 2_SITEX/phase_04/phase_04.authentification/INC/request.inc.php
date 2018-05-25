@@ -8,8 +8,6 @@
 
 require_once "mesFonctions.inc.php";
 require_once "db.inc.php";
-require_once "droits.inc.php";
-
 /*  Protection de fichier */
 if ( count( get_included_files() ) == 1) die( '--access denied--' );
 
@@ -103,7 +101,7 @@ function gereSubmit(){
             $iDB = new Db();
             $user = $iDB->call('whoIs', array_values($_POST['login']));
             if ($user)  if (isset($user['__ERR__'])) error($user['__ERR__']);
-                        else authentication($user[0], $iDB);
+                        else authentication($user[0]);
             else debug('Pseudo et/ou mot de passe incorret(s) !');
             break;
         default:
@@ -120,18 +118,13 @@ function gereRequete($rq){
         case 'TPsem05': tpSem05(); break;
         case 'formSubmit': gereSubmit(); break;
         case 'displaySession':
-            $_SESSION['log'][time()] = $rq;
-            //debug(d($_SESSION));
-            debug(d($_SESSION['start']));
-            debug(d($_SESSION['log']));
+            debug(d($_SESSION));
             break;
         case 'clearLog':
-            //unset($_SESSION['log']);
+//            unset($_SESSION['log']);
             $_SESSION['log'] = [];
             $_SESSION['log'][time()] = $rq;
-            //debug(d($_SESSION));
-            debug(d($_SESSION['start']));
-            debug(d($_SESSION['log']));
+            debug(d($_SESSION));
             break;
         case 'resetSession':
             session_unset();
@@ -146,9 +139,8 @@ function gereRequete($rq){
             $cfg = $iConfig->getForm();
             toSend($cfg,"formConfig");
             break;
-//        case 'gestLog': $f = 'kLog' . (isset($_SESSION['user']) ? 'out': 'in'); $f(); break;
+        case 'gestLog': $f = 'kLog' . (isset($_SESSION['user']) ? 'out': 'in'); $f(); break;
 //        case 'gestLog': kLogin(); break;
-        case 'gestLog': $f = 'kLog' . (isAuthenticated() ? 'out': 'in'); $f(); break;
         case 'testDB':
             $iDB = new Db;
             debug($iDB->getException());
@@ -161,7 +153,7 @@ function gereRequete($rq){
             break;
         default:
             callResAjax($rq);
-            //kint('requête inconnue ('.$rq.') transférée à callResAjax()');
+            kint('requête inconnue ('.$rq.') transférée à callResAjax()');
     }
 }
 
@@ -188,63 +180,10 @@ function kLogout() {
  */
 
 function authentication($user) {
+    $_SESSION['user'] = $user;
     $iDB = new Db();
     $profil = $iDB->call('userProfil', [$user['id']]); // le 'id' selon la routine userprofil
-
-    $isActiv = false;
-    foreach ($profil as $p) if ($p['pAbrev'] == 'acti') $isActiv = true;
-    if ($isActiv) {
-        toSend('Vous devez activer votre compte (Cfr. email envoyé)', 'peutPas');
-        return -1;
-    }
-
-    $_SESSION['user'] = $user;
     $_SESSION['user']['profil'] = $profil;
-    //toSend(d($profil), 'kint');
+//    toSend(d($profil), 'kint');
     toSend((json_encode(d($_SESSION['user']))), 'userConnu');
-
-    creeDroits();
-    if (isReactiv()) {
-        toSend('Vous n\'avez pas encore validé votre nouveau mail (Cfr. mail de confirmation envoyé à la nouvelle adresse mail)', 'peutPas');
-        toSend('<div id="enReact">Vous devez valider votre nouveau mail (Cfr. mail de confirmation)</div>', 'estRéac');
-    }
-    if (isMdpp()) {
-        toSend('Vous aviez demandé un changement de mot de passe mais manifestement vous avez retrouvé votre mot de passe. Nous annulons votre demande', 'peutPas');
-    }
-    toSend(creeMenu(), 'newMenu');
-
-}
-
-/* ----------------------------- GESTION DE DROITS ------------------------------ */
-
-/**
- * Fonction peutPas détermine si un utilisateur a le droit d'éffectuer une action
- * Renvoie false si l'utilisateur à le droit, renvoie true si l'utilisateur ne peut pas.
- * @param $req
- * @return bool
- */
-function peutPas($req) {
-    if ($req == 'formSubmit' && isset($_POST['senderId'])) {
-        $req = $_POST['senderId'];
-    }
-    $peutPas = !in_array($req, $_SESSION['droits']);
-    $msg = 'Droits Insuffisants !';
-    if ($peutPas) {
-        if (isReactiv()) {
-            if (isset($_SESSION['user']['droitsPerdus'])) {
-                if (in_array($req, $_SESSION['user']['droitsPerdus'])) {
-                    if (isSousAdmin()) {
-                        $msg = 'Valider votre nouveau mail (Cfr. mail envoyé) pour ne plus voir ce message';
-                        $peutPas = false;
-                    } else {
-                        $msg = 'Valider votre nouveau mail (Cfr. mail envoyé) pour récupérer ce droit';
-                    }
-                }
-            } else {
-                $msg = 'Droits Insuffisants !';
-            }
-        }
-        toSend($msg, 'peutPas');
-    }
-    return $peutPas;
 }

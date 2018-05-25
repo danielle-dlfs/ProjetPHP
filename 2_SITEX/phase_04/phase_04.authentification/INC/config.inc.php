@@ -12,6 +12,11 @@ class Config
     private $filename = 'config.ini.php'; // faux ami c'est juste pour créer la variable il est pas utilisable
     private $fileExist = false;
     private $config = [];
+
+    /**
+     * Contient les erreurs rencontrées durant le processus de sauvegarde
+     * @var int
+     */
     private $saveError = 0;
 
     function __construct($filename = null) {

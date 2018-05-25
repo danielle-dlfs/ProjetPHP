@@ -1,9 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Adrien
- * Date: 14/05/18
- * Time: 09:35
+ * User: HE201409
  */
 
 if (count(get_included_files()) == 1) die("--access denied--");

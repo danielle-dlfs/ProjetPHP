@@ -15,7 +15,6 @@ require_once "/ALL/kint/kint.php";
 Kint::$return = true;
 // imposer aux méthodes de la class Kint d'envoyer leur résultat par un return à la place d'un echo.
 require_once "INC/config.inc.php";
-require_once 'INC/droits.inc.php';
 
 if (!isset($_SESSION['config'])) {
     $iCfg = new Config('INC/config.ini.php');
@@ -47,21 +46,11 @@ $author = '<a href="mailto:' . $mail . '" title="'. $mail . '">' . $__INFOS__['n
 
 $gestLog = 'Connexion';
 $style = '';
-$bandeau = '';
 
-//if (isset($_SESSION['user'])) {
-//    $gestLog = 'Déconnexion';
-//    $style = '#4C4F22';
-//    $mainZone = 'Page rafraichie: vous êtes toujours connecté ' . $_SESSION['user']['pseudo'] . ' !';
-//}
-
-if (isReactiv()) {
-    $bandeau = '<div id="enReact">Vous devez valider votre nouveau mail (Cfr. mail de confirmation)</div>';
-}
-
-if (isAuthenticated()) {
+if (isset($_SESSION['user'])) {
+    $gestLog = 'Déconnexion';
     $style = '#4C4F22';
-    $mainContent = 'Page rafraichie: vous êtes toujours connecté ' . $_SESSION['user']['uPseudo'] . ' !';
+    $mainZone = 'Page rafraichie: vous êtes toujours connecté ' . $_SESSION['user']['pseudo'] . ' !';
 }
 
 require_once "INC/layout.html.inc.php";

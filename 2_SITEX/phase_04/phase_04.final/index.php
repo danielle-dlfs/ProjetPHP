@@ -6,11 +6,8 @@
  * Time: 17:34
  */
 
-require_once "INC/dbConnect.inc.php";
-
 // SESSION
 
-session_name($sess_name);
 session_start();
 if (!isset($_SESSION['start'])) {
     $_SESSION['start'] = date('YmdHis');
@@ -19,6 +16,7 @@ if (!isset($_SESSION['start'])) {
 
 // Prerequired includes
 
+require_once "INC/dbConnect.inc.php";
 require_once "INC/mesFonctions.inc.php";
 require_once "/ALL/kint/kint.php";
 Kint::$return=true;
@@ -57,6 +55,7 @@ $mainContent = 'Bienvenue';
 $mail = ___MATRICULE___ . '@students.ephec.be';
 $auteur = "<a href=mailto:$mail title=$mail>". $__INFOS__['nom'] ." ". $__INFOS__['prenom'] ."@2018</a>";
 
+$gestLog = 'Connexion';
 $style = '';
 
 $bandeau = '';
@@ -65,6 +64,7 @@ if (isReactiv()) {
 }
 
 if (isAuthenticated()) {
+    $gestLog = 'Déconnexion';
     $style = '#4C4F22';
     $mainContent = 'Page rafraichie: vous êtes toujours connecté ' . $_SESSION['user']['uPseudo'] . ' !';
 }
