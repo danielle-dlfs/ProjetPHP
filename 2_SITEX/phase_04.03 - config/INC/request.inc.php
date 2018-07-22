@@ -100,6 +100,10 @@ function gereRequete($rq){
             $_SESSION['log'][time()] = $rq;
             debug(d($_SESSION));
             break;
+        case 'config':
+            $iConfig = new Config("INC/config.ini.php");
+            //debug("le nom du fichier est : ".$iConfig->getFileName() . d($iConfig->isFileExist()));
+            break;
         default:
             callResAjax($rq);
             kint('requête inconnue ('.$rq.') transférée à callResAjax()');
