@@ -40,15 +40,19 @@ class Config
     }
 
     // déclarations des fonctions
+
     function load($filename = null){
-        if ($filename != null){
-            if(!file_exists($filename)) {
-                return "Le fichier demandé ($filename) n'existe pas";
+        if ($filename != null){ // S'il y a un paramètre,
+            if(!file_exists($filename)) { //elle teste l'existance du fichier demandé
+                return "Le fichier demandé ($filename) n'existe pas";// Dans la négative (cfr !) , elle retourne un msg
+            } else {
+                //sinon (=>si le paremetre est pas null) elle parse celui passé en paramètre
+                return parse_ini_file($this->filename,true);
             }
         } else {
-
+            //si le parametre est null, elle parse le fichier par défaut
+            return parse_ini_file($filename,true);
         }
-        // mettre a true : on obtient un tableau multidimensionnel avec les noms des sections
-        return parse_ini_file($filename,true);
+        return $filename;
     }
 }
