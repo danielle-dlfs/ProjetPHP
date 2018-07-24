@@ -102,6 +102,9 @@ function gereRequete($rq){
             break;
         case 'config':
             $iConfig = new Config("INC/config.ini.php");
+            $cfg = $iConfig->load();
+            kint(d($iConfig->getConfig()));
+            kint(d($cfg));
             //debug("le nom du fichier est : ".$iConfig->getFileName() . d($iConfig->isFileExist()));
             break;
         default:

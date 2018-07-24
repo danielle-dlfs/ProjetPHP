@@ -15,7 +15,7 @@ class Config
     private $fileExist = false;
     private $config = [];
 
-    // déclaration des constructeurs
+    // --------------------------------------------------- CONSTRUCTEURS
     /**
      * Config constructor.
      * @param string $filename
@@ -25,34 +25,53 @@ class Config
         $this->fileExist = file_exists($this->filename);
     }
 
-    // déclaration des méthodes
+    // --------------------------------------------------- METHODES
     public function getFileName() {
         return $this->filename;
     }
 
-    // déclaration des getters & setters
+    // --------------------------------------------------- GETTERS & SETTERS
     /**
      * @return bool
      */
-    public function isFileExist()
-    {
+    public function isFileExist() {
         return $this->fileExist;
     }
 
-    // déclarations des fonctions
+    /**
+     * @return array
+     */
+    public function getConfig(){
+        if(empty($this->config)) { // on utilise empty car $config est un tableau
+            return "Config non chargée";
+        } else {
+            return $this->config;
+        }
+    }
 
-    function load($filename = null){
+    // --------------------------------------------------- FONCTIONS
+    public function load($filename = null){
+        //S'il y a un paramètre, elle teste l'existance du fichier demandé.
+        //Dans la négative, elle retourne le message Le fichier demandé (.....) n'existe pas (où le ... est le paramètre passé)
+        //Si le paramètre est null, elle parse le fichier par défaut sinon elle parse celui passé en paramètre (pas besoin de test puisque fait dans le constructeur)
+        //Le parse est sauvegardé dans une variable privée config qui était initialisée à []
+        //La fonction retourne le contenu de cette variable
+
         if ($filename != null){ // S'il y a un paramètre,
             if(!file_exists($filename)) { //elle teste l'existance du fichier demandé
                 return "Le fichier demandé ($filename) n'existe pas";// Dans la négative (cfr !) , elle retourne un msg
             } else {
-                //sinon (=>si le paremetre est pas null) elle parse celui passé en paramètre
-                return parse_ini_file($this->filename,true);
+                //sinon (=>si le parametre est pas null) elle parse celui passé en paramètre
+                //parse_ini_file($this->filename,true);
+                $this->config = parse_ini_file($filename, true);
             }
-        } else {
-            //si le parametre est null, elle parse le fichier par défaut
-            return parse_ini_file($filename,true);
+        } else { //parametre est null
+            //elle parse le fichier par défaut (le parse est sauvé dans la var privée config
+            $this->config = parse_ini_file($this->filename, true);
         }
-        return $filename;
+
+        return $this->config;
     }
+
 }
+
