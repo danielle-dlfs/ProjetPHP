@@ -168,6 +168,13 @@ function gereRetour(retour) {
             case 'cacher':
                 $(retour[action]).fadeOut(250);
                 break;
+            case 'formConfig':
+                $(destination).html(retour[action]);
+                $("#modifConfig").submit(function(evnt){
+                    evnt.preventDefault();
+                    appelAjax(this);
+                });
+                break;
             default :
                 console.log('action inconnue :' + action);
                 console.log(retour[action]);

@@ -55,6 +55,12 @@ function gereSubmit(){
             toSend('#tp05result div', 'destination');
             sendMakeTable(RES_appelAjax('coursGroup'));
             break;
+        case 'modifConfig':
+            //kint(d($_POST));
+            $iCfg = new Config("INC/config.ini.php");
+            $iCfg->load();
+            debug($iCfg->save('testSaveConfig.ini.php'));
+            break;
         default:
             error('<dl><dt>Error in <b>' . __FUNCTION__ . '()</b></dt><dt>'. monPrint_r(["_REQUEST" => $_REQUEST, "_FILES" => $_FILES]) .'</dt></dl>');
     }
@@ -101,11 +107,15 @@ function gereRequete($rq){
             debug(d($_SESSION));
             break;
         case 'config':
-            $iConfig = new Config("INC/config.ini.php");
-            $cfg = $iConfig->load();
-            kint(d($iConfig->getConfig()));
-            kint(d($cfg));
-            //debug("le nom du fichier est : ".$iConfig->getFileName() . d($iConfig->isFileExist()));
+            $iConfig = new Config('INC/config.ini.php');
+            $iConfig->load();
+            $cfg = $iConfig->getForm();
+            toSend($cfg,"formConfig");
+            //display($cfg);
+            //debug("Le nom du fichier est : " . $iConfig->getFileName());
+            //debug(d($iConfig->isFileExist()));
+            //kint(d($iConfig->getConfig()));
+
             break;
         default:
             callResAjax($rq);

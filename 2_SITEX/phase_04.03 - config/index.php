@@ -26,7 +26,6 @@ if(isset($_GET['rq'])){
     $_SESSION['log'][time()] = 'reset F5';
 }
 
-
 $home = 'Accueil';
 $siteName = 'SITEX : phase 04 : config';
 $logoPath = 'IMG/04.png';
