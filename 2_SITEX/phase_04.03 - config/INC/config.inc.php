@@ -14,6 +14,7 @@ class Config {
     private $filename = 'config.ini.php';
     private $fileExist = false;
     private $config = [];
+    private $saveError = 0;
 
     // ----------------------------------- CONSTRUCTEURS
     /**
@@ -29,6 +30,14 @@ class Config {
     }
 
     // ----------------------------------- GETTERS & SETTERS
+
+    /**
+     * @return null|string
+     */
+    public function getFilename() {
+        return $this->filename;
+    }
+
     /**
      * @return bool
      */
@@ -47,12 +56,15 @@ class Config {
         }
     }
 
-    // ----------------------------------- METHODES
-    public function getFilename() {
-        return $this->filename;
+    /**
+     * @return int
+     */
+    public function getSaveError() {
+        return $this->saveError;
     }
 
-    // ----------------------------------- FONCTIONS
+    // ----------------------------------- METHODES
+
     public function load($filename= null){
         if($filename != null){
             if(!file_exists($filename)){
@@ -172,6 +184,15 @@ class Config {
         }
 
         // gestion des erreurs
+        $this->saveError = $error;
+        return $this->saveErrorMessage($error);
+    }
+
+    /**
+     * @param $error
+     * @return string
+     */
+    public function saveErrorMessage($error){
         switch ($error) {
             case 0:
                 $msgErr = 'Sauvegarde effectuée !';

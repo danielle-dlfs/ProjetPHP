@@ -175,6 +175,10 @@ function gereRetour(retour) {
                     appelAjax(this);
                 });
                 break;
+            case 'layout':
+                var infos = JSON.parse(retour[action]);
+                $("#titre").html('<img id="logo" alt="logo" src="' + infos.logoPath + '" />' + infos.titre);
+                break;
             default :
                 console.log('action inconnue :' + action);
                 console.log(retour[action]);

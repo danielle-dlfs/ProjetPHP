@@ -59,7 +59,13 @@ function gereSubmit(){
             //kint(d($_POST));
             $iCfg = new Config("INC/config.ini.php");
             $iCfg->load();
-            debug($iCfg->save('testSaveConfig.ini.php'));
+            debug($iCfg->save());
+            if($iCfg->getSaveError() == 0){ // si sauvegarde effectuée
+                $_SESSION['config'] = $iCfg->getConfig();
+                $_SESSION['loadTime'] = time();
+                $site = $_SESSION['config'];
+                toSend(json_encode(['titre' => $site['SITE']['titre'], 'logoPath' => $site['SITE']['images'] . '/' . $_SESSION['config']['LOGO']['logo'] . '?' . rand(0, 100)]), 'layout');
+            }
             break;
         default:
             error('<dl><dt>Error in <b>' . __FUNCTION__ . '()</b></dt><dt>'. monPrint_r(["_REQUEST" => $_REQUEST, "_FILES" => $_FILES]) .'</dt></dl>');

@@ -16,6 +16,12 @@ require_once "INC/dbConnect.inc.php";
 require_once "INC/mesFonctions.inc.php";
 require_once "INC/config.inc.php";
 
+if(!isset($_SESSION['config'])){
+    $iConfig = new Config("INC/config.ini.php");
+    $_SESSION['config'] = $iConfig->load();
+    $_SESSION['loadTime'] = time();
+}
+
 if(isset($_GET['rq'])){
     $_SESSION['log'][time()] = $_GET['rq'];
     $toSend = [];
@@ -26,9 +32,13 @@ if(isset($_GET['rq'])){
     $_SESSION['log'][time()] = 'reset F5';
 }
 
+$site = &$_SESSION['config']['SITE'];
+$logo = &$_SESSION['config']['LOGO'];
+
 $home = 'Accueil';
-$siteName = 'SITEX : phase 04 : config';
-$logoPath = 'IMG/04.png';
+$siteName = $site['titre'];
+$logoPath = $site['images'] . '/' . $logo['logo'];
+
 $logoAlt = 'Logo';
 $mainZone = 'Bienvenue';
 $mail = ___MATRICULE___ . '@students.ephec.be';

@@ -24,7 +24,7 @@ if ( count( get_included_files() ) == 1) die( '--access denied--' );?>
 <div id="global">
 
     <header id="entete">
-        <h1>
+        <h1 id="titre">
             <img id=logo alt="<?= $logoAlt ?>" src="<?= $logoPath ?>" />
             <?= $siteName ?>
 
