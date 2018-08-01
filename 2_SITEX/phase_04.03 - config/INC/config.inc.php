@@ -164,6 +164,7 @@ class Config {
             }*/
 
             $newConfig = array_replace_recursive($oldConfig, $_POST);
+            $this->config = $newConfig;
             if ($f = fopen($filename, 'w')) {
                 foreach ($newConfig as $blocName => $blocContent) {
                     fwrite($f, "[" . $blocName . "]\n");
