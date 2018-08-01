@@ -88,6 +88,7 @@ class Config {
 
         // UNSET ERROR TYPE
         unset($config['ERREUR']);
+        unset($config['DB']);
 
         foreach($config as $key => $value){
             $out[] = "<fieldset><legend>$key</legend>";
@@ -164,6 +165,7 @@ class Config {
             }*/
 
             $newConfig = array_replace_recursive($oldConfig, $_POST);
+            $this->config = $newConfig;
             if ($f = fopen($filename, 'w')) {
                 foreach ($newConfig as $blocName => $blocContent) {
                     fwrite($f, "[" . $blocName . "]\n");

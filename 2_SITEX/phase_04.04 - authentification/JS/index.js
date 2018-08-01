@@ -190,6 +190,11 @@ function gereRetour(retour) {
                     appelAjax(this);
                 });
                 break;
+            case 'userConnu' :
+                console.log(retour);
+                // myData['user'] = JSON.parse(retour[action]);
+                // $(destination).html("Bienvenue " . myData['user'].pseudo);
+                break;
             default :
                 console.log('action inconnue :' + action);
                 console.log(retour[action]);

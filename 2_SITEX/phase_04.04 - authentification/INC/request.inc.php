@@ -7,6 +7,8 @@
  */
 
 require_once "mesFonctions.inc.php";
+require_once "db.inc.php";
+
 /*  Protection de fichier */
 if ( count( get_included_files() ) == 1) die( '--access denied--' );
 
@@ -67,6 +69,18 @@ function gereSubmit(){
                 toSend(json_encode(['titre' => $site['SITE']['titre'], 'logoPath' => $site['SITE']['images'] . '/' . $_SESSION['config']['LOGO']['logo'] . '?' . rand(0, 100)]), 'layout');
             }
             break;
+        case 'formLogin':
+            // testez si vous avez un retour
+            // S'il n'y en a pas, retournez en debug un message adéquat
+            // testez si ce n'est pas une __ERReur__
+            // Si c'est le cas envoyez là en error
+            // Si le résultat n'est dans aucun des cas précédent, envoyez le en kint(d())
+            $iDB = new Db();
+            $user = $iDB->call('whoIs',array_values($_POST['login']));
+            if($user) if(isset($user['__ERR__'])) error($user['__ERR__']);
+                      else authentification($user[0]);
+            else debug('Pseudo et/ou mot de passe incorrect(s)');
+            break;
         default:
             error('<dl><dt>Error in <b>' . __FUNCTION__ . '()</b></dt><dt>'. monPrint_r(["_REQUEST" => $_REQUEST, "_FILES" => $_FILES]) .'</dt></dl>');
     }
@@ -103,30 +117,45 @@ function gereRequete($rq){
         case 'sem04': display("Requête « $rq » : Le TP03 est disponible sur le serveur !"); break;
         case 'TPsem05': tpSem05(); break;
         case 'formSubmit': gereSubmit(); break;
-        case 'displaySession':
-            debug(d($_SESSION['start']));
-            debug(d($_SESSION['log']));
-            break;
-        case 'clearLog':
-            $_SESSION['log'] = []; // on réinitialise la var de session 'log'
-            $_SESSION['log'][time()] = $rq; // on recrée la var de session 'log'
-            debug(d($_SESSION));
-            break;
-        case 'resetSession':
-            session_unset();
-            $_SESSION['start'] = date('YmdHis');
-            $_SESSION['log'][time()] = $rq;
-            debug(d($_SESSION));
-            break;
-        case 'config':
-            $iConfig = new Config('INC/config.ini.php');
-            $iConfig->load();
-            $cfg = $iConfig->getForm();
-            toSend($cfg,"formConfig");
-            break;
+        case 'displaySession': debug(d($_SESSION['start']));
+                               debug(d($_SESSION['log']));
+                               break;
+        case 'clearLog': $_SESSION['log'] = []; // on réinitialise la var de session 'log'
+                         $_SESSION['log'][time()] = $rq; // on recrée la var de session 'log'
+                         debug(d($_SESSION));
+                         break;
+        case 'resetSession': session_unset();
+                             $_SESSION['start'] = date('YmdHis');
+                             $_SESSION['log'][time()] = $rq;
+                             debug(d($_SESSION));
+                             break;
+        case 'config':  $iConfig = new Config('INC/config.ini.php');
+                        $iConfig->load();
+                        $cfg = $iConfig->getForm();
+                        toSend($cfg,"formConfig");
+                        break;
         case 'gestLog': kLogin(); break;
-        default:
-            callResAjax($rq);
-            kint('requête inconnue ('.$rq.') transférée à callResAjax()');
+        case 'testDB': $iDB = new Db();
+                        debug($iDB->getException());
+                        //kint(d($iDB->call('mc_allGroups')));
+                        //kint(d($iDB->call('mc_group',['2TL'])));
+                        //kint(d($iDB->call('mc_coursesGroup',['2TL'])));
+                        kint(d($iDB->call('whoIs',['ano','anonyme'])));
+                        kint(d($iDB->call('userProfil',[8])));
+                        break;
+        default: callResAjax($rq);
+                 kint('requête inconnue ('.$rq.') transférée à callResAjax()');
     }
+}
+
+function authentification($user){
+    $_SESSION['user'] = $user;
+    $iDB = new Db();
+    $profil = $iDB->call('userProfil', [$user['id']]); // id à cause de la fonction userProfil
+    $_SESSION['user']['profil'] = $profil;
+    toSend(json_encode($_SESSION['user']),'userConnu');
+    //toSend(json_encode($_SESSION), 'userConnu');
+    //debug(d($_SESSION['user']));
+//    return kint(d($_SESSION['user']));
+
 }
