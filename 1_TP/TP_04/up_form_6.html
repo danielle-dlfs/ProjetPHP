@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Up Form 6</title>
+    <script src="JS/up_form_3.js"></script>
+</head>
+<body>
+
+<form action="upload_6.php" method="post" enctype="multipart/form-data">
+    <label>ID : </label><input type="number" min="1" max="500" name="id" value="1"><br>
+    <input type="file"  name="image" onchange="verif(this)">
+    <input type="submit" value="charger" id="submitButton">
+</form>
+<div id="infos"></div>
+</body>
+</html>

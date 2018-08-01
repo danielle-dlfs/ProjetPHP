@@ -7,12 +7,15 @@
 <body>
 <h1>Formulaire</h1>
 <form method="post" action="mail_4.php">
-    Expéditeur: <br>
-    <input type="email" name="expediteur"><br>
-    Sujet: <br>
-    <input type="text" name="sujet"><br>
-    Message : <br>
-    <textarea name="message"></textarea><br>
+    <label for="expediteur">Expéditeur :</label><br>
+    <input type="email" name="expediteur" id="expediteur"><br>
+
+    <label for="sujet">Sujet : </label><br>
+    <input type="text" name="sujet" id="sujet"><br>
+
+    <label for="msg">Message</label><br>
+    <textarea name="message" id="msg"></textarea><br>
+
     <input type="submit" value="Submit">
 </form>
 </body>
