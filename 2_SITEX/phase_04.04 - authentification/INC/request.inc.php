@@ -104,12 +104,6 @@ function sendMakeTable($tab){
     $toSend['makeTable'] = $tab;
 }
 
-function kLogin(){
-    $res = chargeTemplate("login");
-    if($res) { toSend($res,'formLogin');}
-    else error("Erreur de chargement du formulaire de connexion");
-}
-
 function gereRequete($rq){
     //kint(d($rq));
     switch($rq){
@@ -134,7 +128,8 @@ function gereRequete($rq){
                         $cfg = $iConfig->getForm();
                         toSend($cfg,"formConfig");
                         break;
-        case 'gestLog': kLogin(); break;
+        //case 'gestLog': kLogin(); break;
+        case 'gestLog': $f = 'kLog' . (isset($_SESSION['user']) ? 'out' : 'in'); $f(); break;
         case 'testDB': $iDB = new Db();
                         debug($iDB->getException());
                         kint(d($iDB->call_v1()));
@@ -147,6 +142,17 @@ function gereRequete($rq){
         default: callResAjax($rq);
                  kint('requête inconnue ('.$rq.') transférée à callResAjax()');
     }
+}
+
+function kLogin(){
+    $res = chargeTemplate("login");
+    if($res) { toSend($res,'formLogin');}
+    else error("Erreur de chargement du formulaire de connexion");
+}
+
+function kLogout(){
+    toSend("Au revoir " . $_SESSION['user']['pseudo'], 'logout');
+    unset($_SESSION['user']);
 }
 
 function authentification($user){

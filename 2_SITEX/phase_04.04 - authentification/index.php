@@ -44,7 +44,7 @@ $mainZone = 'Bienvenue';
 $mail = ___MATRICULE___ . '@students.ephec.be';
 $author = '<a href="mailto:' . $mail . '" title="'. $mail . '">' . $__INFOS__['nom'] . ' ' . $__INFOS__['prenom']. '</a>';
 
-$gestLog = "Connection";
+$gestLog = "Connexion";
 $style = "";
 
 if (isset($_SESSION['user'])) {
