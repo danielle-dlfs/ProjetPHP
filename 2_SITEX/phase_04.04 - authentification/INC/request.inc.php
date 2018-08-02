@@ -137,6 +137,7 @@ function gereRequete($rq){
         case 'gestLog': kLogin(); break;
         case 'testDB': $iDB = new Db();
                         debug($iDB->getException());
+                        kint(d($iDB->call_v1()));
                         //kint(d($iDB->call('mc_allGroups')));
                         //kint(d($iDB->call('mc_group',['2TL'])));
                         //kint(d($iDB->call('mc_coursesGroup',['2TL'])));
@@ -150,12 +151,14 @@ function gereRequete($rq){
 
 function authentification($user){
     $_SESSION['user'] = $user;
+    //toSend(json_encode($_SESSION['user']), 'userConnu');
     $iDB = new Db();
-    $profil = $iDB->call('userProfil', [$user['id']]); // id à cause de la fonction userProfil
+    $profil = $iDB->call('userProfil', [$user['id']]);
     $_SESSION['user']['profil'] = $profil;
-    toSend(json_encode($_SESSION['user']),'userConnu');
+    //toSend(json_encode($_SESSION['user']),'userConnu');
+    toSend(json_encode($user),'userConnu');
     //toSend(json_encode($_SESSION), 'userConnu');
-    //debug(d($_SESSION['user']));
-//    return kint(d($_SESSION['user']));
-
+//    debug(d($user));
+//    debug(d($_SESSION['user']));
+    //debug(json_encode(['a' => 'b', 'b' => ['c' => 'd']]));
 }

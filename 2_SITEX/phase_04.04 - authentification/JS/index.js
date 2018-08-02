@@ -191,9 +191,11 @@ function gereRetour(retour) {
                 });
                 break;
             case 'userConnu' :
-                console.log(retour);
-                // myData['user'] = JSON.parse(retour[action]);
-                // $(destination).html("Bienvenue " . myData['user'].pseudo);
+                console.log(retour[action]);
+                myData['user'] = JSON.parse(retour[action]);
+                $(destination).html("Bienvenue " + myData['user'].pseudo);
+                $('body').css('background','');
+                $('#menu a[href="gestLog.html"]').text('Déconnexion');
                 break;
             default :
                 console.log('action inconnue :' + action);

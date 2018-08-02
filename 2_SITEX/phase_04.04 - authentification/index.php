@@ -43,4 +43,14 @@ $logoAlt = 'Logo';
 $mainZone = 'Bienvenue';
 $mail = ___MATRICULE___ . '@students.ephec.be';
 $author = '<a href="mailto:' . $mail . '" title="'. $mail . '">' . $__INFOS__['nom'] . ' ' . $__INFOS__['prenom']. '</a>';
+
+$gestLog = "Connection";
+$style = "";
+
+if (isset($_SESSION['user'])) {
+    $gestLog = 'Deconnexion';
+    $style = '#4C4F22';
+    $mainZone = 'Page rafraichie: vous êtes toujours connecté ' . $_SESSION['user']['pseudo'] . ' !';
+}
+
 require_once "INC/layout.html.inc.php";

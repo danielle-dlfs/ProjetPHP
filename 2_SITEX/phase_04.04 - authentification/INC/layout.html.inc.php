@@ -19,7 +19,7 @@ if ( count( get_included_files() ) == 1) die( '--access denied--' );?>
     <script type="text/javascript" src="JS/index.js"></script>
 </head>
 
-<body>
+<body style="background-color: <?= $style ?>;">
 
 <div id="global">
 
@@ -42,7 +42,7 @@ if ( count( get_included_files() ) == 1) die( '--access denied--' );?>
                         <li><a href="resetSession.html">redémarre</a></li>
                     </ul>
                 </li>
-                <li><a href="gestLog.html">Connexion</a></li>
+                <li><a href="gestLog.html"><?= $gestLog ?></a></li>
             </ul>
         </nav>
     </header>
