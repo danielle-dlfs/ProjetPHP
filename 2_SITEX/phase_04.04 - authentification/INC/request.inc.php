@@ -161,10 +161,9 @@ function authentification($user){
     $iDB = new Db();
     $profil = $iDB->call('userProfil', [$user['id']]);
     $_SESSION['user']['profil'] = $profil;
-    //toSend(json_encode($_SESSION['user']),'userConnu');
-    toSend(json_encode($user),'userConnu');
+    toSend(json_encode($_SESSION['user']),'userConnu');
     //toSend(json_encode($_SESSION), 'userConnu');
 //    debug(d($user));
-//    debug(d($_SESSION['user']));
+    debug(d($_SESSION['user']));
     //debug(json_encode(['a' => 'b', 'b' => ['c' => 'd']]));
 }
