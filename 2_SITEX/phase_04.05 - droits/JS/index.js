@@ -235,10 +235,6 @@ function gereRetour(retour) {
                     }
                 });
                 break;
-
-            case 'estRéac':
-                $('#entete footer').append(retour[action]);
-                break;
             default :
                 console.log('action inconnue :' + action);
                 console.log(retour[action]);

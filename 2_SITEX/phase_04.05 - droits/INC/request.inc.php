@@ -17,36 +17,6 @@ function chargeTemplate($name = 'yololo'){
     return file_exists($name) ? implode("\n", file($name)) : false;
 }
 
-function error($txt){
-    global $toSend;
-    if (!isset($toSend['error'])) $toSend['error'] = '';
-    $toSend['error'] .= $txt;
-}
-
-function debug($txt){
-    global $toSend;
-    if (!isset($toSend['debug'])) $toSend['debug'] = '';
-    $toSend['debug'] .= $txt;
-}
-
-function display($txt){
-    global $toSend;
-    if (!isset($toSend['display'])) $toSend['display'] = '';
-    $toSend['display'] .= $txt;
-}
-
-function kint($txt){
-    global $toSend;
-    if (!isset($toSend['kint'])) $toSend['kint'] = '';
-    $toSend['kint'] .= $txt;
-}
-
-function toSend($txt,$action = 'display'){
-    global $toSend;
-    if (!isset($toSend[$action])) $toSend[$action] = '';
-    $toSend[$action] .= $txt;
-}
-
 function gereSubmit(){
     if(!isset($_POST['senderId'])) $_REQUEST['senderId'] = '';
     switch($_POST['senderId']){
@@ -78,7 +48,8 @@ function gereSubmit(){
             $iDB = new Db();
             $user = $iDB->call('whoIs',array_values($_POST['login']));
             if($user) if(isset($user['__ERR__'])) error($user['__ERR__']);
-                      else authentification($user[0]);
+            //else if (isActiv()) toSend('Vous devez activer votre compte (Cfr. email) pour pouvoir vous connecter !','peutPas');
+            else authentification($user[0]);
             else debug('Pseudo et/ou mot de passe incorrect(s)');
             break;
         default:
@@ -129,7 +100,7 @@ function gereRequete($rq){
                         toSend($cfg,"formConfig");
                         break;
         //case 'gestLog': kLogin(); break;
-        case 'gestLog': $f = 'kLog' . (isset($_SESSION['user']) ? 'out' : 'in'); $f(); break;
+        case 'gestLog': $f = 'kLog' . (isAuthenticated() ? 'out' : 'in'); $f(); break;
         case 'testDB': $iDB = new Db();
                         debug($iDB->getException());
                         kint(d($iDB->call_v1()));
@@ -140,7 +111,7 @@ function gereRequete($rq){
                         kint(d($iDB->call('userProfil',[8])));
                         break;
         default: callResAjax($rq);
-                 kint('requête inconnue ('.$rq.') transférée à callResAjax()');
+                 //kint('requête inconnue ('.$rq.') transférée à callResAjax()');
     }
 }
 
@@ -156,21 +127,49 @@ function kLogout(){
 }
 
 function authentification($user){
-    $_SESSION['user'] = $user;
     $iDB = new Db();
     $profil = $iDB->call('userProfil', [$user['id']]);
+    $isActiv = false;
+
+    foreach ($profil as $p) {
+        if ($p['pAbrev'] == 'acti') $isActiv = true;
+    }
+    kint(d($user,$profil,$isActiv));
+    if ($isActiv) {
+        toSend('Vous devez activer votre compte (Cfr. email envoyé)', 'peutPas');
+        return -1;
+    }
+
+    $_SESSION['user'] = $user;
     $_SESSION['user']['profil'] = $profil;
     toSend(json_encode($_SESSION['user']),'userConnu');
+    creeDroits();
 }
 
 function peutPas($rq){
     if ($rq == 'formSubmit' && isset($_POST['senderId'])) {
         $rq = $_POST['senderId'];
     }
+    $peutPas = !in_array($rq,$_SESSION['droits']);
+    $msg = 'Droits Insuffisants !';
 
-    if (!in_array($rq, $_SESSION['droits'])) {
-        toSend('Droits Insuffisants !', 'peutPas');
-    return true;
+    if($peutPas){
+        if (isReactiv()) {
+            if (isset($_SESSION['user']['droitsPerdus'])) {
+                if (in_array($rq, $_SESSION['user']['droitsPerdus'])) {
+                    if (isSousAdmin()) {
+                        $msg = 'Valider votre nouveau mail (Cfr. mail envoyé) pour ne plus voir ce message';
+                        $peutPas = false;
+                    } else {
+                        $msg = 'Valider votre nouveau mail (Cfr. mail envoyé) pour récupérer ce droit';
+                    }
+                }
+            } else {
+                $msg = 'Droits Insuffisants !';
+            }
+        }
+        toSend($msg, 'peutPas');
     }
-    return false;
+    return $peutPas;
+
 }

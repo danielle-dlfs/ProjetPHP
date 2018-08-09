@@ -1,4 +1,4 @@
-<?php
+ <?php
 /**
  * Created by PhpStorm.
  * User: Danielle
@@ -15,6 +15,8 @@ Kint::$return = true;
 require_once "INC/dbConnect.inc.php";
 require_once "INC/mesFonctions.inc.php";
 require_once "INC/config.inc.php";
+require_once "INC/droits.inc.php";
+require_once "INC/sender.inc.php";
 
 if(!isset($_SESSION['config'])){
     $iConfig = new Config("INC/config.ini.php");
@@ -22,17 +24,10 @@ if(!isset($_SESSION['config'])){
     $_SESSION['loadTime'] = time();
 }
 
-$_SESSION['droitsDeBase'] = ['index','gestLog','pasvorto', 'formLogin','formSubmit'];
-
-if(isset($_SESSION['user']['droits'])){
-    $_SESSION['droits'] = &$_SESSION['user']['droits'];
-} else {
-    $_SESSION['droits'] = &$_SESSION['droitsDeBase'];
-}
+creeDroits();
 
 if(isset($_GET['rq'])){
     $_SESSION['log'][time()] = $_GET['rq'];
-    $toSend = [];
     require_once "INC/request.inc.php";
     gereRequete($_GET['rq']);
     die(json_encode($toSend));
@@ -55,7 +50,7 @@ $author = '<a href="mailto:' . $mail . '" title="'. $mail . '">' . $__INFOS__['n
 $gestLog = "Connexion";
 $style = "";
 
-if (isset($_SESSION['user'])) {
+if (isAuthenticated()) {
     $gestLog = 'Deconnexion';
     $style = '#4C4F22';
     $mainZone = 'Page rafraichie: vous êtes toujours connecté ' . $_SESSION['user']['pseudo'] . ' !';

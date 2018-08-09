@@ -33,7 +33,7 @@ if ( count( get_included_files() ) == 1) die( '--access denied--' );?>
             <ul id="menu" class="menu">
                 <li><a href="index.html">Accueil</a></li>
                 <li><a href="userProfil.html">Profil</a></li>
-                <li><a href="userInfos.html">Mes infos</a></li>
+                <li><a href="moderation.html">Modération</a></li>
                 <li><a href="config.html">Configuration</a></li>
                 <li>Session
                     <ul id="menu" class="menu sMenu">
