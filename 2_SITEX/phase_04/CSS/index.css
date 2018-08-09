@@ -207,3 +207,13 @@ section#gestion aside:before {
     background: #FC1D1C;
     color: yellow;
 }
+
+/* ------- BANDEAU ------- */
+
+#enReact {
+    color: yellow;
+    background: #F00;
+    padding: 0.15em;
+    padding-left: 6.5em;
+    font-weight: bold;
+}

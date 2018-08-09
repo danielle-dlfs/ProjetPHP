@@ -20,7 +20,7 @@ function creeDroits(){
     //if(!isset($_SESSION['user'])) return -1;
     if(!isAuthenticated()) return -1;
 
-    $listeDesStatuts = ['réact'];
+    $listeDesStatuts = [];
     $listeDesProfils = [];
 
     foreach ($_SESSION['user']['profil'] as $aProfil){

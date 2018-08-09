@@ -144,6 +144,11 @@ function authentification($user){
     $_SESSION['user']['profil'] = $profil;
     toSend(json_encode($_SESSION['user']),'userConnu');
     creeDroits();
+
+    if(isReactiv()){
+        toSend('Vous n\'avez pas encore validé votre nouveau mail (Cfr. mail de confirmation envoyé à la nouvelle adresse mail','peutPas');
+        toSend('<div id="enReact">Vous devez valider votre nouveau mail (Cfr. mail de confirmation)</div>', 'estReact');
+    }
 }
 
 function peutPas($rq){

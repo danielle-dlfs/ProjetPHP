@@ -217,6 +217,7 @@ function gereRetour(retour) {
                         of: '#menu a[href="gestLog.html"]'
                     }
                 });
+                $('#entete footer #enReact').remove();
                 break;
             case 'peutPas':
                 $('#debug').html('<div title="Gestion des droits">' + retour[action] + '</div>').find('div').dialog({
@@ -234,6 +235,9 @@ function gereRetour(retour) {
                         of: '#contenu'
                     }
                 });
+                break;
+            case 'estReact':
+                $("#entete footer").append(retour[action]);
                 break;
             default :
                 console.log('action inconnue :' + action);

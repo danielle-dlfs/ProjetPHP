@@ -45,6 +45,9 @@ if ( count( get_included_files() ) == 1) die( '--access denied--' );?>
                 <li><a href="gestLog.html"><?= $gestLog ?></a></li>
             </ul>
         </nav>
+        <footer>
+            <?= $bandeau ?>
+        </footer>
     </header>
 
     <nav id="sous-menu" class="menu">
