@@ -57,10 +57,10 @@ if (isReactiv()) {
 }
 
 
-if (isAuthenticated()) {
-    $gestLog = 'Deconnexion';
-    $style = '#4C4F22';
-    $mainZone = 'Page rafraichie: vous êtes toujours connecté ' . $_SESSION['user']['pseudo'] . ' !';
-}
+//if (isAuthenticated()) {
+//    $gestLog = 'Deconnexion';
+//    $style = '#4C4F22';
+//    $mainZone = 'Page rafraichie: vous êtes toujours connecté ' . $_SESSION['user']['pseudo'] . ' !';
+//}
 
 require_once "INC/layout.html.inc.php";

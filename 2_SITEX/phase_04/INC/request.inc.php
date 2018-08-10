@@ -124,6 +124,7 @@ function kLogin(){
 function kLogout(){
     toSend("Au revoir " . $_SESSION['user']['pseudo'], 'logout');
     unset($_SESSION['user']);
+    toSend(creeMenu(), 'newMenu');
 }
 
 function authentification($user){
@@ -153,6 +154,8 @@ function authentification($user){
     if (isMdpp()) {
         toSend('Vous aviez demandé un changement de mot de passe mais manifestement vous avez retrouvé votre mot de passe. Nous annulons votre demande', 'peutPas');
     }
+
+    toSend(creeMenu(),'newMenu');
 }
 
 function peutPas($rq){

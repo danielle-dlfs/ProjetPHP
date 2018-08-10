@@ -218,6 +218,7 @@ function gereRetour(retour) {
                     }
                 });
                 $('#entete footer #enReact').remove();
+
                 break;
             case 'peutPas':
                 $('#debug').html('<div title="Gestion des droits">' + retour[action] + '</div>').find('div').dialog({
@@ -238,6 +239,18 @@ function gereRetour(retour) {
                 break;
             case 'estReact':
                 $("#entete footer").append(retour[action]);
+                break;
+            case 'newMenu' :
+                $('#menu').replaceWith("<ul id='menu' class='menu'>" + retour[action] + "</ul>");
+                $('#menu').menu({
+                    position: {my: "center top+5", at: "center bottom+5"}
+                });
+                $('.menu a').click(function (event) {
+                    event.preventDefault();
+                    $('.menu a').removeClass('selected');
+                    $(this).toggleClass('selected');
+                    appelAjax(this);
+                });
                 break;
             default :
                 console.log('action inconnue :' + action);

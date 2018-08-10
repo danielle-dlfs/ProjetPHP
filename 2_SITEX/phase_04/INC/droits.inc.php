@@ -67,46 +67,68 @@ function creeDroits(){
 
 
 function creeMenu(){
-    $gestLog = (isAuthenticated() ? 'Dé' : '') . 'connexion';
-    //HEREDOC <<< motClé MENU
-    $menu = <<<MENU
-        <li><a href='index.html'>Accueil</a></li>
-        <li>Membre
-            <ul class="menu sMenu">
-                <li><a href="userProfil.html">Profil</a></li>
-                <li>TP
-                    <ul class="menu sMenu">
-                        <li><a href="sem02.html">TP02</a></li>
-                        <li><a href="sem03.html">TP03</a></li>
-                        <li><a href="sem04.html">TP04</a></li>
-                        <li><a href="TPsem05.html">TP05</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-        <li>Modo
-            <ul class="menu sMenu">
-                <li><a href="tableau.html">JSON 00</a></li>
-                <li><a href="moderation.html">Modération</a></li>
-            </ul>
-        </li>
-        <li>Admin
-            <ul class="menu sMenu">
-                <li><a href="testDB.html" id="test">test</a></li>
-                <li><a href="config.html">Configuration</a></li>
-                <li>Session
-                    <ul class="menu sMenu">
-                        <li><a href="displaySession.html">affiche</a></li>
-                        <li><a href="clearLog.html">efface log</a></li>
-                        <li><a href="resetSession.html">redémarre</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
+    $gestLog = 'Connexion';
+    $profil = 'ano';
+    if (isAuthenticated()) {
+        $gestLog = 'Déconnexion';
+        $profil = $_SESSION['user']['lesProfils'][0];
+    }
+    $menu = [];
+//HEREDOC <<<motClé MENU
+//attention colonne 0 pour l'heredoc le second mot clé
+    array_unshift($menu, <<<MENU
         <li><a href='gestLog.html'>$gestLog</a></li>
-MENU;
-    //attention colonne 0
-    return $menu;
+MENU
+    );
+    switch($profil){
+        case 'admin':
+        case 'sAdmin' : array_unshift($menu, <<<MENU
+            <li>Admin
+                <ul class="menu sMenu">
+                    <li><a href="testDB.html" id="test">test</a></li>
+                    <li><a href="config.html">Configuration</a></li>
+                    <li>Session
+                        <ul class="menu sMenu">
+                            <li><a href="displaySession.html">affiche</a></li>
+                            <li><a href="clearLog.html">efface log</a></li>
+                            <li><a href="resetSession.html">redémarre</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+MENU
+        );
+        case 'modo' : array_unshift($menu, <<<MENU
+            <li>Modo
+                <ul class="menu sMenu">
+                    <li><a href="tableau.html">JSON 00</a></li>
+                    <li><a href="moderation.html">Modération</a></li>
+                </ul>
+            </li>
+MENU
+        );
+        case 'memb' : array_unshift($menu, <<<MENU
+            <li>Membre
+                <ul class="menu sMenu">
+                    <li><a href="userProfil.html">Profil</a></li>
+                    <li>TP
+                        <ul class="menu sMenu">
+                            <li><a href="sem02.html">TP02</a></li>
+                            <li><a href="sem03.html">TP03</a></li>
+                            <li><a href="sem04.html">TP04</a></li>
+                            <li><a href="TPsem05.html">TP05</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+MENU
+        );
+        case 'ano' : array_unshift($menu,<<<MENU
+            <li><a href='index.html'>Accueil</a></li>
+MENU
+        );
+    }
+    return implode("\n",$menu);
 }
 
 /* GESTION DES STATUTS */
