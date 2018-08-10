@@ -43,7 +43,7 @@ function creeDroits(){
     $_SESSION['user']['droits'] = $listeDesDroits;
     kint(d($_SESSION['user']));
 
-    if(!isReactiv()) return -2;
+    if(!isReactiv() || isAdmin()) return -2;
 
     $perdu = [  'memb' => ['formTP05'],
                 'modo' => ['moderation'],

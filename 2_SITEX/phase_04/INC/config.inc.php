@@ -88,7 +88,10 @@ class Config {
 
         // UNSET ERROR TYPE
         unset($config['ERREUR']);
-        unset($config['DB']);
+        unset($config['EPHEC']);
+        if(!isAdmin()){
+            unset($config['DB']);
+        }
 
         foreach($config as $key => $value){
             $out[] = "<fieldset><legend>$key</legend>";

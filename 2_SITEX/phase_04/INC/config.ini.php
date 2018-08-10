@@ -28,3 +28,6 @@ max = 200
 type = "jpg|gif|png"
 choix[] = "jpg"
 choix[] = "png"
+
+[EPHEC]
+admin = "administrateur"
