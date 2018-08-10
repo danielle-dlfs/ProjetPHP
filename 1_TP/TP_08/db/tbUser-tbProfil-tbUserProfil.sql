@@ -59,14 +59,14 @@ COMMIT;
 
 -- tbProfil
 
-INSERT INTO `tbProfil` (`pId`, `pNom`, `pAbrev`, `pIcon`, `pEstStatus`) VALUES (DEFAULT, 'anonyme', 'ano', NULL, NULL);
-INSERT INTO `tbProfil` (`pId`, `pNom`, `pAbrev`, `pIcon`, `pEstStatus`) VALUES (DEFAULT, 'activation', 'acti', NULL, 1);
-INSERT INTO `tbProfil` (`pId`, `pNom`, `pAbrev`, `pIcon`, `pEstStatus`) VALUES (DEFAULT, 'membre', 'memb', NULL, NULL);
-INSERT INTO `tbProfil` (`pId`, `pNom`, `pAbrev`, `pIcon`, `pEstStatus`) VALUES (DEFAULT, 'réactivation', 'réact', NULL, 1);
-INSERT INTO `tbProfil` (`pId`, `pNom`, `pAbrev`, `pIcon`, `pEstStatus`) VALUES (DEFAULT, 'mdp-perdu', 'mdpp', NULL, 1);
-INSERT INTO `tbProfil` (`pId`, `pNom`, `pAbrev`, `pIcon`, `pEstStatus`) VALUES (DEFAULT, 'modérateur', 'modo', NULL, NULL);
-INSERT INTO `tbProfil` (`pId`, `pNom`, `pAbrev`, `pIcon`, `pEstStatus`) VALUES (DEFAULT, 'sous-administrateur', 'sAdmin', NULL, NULL);
-INSERT INTO `tbProfil` (`pId`, `pNom`, `pAbrev`, `pIcon`, `pEstStatus`) VALUES (DEFAULT, 'administrateur', 'admin', NULL, NULL);
+INSERT INTO `tbProfil` (`pId`, `pNom`, `pAbrev`, `pIcon`, `pEstStatus`) VALUES (1, 'anonyme', 'ano', NULL, NULL);
+INSERT INTO `tbProfil` (`pId`, `pNom`, `pAbrev`, `pIcon`, `pEstStatus`) VALUES (2, 'activation', 'acti', NULL, 1);
+INSERT INTO `tbProfil` (`pId`, `pNom`, `pAbrev`, `pIcon`, `pEstStatus`) VALUES (3, 'membre', 'memb', NULL, NULL);
+INSERT INTO `tbProfil` (`pId`, `pNom`, `pAbrev`, `pIcon`, `pEstStatus`) VALUES (4, 'réactivation', 'réact', NULL, 1);
+INSERT INTO `tbProfil` (`pId`, `pNom`, `pAbrev`, `pIcon`, `pEstStatus`) VALUES (5, 'mdp-perdu', 'mdpp', NULL, 1);
+INSERT INTO `tbProfil` (`pId`, `pNom`, `pAbrev`, `pIcon`, `pEstStatus`) VALUES (6, 'modérateur', 'modo', NULL, NULL);
+INSERT INTO `tbProfil` (`pId`, `pNom`, `pAbrev`, `pIcon`, `pEstStatus`) VALUES (7, 'sous-administrateur', 'sAdmin', NULL, NULL);
+INSERT INTO `tbProfil` (`pId`, `pNom`, `pAbrev`, `pIcon`, `pEstStatus`) VALUES (8, 'administrateur', 'admin', NULL, NULL);
 
 COMMIT;
 
