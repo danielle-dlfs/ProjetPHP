@@ -47,7 +47,7 @@ $mainZone = 'Bienvenue';
 $mail = ___MATRICULE___ . '@students.ephec.be';
 $author = '<a href="mailto:' . $mail . '" title="'. $mail . '">' . $__INFOS__['nom'] . ' ' . $__INFOS__['prenom']. '</a>';
 
-$gestLog = "Connexion";
+//$gestLog = "Connexion"; deplacé dans droits.inc.php
 $style = "";
 
 $bandeau = '';
@@ -55,6 +55,7 @@ $bandeau = '';
 if (isReactiv()) {
     $bandeau = '<div id="enReact">Vous devez valider votre nouveau mail (Cfr. mail de confirmation)</div>';
 }
+
 
 if (isAuthenticated()) {
     $gestLog = 'Deconnexion';

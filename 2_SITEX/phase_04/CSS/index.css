@@ -14,11 +14,16 @@
     line-height: 1.5;
     font-size: .9em;
     border: 0.1em solid var(--menu-bg-color);
-    padding: 0.25em 0.5em !important;
+    /*padding: 0.25em 0.5em !important;*/
+    /*height: 1%;*/
+    /*font-size: 1.2em;*/
 }
 
 .menu a:hover, .menu a.selected  {
     background-color: #282828;
+
+    border-radius: 0.75em 0.25em;
+    /*outline: none;*/
 }
 
 .menu a:hover{
@@ -37,8 +42,10 @@
     padding: 0;
 }
 
-.menu li {
+#menu li {
     color: orange;
+    min-width: 5em;
+    text-align: center;
 }
 
 .menu a.selected {
@@ -66,22 +73,30 @@
 /* Menu horizontal - #menu */
 #menu a {
     line-height:2.5;
-    display: inline;
+    /*display: inline;*/
+    font-size: 1.2em;
 }
 #menu ul {
     padding: 10px;
 }
 #menu ul, #menu li {
-    display: inline;
+    display: inline-block;
+}
+#menu li ul:before {
+    content: '⏏';
+    color: orange;
+    display: inline-block;
+    position: absolute;
+    top: -0.75em;
+    left: 47%;
 }
 
 .sMenu {
     border: 0.05em solid darkorange;
     border-radius: 0.5em;
 }
-
 .sMenu a {
-    padding: 1em;
+    /*padding: 1em;*/
     box-shadow: rgba(0, 0, 0, 0.5) .25em .25em .5em;
 }
 
@@ -118,25 +133,21 @@ section#gestion aside:before {
     background-color: darkred;
     border: 0.1em solid red;
 }
-
 #gestion aside#message:before{
     content:'message';
     background-color: darkgreen;
     border: 0.1em solid green;
 }
-
 #gestion aside#debug:before{
     content:'debug';
     background-color: firebrick;
     border: 0.1em solid orange;
 }
-
 #gestion aside#jsonError:before{
     content:'jsonError';
     background-color: rebeccapurple;
     border: 0.1em solid purple;
 }
-
 #gestion aside#kint:before {
     content:'kint';
     background-color: darkblue;
@@ -177,8 +188,26 @@ section#gestion aside:before {
 }
 
 /*  jQuery UI override  */
-.ui-widget.ui-widget-content, .ui-widget-content{
-    border:none;
+/*.ui-widget.ui-widget-content, .ui-widget-content{*/
+    /*border:none;*/
+/*}*/
+.ui-widget.ui-widget-content {
+    border: inherit;
+    color: inherit;
+}
+
+.ui-menu .ui-menu-item-wrapper {
+    padding: 0.25em 0.5em;
+}
+
+.ui-menu .ui-state-focus, .ui-menu .ui-state-active {
+    margin: initial;
+}
+
+.ui-menu-item-wrapper.ui-state-active {
+    border: 0.1em solid var(--menu-bg-color);
+    background: none;
+    color: #FF6533;
 }
 
 /* ------ LOGOUT DIALOG ------- */
