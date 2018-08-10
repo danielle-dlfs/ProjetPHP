@@ -3,31 +3,6 @@
 
 -- Ordre pour les FK : tbUser tbProfil tbUserProfil
 
--- -----------------------------------------------------
--- Table `tbUser`
--- -----------------------------------------------------
-
-CREATE TABLE `tbuser` (
-  `uId` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `uPseudo` char(20) NOT NULL,
-  `uEmail` char(50) DEFAULT NULL,
-  `uSemence` char(32) NOT NULL,
-  `uMdp` char(32) NOT NULL,
-  `uQuestion` varchar(100) DEFAULT NULL,
-  `uReponse` varchar(50) DEFAULT NULL,
-  `uAvatar` blob NULL,
-  `uDateCreation` datetime DEFAULT NULL,
-  PRIMARY KEY (`uId`,`uPseudo`),
-  UNIQUE KEY `uPseudo_UNIQUE` (`uPseudo`),
-  UNIQUE KEY `uId_UNIQUE` (`uId`),
-  UNIQUE KEY `uEmail_UNIQUE` (`uEmail`)
-) 
-
-
--- -----------------------------------------------------
--- Table `tbProfil`
--- -----------------------------------------------------
-
 CREATE TABLE `tbprofil` (
   `pId` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `pNom` char(20) NOT NULL,
@@ -37,11 +12,24 @@ CREATE TABLE `tbprofil` (
   PRIMARY KEY (`pId`),
   UNIQUE KEY `pNom_UNIQUE` (`pNom`),
   UNIQUE KEY `pAbrev_UNIQUE` (`pAbrev`)
-)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
--- -----------------------------------------------------
--- Table `tbUserProfil`
--- -----------------------------------------------------
+CREATE TABLE `tbuser` (
+  `uId` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uPseudo` char(20) NOT NULL,
+  `uEmail` char(50) NOT NULL,
+  `uSemence` char(32) NOT NULL,
+  `uMdp` char(32) NOT NULL,
+  `uQuestion` varchar(100) DEFAULT 'null',
+  `uReponse` varchar(50) DEFAULT 'null',
+  `uAvatar` blob,
+  `uDateCreation` datetime DEFAULT NULL,
+  PRIMARY KEY (`uId`),
+  UNIQUE KEY `uPseudo_UNIQUE` (`uPseudo`),
+  UNIQUE KEY `uEmail_UNIQUE` (`uEmail`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+
 
 CREATE TABLE `tbuserprofil` (
   `uId` int(10) unsigned NOT NULL,
@@ -51,7 +39,8 @@ CREATE TABLE `tbuserprofil` (
   KEY `fk_tbUserProfil_tbProfil1_idx` (`pId`),
   CONSTRAINT `fk_tbUserProfil_tbProfil1` FOREIGN KEY (`pId`) REFERENCES `tbprofil` (`pId`) ON UPDATE CASCADE,
   CONSTRAINT `fk_tbUserProfil_tbUser` FOREIGN KEY (`uId`) REFERENCES `tbuser` (`uId`) ON UPDATE CASCADE
-) 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 /* ------------------------- INSERTION DATA  ------------------------- */
 
@@ -81,7 +70,7 @@ INSERT INTO `tbProfil` (`pId`, `pNom`, `pAbrev`, `pIcon`, `pEstStatus`) VALUES (
 
 COMMIT;
 
--- tbUserProfil 
+-- tbUserProfil
 
 
 INSERT INTO `tbUserProfil` (`uId`, `pId`, `upDateDebut`) VALUES (1, 1, NOW());
@@ -103,4 +92,3 @@ INSERT INTO `tbUserProfil` (`uId`, `pId`, `upDateDebut`) VALUES (8, 7, NOW());
 INSERT INTO `tbUserProfil` (`uId`, `pId`, `upDateDebut`) VALUES (8, 8, NOW());
 
 COMMIT;
-
