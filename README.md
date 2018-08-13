@@ -16,10 +16,7 @@ NE PAS OUBLIER DE CONVERTIR LES IMAGES EN BASE 64 AVEC LA COMMANDE NOTEE PLUS BA
 - [Phase 1](https://devweb.ephec.be/HE201409/2_SITEX/phase_01/) | 100% finie   
 - [Phase 2](https://devweb.ephec.be/HE201409/2_SITEX/phase_02/) | 100% finie  
 - [Phase 3](https://devweb.ephec.be/HE201409/2_SITEX/phase_03/) | 100% finie   
-- [Phase 4.1 - kint](https://devweb.ephec.be/HE201409/2_SITEX/phase_04.01%20-%20kint/index.php) | 100% finie  
-- [Phase 4.2 - session](https://devweb.ephec.be/HE201409/2_SITEX/phase_04.02%20-%20session/index.php) | 100% finie    
-- [Phase 4.3 - config](https://devweb.ephec.be/HE201409/2_SITEX/phase_04.03%20-%20config/index.php) | 100% finie  
-- [Phase 4.4 - authentification](https://devweb.ephec.be/HE201409/2_SITEX/phase_04.04%20-%20authentification/index.php) | 100% finie   
+- [Phase 4](https://devweb.ephec.be/HE201409/2_SITEX/phase_04/index.php) | 100% finie   
 ==> NB : pour les images BLOB dans la BD (que json_encode ne supporte pas (cfr TP11), faites une UPDATE dans la DB pour chaque pId (de 1 à 8) :   
 > `UPDATE tbprofil SET pIcon = concat('data:image/png;base64,' , to_base64(pIcon)) where pId between 1 and 8`  
 
