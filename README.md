@@ -3,10 +3,12 @@
 <hr>
   
 Lien du cours > https://devweb.ephec.be/TP/2T/  <> https://193.190.65.92/TP/2T/  
-Attention ! 
+Attention ! A LIRE !!!
 
 NE PAS OUBLIER DE METTRE VOTRE FICHIER dbConnect.inc.php dans les dossiers INC de vos phases  
 NE PAS OUBLIER DE METTRE VOS IDENTIFIANTS A VOUS DANS LE FICHIER DE config.ini.php DANS LA PHASE 4 !  
+POUR CE QUI EST DE LA DB, LES SCRIPTS SONT DANS LE DOSSIER TP_8, AVEC LE TP11 IL FAUT RAJOUTER LES IMAGES POUR LES USERS  
+NE PAS OUBLIER DE CONVERTIR LES IMAGES EN BASE 64 AVEC LA COMMANDE NOTEE PLUS BAS  
 
 ## Liens vers mes phases :  
 
@@ -19,7 +21,7 @@ NE PAS OUBLIER DE METTRE VOS IDENTIFIANTS A VOUS DANS LE FICHIER DE config.ini.p
 - [Phase 4.3 - config](https://devweb.ephec.be/HE201409/2_SITEX/phase_04.03%20-%20config/index.php) | 100% finie  
 - [Phase 4.4 - authentification](https://devweb.ephec.be/HE201409/2_SITEX/phase_04.04%20-%20authentification/index.php) | 100% finie   
 ==> NB : pour les images BLOB dans la BD (que json_encode ne supporte pas (cfr TP11), faites une UPDATE dans la DB pour chaque pId (de 1 à 8) :   
-> `UPDATE tbprofil SET pIcon = concat('data:image/png;base64,' , pIcon) where pId = 1`  
+> `UPDATE tbprofil SET pIcon = concat('data:image/png;base64,' , to_base64(pIcon)) where pId between 1 and 8`  
 
 - [Phase 4.5 - droits](https://devweb.ephec.be/HE201409/2_SITEX/phase_04.05%20-%20droits/index.php) | work in progress  
 
